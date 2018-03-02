@@ -1,0 +1,114 @@
+\documentclass[12pt,titlepage]{article}
+\usepackage[table]{xcolor}
+\usepackage{longtable}
+\usepackage[utf8]{inputenc}
+%Language of Document Elements like Figure or Table
+\usepackage[english]{babel}
+\usepackage[bookmarks]{hyperref}
+\usepackage{pdfpages}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{array}
+\usepackage[justification=centering]{caption}
+\usepackage{enumitem}
+\usepackage{chngcntr}
+\usepackage{lscape}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{nameref}
+\usepackage{tabularx}
+\usepackage[a4paper,width=160mm,top=25mm,bottom=25mm]{geometry}
+
+%Syntax-highlighting]
+%\usepackage{minted}
+%\usemintedstyle{vs}
+
+%Each Section in a new Page
+\let\oldsection\section
+\renewcommand\section{\clearpage\oldsection}
+
+%Set space around and between lists
+\setlist[enumerate]{noitemsep, topsep=0cm}
+\setlist[itemize]{noitemsep, topsep=0cm}
+
+%Figure/Table Numbering style "Section Number.figure counter
+\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+\renewcommand{\thetable}{\arabic{section}.\arabic{table}}
+
+%Reset figure/table counter after section change
+\counterwithin{figure}{section}
+\counterwithin{table}{section}
+
+\hypersetup{
+	colorlinks,
+	linkcolor={black},
+	citecolor={black},
+	urlcolor={black}
+}
+
+\colorlet{punct}{red!60!black}
+\definecolor{background}{HTML}{EEEEEE}
+\definecolor{delim}{RGB}{20,105,176}
+\colorlet{numb}{magenta!60!black}
+
+\newcommand{\todonl}[1]{\newline\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{#1!}}
+\newcommand{\todo}[1]{\textcolor{red}{TODO: #1}\PackageWarning{TODO:}{#1!}}
+
+%Set Paragraph indent to null
+\setlength{\parindent}{0pt}
+% Smaler Table Space
+\renewcommand{\arraystretch}{1.5}
+
+% renamig of section to Abschnitt \autoref 
+\addto\extrasenglish{%
+	\def\sectionautorefname{Abschnitt}%
+}
+
+% renamig of subsubsection to Abschnitt \autoref 
+\addto\extrasenglish{%
+	\def\subsubsectionautorefname{Abschnitt}%
+}
+
+% renamig of subsection to Abschnitt \autoref 
+\addto\extrasenglish{%
+	\def\subsectionautorefname{Abschnitt}%
+}
+%rename Figure zu Abbildung
+\addto\captionsenglish{\renewcommand{\figurename}{Abbildung}}
+
+%rename Tabe zu Tabelle
+\addto\captionsenglish{\renewcommand{\tablename}{Tabelle}}
+
+\title{Software-Defined Netzwerk im Campus Bereich}
+\author{Sandro Kaspar, Philipp Albrecht, Jessica Kalberer}
+\date{28.02.2017}
+
+\pagestyle{fancy}
+\lhead{Software-Defined Netzwerk im Campus Bereich}
+\begin{document}
+\pagenumbering{Roman} 
+
+
+\includepdf{pdfincludes/titlepage}
+
+\newpage
+%new Title for tableofcontent
+\renewcommand{\contentsname}{Inhaltsverzeichnis}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\input{sections/abstract}
+
+
+\newpage
+\appendix
+\pagenumbering{Roman}
+
+\input{sections/sitzungsprotokolle}
+\input{sections/erklaerungen}
+\input{sections/verzeichnisse}
+
+
+\end{document}
