@@ -185,6 +185,7 @@ keine
 \begin{itemize}	
 	\item Laurent Metzger 
 	\item Urs Baumann
+	\item Industriepartner (FUB Leiter Netzwerk mit einem Mitarbeiter)
 	\item Philipp Albrecht
 	\item Sandro Kaspar
 	\item Jessica Kalberer
@@ -193,22 +194,49 @@ keine
 \paragraph{Traktanden}
 \begin{itemize}	
 	\item Arbeit auf GitHub private oder public? Waffle.io wenn private 5 Dollar / Monat
-	\begin{itemize}
-		\item Industriepartner am Donnerstag nochmals darauf ansprechen
-	\end{itemize}
 	\item Vorstellung unserer internen Organisationsstruktur
-	\item Wird SDN zur Zeit schon benutzt?
-	\item Zeithorizont für Einführung des SDA?
+	\item Wird SDA zur Zeit schon benutzt?
 	\item Aktuelle Infrastruktur
+	\begin{itemize}
 		\item Anzahl Benutzer
 		\item Anzahl Netzwerkgeräte
 		\item Wie viele Personen betreuen zur Zeit diese Infrastuktur? 
+	\end{itemize}
 \end{itemize}
 
 \paragraph{Beschlüsse (Diskussion)}
 \begin{itemize}	
-	\item x
-	\item x
+	\item Sicherheit ist der Mittelpunkt bei der FUB. Entsprechende Use Cases definieren:
+	\begin{itemize}
+		\item Benutzer- und Geräteprofile Definition ist ein sehr wichtiger Punkt für die FUB. Sie möchten gerne wissen wie diese Definition auf einem ISE aussehen 
+		\item Use Case: Austausch eines Switches oder Netzwerk-Gerätes
+		\item sicherstellen das wir die erhaltenen Use Case richtig verstanden haben und dies mit ihnen nochmals abklären, falls etwas nicht ganz klar oder unpräzise
+		\item wir werden mind. 4 Use Cases von der FUB erhalten, welche Ihnen besonders wichtig sind. Spätestens bis ende März 2018.			
+	\end{itemize}
+	\item Netzwerk-Umgebung: es muss noch eine passende Netzwerk-Topologie erstellt werden
+	\begin{itemize}
+		\item Hardware
+		\begin{itemize}
+			\item 4 x Catalyst 9300
+			\item 4 x Catalyst 3850
+			\item 1 Cisco 3650CX - Büro-Switch (herausfinden wie diese Switche im DNAC integriert werden können)
+			\item 2 ISR4431
+		\end{itemize}
+		\item VMs werden von Betreuer erstellt und wir erhalten VPN Zugriff auf die Server, falls wir Hardware Zugriff benötigen, befinden sich die Switches im Netzwerklabor.
+		\begin{itemize}
+			\item ISE, Infobox (Betreuer - Lizenzen erhalten wir von der FUB)
+			\item DHCP, DNS, NTP (Diese Dienste sind nicht separat, sondern auf der Infobox vorhanden und können dort eingerichtet werden.
+		\end{itemize}
+	\end{itemize}
+	\item DNA-Center inkl. Material sollte ca. in 1-2 Wochen gesendet werden.
+	\item Dimensionen des aktuellen FUB Netzes:
+	\begin{itemize}
+		\item Ganzes Führungsnetz Schweiz mittels MPLS
+		\item Anzahl User permanent ein paar Tausend, aber ist sehr variabel je nach Einsatz. Wichtiger Punkt der abzuklären gilt wäre, werden die maximal erlaubten Geräte überschritten? Wo liegen die Limiten?
+		\item Kennenlernen der Tools und abklärung ob diese Technologien 
+	\end{itemize}
+	\item GitHub kann public genutzt werden, da Informationen von FUB schon vorher gefiltert.
+	\item SDA wird noch nicht benutzt, wir sollen diese Technologien für die Evaluieren.
 \end{itemize}
 
 \paragraph{Offene Punkte (erledigt vor nächster Sitzung)} \mbox{}
@@ -219,7 +247,9 @@ keine
 		\rowcolor{gray!50}
 		\textbf{Was} & \textbf{Verantwortlichkeit} \\
 		\hline	
-		x & x \\	
+		Netzwerktopologie mit zusätzlichen Geräten & Philipp \\	
+		Risiko-Management Tabelle & Sandro \\
+		Sitzungsprotokoll Traktanden spätestens Montagabend an Betreuer	& Jessica \\		
 	\end{tabularx}
 	\label{tab:my-label}
 \end{table}
@@ -247,8 +277,8 @@ keine
 
 \paragraph{Traktanden}
 \begin{itemize}	
-	\item x
-	\item x
+	\item Genauigkeit der Dokumentation der Technologien
+	\item Wie ist es mit Quellen umzugehen?
 \end{itemize}
 
 \paragraph{Beschlüsse (Diskussion)}
