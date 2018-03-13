@@ -50,10 +50,14 @@
 	\item Meeting mit Industriepartner: 08. März 2017, 14 Uhr, 120 Minuten
 \end{itemize}
 
-\paragraph{Kommende Abwesenheiten}
+\paragraph{Kommende Abwesenheiten} \mbox{}\\
 keine
 
 \newpage
+
+
+
+
 
 \subsection{Sitzungsprotokoll 06.03.2018}
 
@@ -174,10 +178,15 @@ keine
 	\item Sitzung mit Betreuer: 13. März 2018, 15.10 Uhr, 60 Minuten
 \end{itemize}
 
-\paragraph{Kommende Abwesenheiten}
+\paragraph{Kommende Abwesenheiten} \mbox{}\\
 keine
 
 \newpage
+
+
+
+
+
 
 \subsection{Sitzungsprotokoll 08.03.2018}
 
@@ -185,7 +194,8 @@ keine
 \begin{itemize}	
 	\item Laurent Metzger 
 	\item Urs Baumann
-	\item Industriepartner (FUB Leiter Netzwerk mit einem Mitarbeiter)
+	\item Laurent Billas FUB
+	\item Serge Pidoux FUB
 	\item Philipp Albrecht
 	\item Sandro Kaspar
 	\item Jessica Kalberer
@@ -259,10 +269,15 @@ keine
 	\item Meeting mit Betreuer: 13. März 2018, 15.10 Uhr, 60 Minuten
 \end{itemize}
 
-\paragraph{Kommende Abwesenheiten}
+\paragraph{Kommende Abwesenheiten} \mbox{}\\
 keine
 
 \newpage
+
+
+
+
+
 
 \subsection{Sitzungsprotokoll 13.03.2018}
 
@@ -284,9 +299,40 @@ keine
 
 \paragraph{Beschlüsse (Diskussion)}
 \begin{itemize}	
-	\item x
-	\item x
+	\item Netzwerktopologie
+	\begin{itemize}
+		\item Core Layer kommt darauf an welche Modelle wir bekommen, um dies genauer spezifizieren zu können
+		\begin{itemize}
+			\item 9300-24T-A (Lizenz: Cisco DNA Advantage für 3 Jahre) ohne Uplinks
+			\item Die genauen Modelle werden uns von Herrn Metzger noch bekannt gegeben		
+		\end{itemize}
+		\item Green: Out of Bound Management
+		\item 3650CX kann selbst kein VXLAN und muss an 9300 angeschlossen werden
+		\item Unterschiedliche Gebäude in Netzwerktopologie erwähnen
+		\item 9300 zwischen Border und Control Node
+		\item zwischen den Switchen L3 Routing Protokolle
+		\item mit L2 auf Server zugriff vom 9300 Distribution Core her
+		
+		\item 9300 Unterschied der einzelnen Modelle mehr nur Perfomance
+		\item Anmerkung: 3850XS nicht der beste Router in Core in einer Produktiven Umgebung
+		
+		\item 3850 aktuell bei FUB in Verwendung
+		\item 9300 sind neu geplant
+	\end{itemize}
+	\item Wireless = Out of Scope, sollte unbedingt in der Dokumentation erwähnt und als optional definiert werden.
+	\item DNAC Konfiguration von Switches (theoretisch ein Use Case)
+	\begin{itemize}
+		\item Bleibt die Verbindung bestehen bei Änderungen?
+		\item Port Konfigurationen werden nicht kontrolliert
+		\item Route Policies werden fix überschrieben
+	\end{itemize}
+	\item Netzwerktopologie wird von Herrn Metzger noch FUB gezeigt (informell)
+	\item Verkabelungsplan erstellen: da keine Uplinks vorhanden, werden wahrscheinlich Port 1-4 für das verwendet
+	\item Regelmässige Updates per Mail mit Dokumentation an Betreuer
+	\item Quellen HSR intern keine Vorgaben, so wie angefangen weiterführen
 \end{itemize}
+
+\newpage 
 
 \paragraph{Offene Punkte (erledigt vor nächster Sitzung)} \mbox{}
 
@@ -296,8 +342,12 @@ keine
 	\begin{tabularx}{\textwidth}{X | p{4.5cm}}
 		\rowcolor{gray!50}
 		\textbf{Was} & \textbf{Verantwortlichkeit} \\
-		\hline	
-		x & x \\	
+		\hline
+		Genaue Modelle der Switche bekanntgeben & Metzger \\	
+		Verkabelungsplan erstellen (Switch Ports) & x \\
+		IP-Adressen Plan & x \\
+		Mapping zwischen SDA und LISP Name Definitions & x \\
+		Regelmässige Updates der Doku an Betreuer & x \\
 	\end{tabularx}
 	\label{tab:my-label}
 \end{table}
@@ -307,7 +357,7 @@ keine
 	\item Meeting mit Betreuer: 20. März 2018, 15.10 Uhr, 60 Minuten
 \end{itemize}
 
-\paragraph{Kommende Abwesenheiten}
+\paragraph{Kommende Abwesenheiten} \mbox{}\\
 keine
 
 
