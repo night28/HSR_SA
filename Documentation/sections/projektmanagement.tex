@@ -13,7 +13,7 @@ Sollten sich während dem Projekt neue potenzielle Risiken zeigen, wird dieses D
 
 \subsubsection{Risiken}
 \newcommand*\rot{\rotatebox{90}}
-\begin{tabular}{|m{0.5cm}|m{3cm}|m{5cm}|m{0.75cm}|m{0.75cm}|m{0.75cm}|m{5cm}|m{5cm}|} 
+\begin{longtable}{|m{0.5cm}|m{3cm}|m{5cm}|m{0.75cm}|m{0.75cm}|m{0.75cm}|m{5cm}|m{5cm}|} 
 	\hline
 	\rot{Nummer} & \rot{Titel} & \rot{Beschreibung} & \rot{\shortstack[l]{maximaler\\Schaden [h]}} & \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit}} & \rot{\shortstack[l]{Gewichteter\\Schaden [h]}} & \rot{Vorbeugung} & \rot{\shortstack[l]{Verhalten beim\\Eintreten}} \\
 	\hline\hline
@@ -26,12 +26,16 @@ Sollten sich während dem Projekt neue potenzielle Risiken zeigen, wird dieses D
 	4 & Konflikte oder Missverständnisse im Team & Das Team ist sich bezüglich wichtigen Entscheidungen uneinig & 25 & 15\% & 3.75 & Entscheidungen stets mit Begründung dokumentieren & Kann auch mit Hilfe der Doku keine Einigung gefunden werden, fachnlichen Rat des Betreuers einholen \\
 	\hline
 	5 & Missverständnisse im Team & Im Team herscht Uneinigkeit über bereits getroffene Entscheidungen & 20 & 20\% & 4 & Protokolle führen und Entscheidungen klar dokumentieren & Protokolle und Dokumentationen beiziehen \\
+	\hline
 	6 & Ausfall Server / Netzwerkinfrastruktur & Ausfall der von der HSR zur Verfügung gestellten Infrastrukturkomponenten & 30 & 10\% & 3 & Keine Vorbeugenden Massnahmen möglich & Sobald die Infrastruktur wieder verfügbar ist, Systeme wieder in Betrieb nehmen \\
+	\hline
 	7 & Lieferverzögerung Hardware & Die von Cisco bestellte Hardware kommt später als angekündigt & 30 & 18\% & 5.4 & Keine Vorbeugenden Massnahmen möglich & Projektplanung an neue Gegebenheiten anpassen, notfalls Projektumfang anpassen \\
+	\hline
 	8 & Zeitaufwände falsch geschätzt & Auf Grund falscher Schätzungen kommt es zu Verzögerungen im Projekt & 30 & 25\% & 7.5 & Laufende Kontrolle des Projektfortschritts um Probleme frühzeitig zu erkennen, Reserven einplanen & Verbleibende Schätzungen korrigieren, Planung anpassen \\
+	\hline
 	9 & Datenverlust & Verlust von projektbezogenen Daten wie Dokumentationen, Konfigurationen etc. & 40 & 5\% & 2 & Regelmässige und verteilte Backups aller Daten erstellen & Verlorenen Daten aus Backups wiederherstellen, fehlende Daten neu erarbeiten \\
 	\hline
-\end{tabular}
+\end{longtable}
 
 \end{landscape}
 
