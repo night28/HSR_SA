@@ -115,6 +115,30 @@ Im Einzug mit dem Campus Fabric wurden für bestehende LISP Namenskonzepte neue 
 	\item "Intermediate Node" $\approx$ "Non-LISP IP Forwarder"
 \end{itemize}
 
+\paragraph{Fabric Control-Plane Node} basiert auf einem LISP Map Server / Resolver. Führt die LISP-Host-Tracking-Datenbank aus, um Overlay-Erreichbarkeitsinformationen bereitzustellen.
+\begin{itemize}
+	\item Eine einfache Host-Datenbank, die die Endpunkt-ID zu Edge-Knoten-Bindungen zusammen mit anderen Attributen verfolgt
+	\item Host-Datenbank unterstützt mehrere Endpoint-ID-Lookup-Schlüssel (IPv4 / 32, IPv6 / 128 oder MAC)
+	\item Empfängt Präfix-Registrierungen von Edge Nodes mit lokalen Endpunkten
+	\item Beheben von Suchanforderungen von Remote-Edge-Knoten, um lokale Endpunkte zu finden
+\end{itemize}
+
+\paragraph{Fabric Edge Node} basiert auf einem LISP Tunnel Router (xTR). Bietet Konnektivität für Benutzer und Geräte, die mit dem Fabric verbunden sind.
+\begin{itemize}
+	\item Verantwortlich für das Identifizieren und Authentifizieren von Endpunkten
+	\item Registrieren von Endpunkt-ID mit dem Control-Plane Node(s)
+	\item Bietet Anycast L3 Gateway für verbundene Endpunkte
+	\item Host-Datenverkehr von und zu Endpunkten, die mit dem Fabric verbunden sind, verkapseln/entkapseln
+\end{itemize}
+
+\paragraph{Fabric Border Node} basiert auf einem LISP Proxy Tunnel Router (PxTR). Der gesamte Verkehr, der das Fabric betritt oder verlässt, durchläuft diesen Knotentyp.
+\begin{itemize}
+	\item Verbindet traditionelle L3-Netzwerke und / oder verschiedene Fabric-Domänen mit der lokalen Domäne
+	\item Wo zwei Domains Endpoint Erreichbarkeit und Richtlinieninformationen austauschen
+	\item Verantwortlich für die Übersetzung von Kontexten (VRF und SGT) von einer Domäne in eine andere
+	\item Stellt einen Domänenexitpunkt für alle Edge-Knoten bereit
+\end{itemize}
+
 \subsection{Virtual Extensible LAN (VXLAN)}
 VXLAN ist ein Encapsulation-Protokoll, um ein Overlay-Netzwerk auf einer existierenden Layer 3 Infrasturktur laufen zu lassen. VXLAN wurde ursprünglich von Cisco Systems, VMware und Arista Network entwickelt und ist einer der IETF festgelegten Standards (RFC 7348). \cite{rfc-7348} \\
 \\
