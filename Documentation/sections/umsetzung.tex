@@ -5,7 +5,7 @@
 	\item Dokumentation, welche Experimente/Tests durchgeführt wurden und welche Lösungsoptionen aufgrund der Ergebnisse dieser Experimente/Tests verworfen wurden.
 \end{itemize}
 
-\subsubsection{Labor Netzwerk Architektur}
+\subsection{Labor Netzwerk Architektur}
 Mit der zur Verfügung gestellten Hardware ist die folgende Netzwerk Architektur entstanden.
 
 Folgende zentrale Überlegungen sind eingeflossen:
@@ -24,7 +24,7 @@ Folgende zentrale Überlegungen sind eingeflossen:
 	\label{fig:LabNetworkArchitecture}
 \end{figure}
 
-\subsubsection{Netzwerkarchitekturen Vergleich}
+\subsection{Netzwerkarchitekturen Vergleich}
 Hauptunterschiede zwischen der klassischen Netzwerkarchitektur und der "Modernen" Software-Defined Access Architektur. 
 
 \begin{itemize}
@@ -40,3 +40,89 @@ Hauptunterschiede zwischen der klassischen Netzwerkarchitektur und der "Modernen
 	\caption{Netzwerk Architektur Vergleich}
 	\label{fig:LabNetworkArchitectureVergleich}
 \end{figure}
+
+\pagebreak
+\subsection{Verkabelungsplan}
+\begin{longtable}{| l | l | l | l |}
+		\hline
+		\multicolumn{4}{| c| }{Verkabelung} \\
+		\hline
+		\multicolumn{2}{| c |}{Seite A} & \multicolumn{2}{ c |}{Seite B} \\
+		\hline
+		isr4431-1.access & port1 & WAN & - \\
+		\hline
+		isr4431-1.access & port2 & isr4431-2.access & port2 \\
+		\hline
+		isr4431-1.access & port3 & c9300-1.dist & port1 \\
+		\hline
+		isr4431-2.access & port1 & WAN & - \\
+		\hline
+		isr4431-2.access & port2 & isr4431-1.access & port2 \\
+		\hline
+		isr4431-2.access & port3 & c9300-2.dist & port1 \\
+		\hline
+		c9300-1.dist & port1 & isr4431-1.access & port3 \\
+		\hline
+		c9300-1.dist & port2 & c9300-2.dist & port2 \\
+		\hline
+		c9300-1.dist & port3 & c3850-1.core & port1 \\
+		\hline
+		c9300-1.dist & port4 & c3850-2.core & port1 \\
+		\hline
+		c9300-2.dist & port1 & isr4431-1.access & port3 \\
+		\hline
+		c9300-2.dist & port2 & c9300-1.dist & port2 \\
+		\hline
+		c9300-2.dist & port3 & c3850-1.core & port2 \\
+		\hline
+		c9300-2.dist & port4 & c3850-2.core & port2 \\
+		\hline
+		c3850-1.core & port1 & c9300-1.dist & port3 \\
+		\hline
+		c3850-1.core & port2 & c9300-2.dist & port3 \\
+		\hline
+		c3850-1.core & port3 & c3850-2.core & port3 \\
+		\hline
+		c3850-1.core & port4 & c3850-1.access & port1 \\
+		\hline
+		c3850-1.core & port5 & c9300-1.access & port1 \\
+		\hline
+		c3850-1.core & port6 & c3850-2.access & port1 \\
+		\hline		
+		c3850-1.core & port7 & c9300-2.access & port1 \\
+		\hline
+		c3850-2.core & port1 & c9300-1.dist & port4 \\
+		\hline	
+		c3850-2.core & port2 & c9300-2.dist & port4 \\
+		\hline
+		c3850-2.core & port3 & c3850-1.core & port3 \\
+		\hline
+		c3850-2.core & port4 & c3850-1.access & port2 \\
+		\hline
+		c3850-2.core & port5 & c9300-1.access & port2 \\
+		\hline
+		c3850-2.core & port6 & c3850-2.access & port2 \\
+		\hline		
+		c3850-2.core & port7 & c9300-2.access & port2 \\
+		\hline
+		c3850-1.access & port1 & c3850-1.core & port4 \\
+		\hline
+		c3850-1.access & port2 & c3850-2.core & port4 \\
+		\hline
+		c3850-1.access & port3 & c3650-1.access & port1 \\
+		\hline
+		c3650-1.access & port1 & c3850-1.access & port3 \\
+		\hline
+		c9300-1.access & port1 & c3850-1.core & port5 \\
+		\hline
+		c9300-1.access & port2 & c3850-2.core & port5 \\
+		\hline
+		c3850-2.access & port1 & c3850-1.core & port6 \\
+		\hline
+		c3850-2.access & port2 & c3850-2.core & port6 \\
+		\hline
+		c9300-2.access & port1 & c3850-1.core & port7 \\
+		\hline
+		c9300-2.access & port2 & c3850-2.core & port7 \\
+		\hline
+\end{longtable}
