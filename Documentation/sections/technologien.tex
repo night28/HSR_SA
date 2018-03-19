@@ -45,7 +45,7 @@ DNA Center ist das zentrale Überwachungs-Dashboard für Netzwerke, mit dem alle
 DNA Center gibt die Möglichkeit unter einem Grafischen Nutzer Interface direkt mit APIC(Application Policy Infrastructure Controller)-EM 2.x Applikationen mit der Identity Services Engine (ISE) und mit Network Data Plattform (NDP) unserer Assurance und Analytics Plattform zu sprechen. Alle Parameter die angezeigt oder konfiguriert werden müssen kann man unter DNA Center ausführen und muss nicht zwischen den einzelnen Modulen und Oberflächen hin und her springen.
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=8cm]{img/DNAC-1.jpg}
+	\includegraphics[height=7cm]{img/DNAC-1.jpg}
 	\caption{DNA Solution}
 	\label{fig:Aufbau einer DNA Solution}
 \end{figure}
@@ -64,6 +64,13 @@ In ähnlicher Weise werden DNA-Center-Geräte, sobald sie bereitgestellt werden 
 
 \subsection{Locator ID Separation Protocol (LISP)} 
 LISP ist das Produkt einer Arbeitsgruppe in der Internet Engineering Taskforce (IETF), um was wachsende Problem des doppelten Verwendungszwecks der IP-Adressen zu bereinigen. Zur Zeit wird die IP-Adresse benutzt um die Identität eines Hosts festzulegen und auch den Ort zu bestimmen, an dem er sich im Internet befindet. Dies hat zur Folge das sich bei einem Aufenthalsortwechsel auch die IP-Adresse des Hosts ändert, was bedeutet das die Identität verloren geht und die alten IP-Verbindungen verfallen. \\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=3.5cm]{img/lisp.png}
+	\caption{LISP Aufbau}
+	\label{fig:LISP Aufbau}
+\end{figure}
 
 Dies soll nun durch LISP geändert werden, in dem es die Identität eines Gerätes, auch Endpoint Identifier (EID) genannt, von seinem Aufenthaltsort, auch Routing Locator (RLOC) genannt, in zwei separate Adressräume unterteilt. Das bedeutet, dass die Router in einer LISP-Architektur nur Routing-Informationen von RLOCs speichern müssen. Um Pfadinformationen eines Hosts abzurufen, kann der Router diese beim LISP-Mapping-Server abfragen, was analog wie das DNS-Mapping funktioniert. \\
 
@@ -99,10 +106,53 @@ LISP verwendet für SDA/Fabric eine VXLAN-Kapselung. Um die VXLAN-Kapselung für
 	\label{tab:my-label}
 \end{table}
 
+\subsubsection{Campus Fabric und LISP}
+Im Einzug mit dem Campus Fabric wurden für bestehende LISP Namenskonzepte neue Begriffsdefinitionen zugewiesen:
+\begin{itemize}
+	\item "Control-Plane Node" $\approx$ "LISP Map-Server"
+	\item "Edge Node" $\approx$ "LISP Tunner Router" (xTR)
+	\item "Border Node" $\approx$ "LISP Proxy Tunnel Router" (PxTR)
+	\item "Intermediate Node" $\approx$ "Non-LISP IP Forwarder"
+\end{itemize}
+
 \subsection{Virtual Extensible LAN (VXLAN)}
-VXLAN ist ein Encapsulation-Protokoll, um ein Overlay-Netzwerk auf einer existierenden Layer 3 Infrasturktur laufen zu lassen. VXLAN wurde ursprünglich von Cisco Systems, VMware und Arista Network entwickelt und ist einer der IETF festgelegten Standards (RFC 7348). \\
+VXLAN ist ein Encapsulation-Protokoll, um ein Overlay-Netzwerk auf einer existierenden Layer 3 Infrasturktur laufen zu lassen. VXLAN wurde ursprünglich von Cisco Systems, VMware und Arista Network entwickelt und ist einer der IETF festgelegten Standards (RFC 7348). \cite{rfc-7348} \\
 \\
-Technisch gesehen erzeugt ein VXLAN logische Layer 2 Netzwerke, die dann in standardmässige Layer 3 Pakete eingepackt werden. VXLAN dient dazu um in sehr grossen Netzwerkumgebung die Probleme zu lösen, die durch beschränkte Anzahl von VLANS betroffen sind. Mit VXLAN sind insgesamt 16’777’215 (24 Bit) Layer-2-Umgebungen möglich, die ihrerseits wieder jeweils 4096 VLANs beinhalten können. \cite{rfc-7348}
+Technisch gesehen erzeugt ein VXLAN logische Layer 2 Netzwerke, die dann in standardmässige Layer 3 Pakete eingepackt werden. VXLAN dient dazu um in sehr grossen Netzwerkumgebung die Probleme zu lösen, die durch beschränkte Anzahl von VLANS betroffen sind. Mit VXLAN sind insgesamt 16’777’215 (24 Bit) Layer-2-Umgebungen möglich, die ihrerseits wieder jeweils 4096 VLANs beinhalten können. 
+
+\subsubsection{VXLAN Encapsulation}
+Die Data Plane basiert auf VXLAN, im Gegensatz zur Control Plane, welche auf LISP basiert. Die VXLAN-Kapselung ist IP/UDP-basiert, was bedeutet, dass sie von jedem IP-basierten Netzwerk (Legacy- oder nicht-Cisco-Netzwerk) weitergeleitet werden kann und effektiv den Overlay-Aspekt des SD-Access-Fabric erzeugt. Die VXLAN-Kapselung wird (statt der LISP-Kapselung) aus zwei Hauptgründen verwendet. VXLAN umfasst den Source Layer 2 (Ethernet) -Header (LISP nicht) und bietet auch spezielle Felder für zusätzliche Informationen (wie die ID des virtuellen Netzwerks [VN] und die ID der Gruppe [Segment]). \cite{sda-whitepaper}\\
+
+Diese Technologie bietet mehrere Vorteile für SD-Access, z. B. Unterstützung für virtuelle Layer-2 und Layer-3-Topologien (Overlays) und die Möglichkeit, über jedes IP-basierte Netzwerk mit integrierter Netzwerksegmentierung (VRF/VN) und gruppenbasierter Richtlinie zu arbeiten. \\ 
+
+In SD-Access wurden einige Verbesserungen der ursprünglichen VXLAN-Spezifikationen hinzugefügt, insbesondere die Verwendung von Sicherheitsgruppen-Tags (SGTs). Dieses neue VXLAN-Format ist derzeit ein IETF-Entwurf, der als Gruppenrichtlinienoption (oder VXLAN-GPO) bekannt ist.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=4.5cm]{img/vxlan-encapsulation.jpg}
+	\caption{VXLAN Encapsulation}
+	\label{fig:VXLAN Encapsulation}
+\end{figure}
+
+Die Fabric Data-Plane bietet folgendes:
+\begin{itemize}
+	\item Underlay Adressanzeige und -zuordnung
+	\item Automatischer Tunnelaufbau (Virtuelle Tunnelendpunkte)
+	\item Frame-Kapselung zwischen Routing-Locators
+\end{itemize}
+
+Unterstützung für das LISP- oder VXLAN-Header-Format
+\begin{itemize}
+	\item Fast gleich, mit verschiedenen Feldern und Nutzlast
+	\item LISP-Header trägt IP-Payload (IP in IP)
+	\item VXLAN-Header trägt MAC-Payload (MAC in IP)
+\end{itemize}
+
+Ausgelöst durch LISP-Control-Plane-Ereignisse
+\begin{itemize}
+	\item ARP oder NDP Learning auf L3 Gateways
+	\item Map-Reply oder Cache auf Routing Locators
+\end{itemize}
 
 \subsection{Slack}
 Slack ist ein webbasierter Instant-Messaging-Dienst des US-amerikanischen Unternehmens Slack Technologies zur Kommunikation innerhalb von Arbeitsgruppen. Slack erlaubt, Nachrichten auszutauschen, mit Einzelpersonen oder in einer Gruppe zu chatten sowie gemeinsam Dokumente zu bearbeiten. Andere Online-Dienste wie Dropbox, Google Drive oder GitHub lassen sich in Slack integrieren.
