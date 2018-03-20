@@ -383,18 +383,26 @@ keine
 	\item LabNetzwerkArchitektur
 	\item Zwischenstand aktuelle Dokumentation
 	\item Dokumentatorisches: Quellenangaben
-	\item Genaue Modelle der Switche (Laurent Metzger)
-	\item IP Adress Plan - Vorgabe von Lab Infrastruktur (Urs Baumann)
+	\item Genaue Modelle der Switche (Laurent Metzger) - kommt noch
+	\item IP Adress Plan - Vorgabe von Lab Infrastruktur (Urs Baumann) - kommt noch
+	\item IPv6 Unterstützung? (Out of Scope - es werden private IPv4 Adressen verwendet RFC1918)
 \end{itemize}
 
 \paragraph{Beschlüsse (Diskussion)}
 \begin{itemize}	
-	\item x
+	\item Use Cases werden bis 27.März 2018 vom Industriepartner übergeben (Herr Metzger wird nochmal bei FUB nachhaken, damit diese wirklich geliefert werden)
+	\item Netzwerk Architektur wurde nach Besprechung mit FUB noch angepasst. Es werden zwei weitere Router im Core Layer hinzugefügt und die Catalyst 3850 in den Distribution Layer hoch geschoben
+	\item Im Core Layer wird für den Cisco ISR 4431 ein Modul hinzugefügt. Zu beschreiben als Port 01-0 (mittleres bedeutet Modul 1)
+	\item Hardware Aufbau inkl. Installation beginnt nach Ostern (1. April 2018) - Zeitaufwand wird exponentiell steigen
+	\item Voranalyse Technologien (LISP Komponenten, Skalierbarkeit, Ablauf Kommunikation...)
 	\begin{itemize}
-		\item x
+		\item Single Point of Failure
+		\item mögliche Topologien (mehrere Gebäude, Standorte, etc.), wo macht was Sinn? Grosse Instanzen, mehrere kleinere, etc.
+		\item Skalierungsprobleme
+		\item Abläufe: was passiert wann (ARP Request, Abfolge, Zuständigkeiten, etc.)
 	\end{itemize}
-	\item x
-	\item x
+	\item IPv6 Unterstützung -> Out of Scope - es werden private IPv4 Adressen verwendet RFC1918
+	\item Materialliste inkl. den genauen Switch/Router Spezifikationen wird noch geliefert
 \end{itemize}
 
 \paragraph{Offene Punkte (erledigt vor nächster Sitzung)} \mbox{}
@@ -406,7 +414,11 @@ keine
 		\rowcolor{gray!50}
 		\textbf{Was} & \textbf{Verantwortlichkeit} \\
 		\hline
-		x & x \\	
+		Quellenangaben in Literaturverzeichnis übernehmen & Jessica \\
+		Meilensteine anpassen & Philipp, Sandro, Jessica \\
+		Analysephase & 	Philipp, Sandro, Jessica \\
+		Topologie korrigieren & Philipp \\
+		Design Guide lesen & hilipp, Sandro, Jessica \\
 	\end{tabularx}
 	\label{tab:my-label}
 \end{table}
