@@ -6,11 +6,12 @@ Cisco bietet mit SDA eine automatisierte End-to-End-Segmentierung um den Benutze
 So können Organisationen sicherstellen, dass für jeden Benutzer oder jedes Gerät mit jeder Anwendung die richtigen Richtlinien festgelegt werden über das Netzwerk. Dies wird mit einer einzigen Netzwerkstruktur über LAN und WLAN erreicht, wodurch ein konsistente Benutzererfahrung überall ohne Kompromisse bei der Sicherheit. \\
 \\
 SDA wird aus mehreren Komponenten zusammengesetzt. Dazu gehört das DNA-Center, welches die grundsätzliche Funktion des Netzwerks sicherstellt, sowie Identity Service Engine (ISE), welches die Benutzeridentitäten und Profile verwaltet.
+\footnote{SDA Cisco Definition: https://www.cisco.com/c/en/us/solutions/enterprise-networks/software-defined-access/index.html}
 
 \subsubsection{Campus Fabric}
 Um eine konsistente Benutzererfahrung zu erreichen, braucht man eine Switching-Infrastruktur mit der sich der Zugang zu bestimmten IP-Subnetzen ortsunabhängig realisieren lässt.
 
-Cisco hat nun ein neues Overlay für diesen Zweck erfunden, die "Campus Fabric". Das Overlay ist hierbei eine Kombination aus LISP und VXLAN.
+Cisco hat nun ein neues Overlay für diesen Zweck erfunden, die "Campus Fabric". Das Overlay ist hierbei eine Kombination aus LISP und VXLAN. \footnote{Campus Fabric: https://www.cisco.com/c/dam/m/hr\_hr/training-events/2017/cisco-connect/pdf/Cisco-Campus-Fabric-Introduction.pdf}
 
 \begin{figure}[H]
 	\centering
@@ -44,7 +45,7 @@ DNA Center ist das zentrale Überwachungs-Dashboard für Netzwerke, mit dem alle
 DNA Center gibt die Möglichkeit unter einem Grafischen Nutzer Interface direkt mit APIC(Application Policy Infrastructure Controller)-EM 2.x Applikationen mit der Identity Services Engine (ISE) und mit Network Data Plattform (NDP) unserer Assurance und Analytics Plattform zu sprechen. Alle Parameter die angezeigt oder konfiguriert werden müssen kann man unter DNA Center ausführen und muss nicht zwischen den einzelnen Modulen und Oberflächen hin und her springen.
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=8cm]{img/DNAC-1.jpg}
+	\includegraphics[height=7cm]{img/DNAC-1.jpg}
 	\caption{DNA Solution}
 	\label{fig:Aufbau einer DNA Solution}
 \end{figure}
@@ -61,12 +62,19 @@ DNA Center bietet einen Mechanismus zum Erstellen einer vertrauenswürdigen Komm
 \\
 In ähnlicher Weise werden DNA-Center-Geräte, sobald sie bereitgestellt werden und zu einer bestimmten Site in der DNA Center-Standorthierarchie gehören, an ISE übergeben. Alle Aktualisierungen an einem DNA Center-Gerät (z. B. Änderungen an der IP-Adresse, SNMP- oder CLI-Anmeldeinformationen, gemeinsamer ISE-Schlüssel usw.) werden automatisch an die entsprechende Geräteinstanz auf der ISE weitergeleitet. Wenn ein DNA Center-Gerät gelöscht wird, wird es ebenfalls aus der ISE entfernt.
 
-\subsection{Locator ID Separation Protocol (LISP)}
+\subsection{Locator ID Separation Protocol (LISP)} 
 LISP ist das Produkt einer Arbeitsgruppe in der Internet Engineering Taskforce (IETF), um was wachsende Problem des doppelten Verwendungszwecks der IP-Adressen zu bereinigen. Zur Zeit wird die IP-Adresse benutzt um die Identität eines Hosts festzulegen und auch den Ort zu bestimmen, an dem er sich im Internet befindet. Dies hat zur Folge das sich bei einem Aufenthalsortwechsel auch die IP-Adresse des Hosts ändert, was bedeutet das die Identität verloren geht und die alten IP-Verbindungen verfallen. \\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=3.5cm]{img/lisp.png}
+	\caption{LISP Aufbau}
+	\label{fig:LISP Aufbau}
+\end{figure}
 
 Dies soll nun durch LISP geändert werden, in dem es die Identität eines Gerätes, auch Endpoint Identifier (EID) genannt, von seinem Aufenthaltsort, auch Routing Locator (RLOC) genannt, in zwei separate Adressräume unterteilt. Das bedeutet, dass die Router in einer LISP-Architektur nur Routing-Informationen von RLOCs speichern müssen. Um Pfadinformationen eines Hosts abzurufen, kann der Router diese beim LISP-Mapping-Server abfragen, was analog wie das DNS-Mapping funktioniert. \\
 
-LISP verwendet für SDA/Fabric eine VXLAN-Kapselung.
+LISP verwendet für SDA/Fabric eine VXLAN-Kapselung. Um die VXLAN-Kapselung für LISP zu aktivieren, muss auf dem Router der LISP Konfigurationsmodus, den Befehl für die VXLAN-Enkapsulierung verwendet werden. Dieser Befehl muss auf allen LISP-Edge-Geräten im Enterprise-Fabric konfiguriert werden: Ingress Tunnel Router (ITR), Egress Tunnel Router (ETR), Proxy Ingress Tunnel Router (PITR), Proxy Egress Tunnel Router (PETR). Wenn dieser Befehl nicht auf einem der LISP-Edge-Geräte konfiguriert wird, führt dies zu einem Verlust der Kontrolle und des Datenverkehrs.  \cite{rfc-6830}
 
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
@@ -98,10 +106,77 @@ LISP verwendet für SDA/Fabric eine VXLAN-Kapselung.
 	\label{tab:my-label}
 \end{table}
 
+\subsubsection{Campus Fabric und LISP}
+Im Einzug mit dem Campus Fabric wurden für bestehende LISP Namenskonzepte neue Begriffsdefinitionen zugewiesen:
+\begin{itemize}
+	\item "Control-Plane Node" $\approx$ "LISP Map-Server"
+	\item "Edge Node" $\approx$ "LISP Tunner Router" (xTR)
+	\item "Border Node" $\approx$ "LISP Proxy Tunnel Router" (PxTR)
+	\item "Intermediate Node" $\approx$ "Non-LISP IP Forwarder"
+\end{itemize}
+
+\paragraph{Fabric Control-Plane Node} basiert auf einem LISP Map Server / Resolver. Führt die LISP-Host-Tracking-Datenbank aus, um Overlay-Erreichbarkeitsinformationen bereitzustellen.
+\begin{itemize}
+	\item Eine einfache Host-Datenbank, die die Endpunkt-ID zu Edge-Knoten-Bindungen zusammen mit anderen Attributen verfolgt
+	\item Host-Datenbank unterstützt mehrere Endpoint-ID-Lookup-Schlüssel (IPv4 / 32, IPv6 / 128 oder MAC)
+	\item Empfängt Präfix-Registrierungen von Edge Nodes mit lokalen Endpunkten
+	\item Beheben von Suchanforderungen von Remote-Edge-Knoten, um lokale Endpunkte zu finden
+\end{itemize}
+
+\paragraph{Fabric Edge Node} basiert auf einem LISP Tunnel Router (xTR). Bietet Konnektivität für Benutzer und Geräte, die mit dem Fabric verbunden sind.
+\begin{itemize}
+	\item Verantwortlich für das Identifizieren und Authentifizieren von Endpunkten
+	\item Registrieren von Endpunkt-ID mit dem Control-Plane Node(s)
+	\item Bietet Anycast L3 Gateway für verbundene Endpunkte
+	\item Host-Datenverkehr von und zu Endpunkten, die mit dem Fabric verbunden sind, verkapseln/entkapseln
+\end{itemize}
+
+\paragraph{Fabric Border Node} basiert auf einem LISP Proxy Tunnel Router (PxTR). Der gesamte Verkehr, der das Fabric betritt oder verlässt, durchläuft diesen Knotentyp.
+\begin{itemize}
+	\item Verbindet traditionelle L3-Netzwerke und / oder verschiedene Fabric-Domänen mit der lokalen Domäne
+	\item Wo zwei Domains Endpoint Erreichbarkeit und Richtlinieninformationen austauschen
+	\item Verantwortlich für die Übersetzung von Kontexten (VRF und SGT) von einer Domäne in eine andere
+	\item Stellt einen Domänenexitpunkt für alle Edge-Knoten bereit
+\end{itemize}
+
 \subsection{Virtual Extensible LAN (VXLAN)}
-VXLAN ist ein Encapsulation-Protokoll, um ein Overlay-Netzwerk auf einer existierenden Layer 3 Infrasturktur laufen zu lassen. VXLAN wurde ursprünglich von Cisco Systems, VMware und Arista Network entwickelt und ist einer der IETF festgelegten Standards (RFC 7348). \\
+VXLAN ist ein Encapsulation-Protokoll, um ein Overlay-Netzwerk auf einer existierenden Layer 3 Infrasturktur laufen zu lassen. VXLAN wurde ursprünglich von Cisco Systems, VMware und Arista Network entwickelt und ist einer der IETF festgelegten Standards (RFC 7348). \cite{rfc-7348} \\
 \\
-Technisch gesehen erzeugt ein VXLAN logische Layer 2 Netzwerke, die dann in standardmässige Layer 3 Pakete eingepackt werden. VXLAN dient dazu um in sehr grossen Netzwerkumgebung die Probleme zu lösen, die durch beschränkte Anzahl von VLANS betroffen sind. Mit VXLAN sind insgesamt 16’777’215 (24 Bit) Layer-2-Umgebungen möglich, die ihrerseits wieder jeweils 4096 VLANs beinhalten können.
+Technisch gesehen erzeugt ein VXLAN logische Layer 2 Netzwerke, die dann in standardmässige Layer 3 Pakete eingepackt werden. VXLAN dient dazu um in sehr grossen Netzwerkumgebung die Probleme zu lösen, die durch beschränkte Anzahl von VLANS betroffen sind. Mit VXLAN sind insgesamt 16’777’215 (24 Bit) Layer-2-Umgebungen möglich, die ihrerseits wieder jeweils 4096 VLANs beinhalten können. 
+
+\subsubsection{VXLAN Encapsulation}
+Die Data Plane basiert auf VXLAN, im Gegensatz zur Control Plane, welche auf LISP basiert. Die VXLAN-Kapselung ist IP/UDP-basiert, was bedeutet, dass sie von jedem IP-basierten Netzwerk (Legacy- oder nicht-Cisco-Netzwerk) weitergeleitet werden kann und effektiv den Overlay-Aspekt des SD-Access-Fabric erzeugt. Die VXLAN-Kapselung wird (statt der LISP-Kapselung) aus zwei Hauptgründen verwendet. VXLAN umfasst den Source Layer 2 (Ethernet) -Header (LISP nicht) und bietet auch spezielle Felder für zusätzliche Informationen (wie die ID des virtuellen Netzwerks [VN] und die ID der Gruppe [Segment]). \cite{sda-whitepaper}\\
+
+Diese Technologie bietet mehrere Vorteile für SD-Access, z. B. Unterstützung für virtuelle Layer-2 und Layer-3-Topologien (Overlays) und die Möglichkeit, über jedes IP-basierte Netzwerk mit integrierter Netzwerksegmentierung (VRF/VN) und gruppenbasierter Richtlinie zu arbeiten. \\ 
+
+In SD-Access wurden einige Verbesserungen der ursprünglichen VXLAN-Spezifikationen hinzugefügt, insbesondere die Verwendung von Sicherheitsgruppen-Tags (SGTs). Dieses neue VXLAN-Format ist derzeit ein IETF-Entwurf, der als Gruppenrichtlinienoption (oder VXLAN-GPO) bekannt ist.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=4.5cm]{img/vxlan-encapsulation.jpg}
+	\caption{VXLAN Encapsulation}
+	\label{fig:VXLAN Encapsulation}
+\end{figure}
+
+Die Fabric Data-Plane bietet folgendes:
+\begin{itemize}
+	\item Underlay Adressanzeige und -zuordnung
+	\item Automatischer Tunnelaufbau (Virtuelle Tunnelendpunkte)
+	\item Frame-Kapselung zwischen Routing-Locators
+\end{itemize}
+
+Unterstützung für das LISP- oder VXLAN-Header-Format
+\begin{itemize}
+	\item Fast gleich, mit verschiedenen Feldern und Nutzlast
+	\item LISP-Header trägt IP-Payload (IP in IP)
+	\item VXLAN-Header trägt MAC-Payload (MAC in IP)
+\end{itemize}
+
+Ausgelöst durch LISP-Control-Plane-Ereignisse
+\begin{itemize}
+	\item ARP oder NDP Learning auf L3 Gateways
+	\item Map-Reply oder Cache auf Routing Locators
+\end{itemize}
 
 \subsection{Slack}
 Slack ist ein webbasierter Instant-Messaging-Dienst des US-amerikanischen Unternehmens Slack Technologies zur Kommunikation innerhalb von Arbeitsgruppen. Slack erlaubt, Nachrichten auszutauschen, mit Einzelpersonen oder in einer Gruppe zu chatten sowie gemeinsam Dokumente zu bearbeiten. Andere Online-Dienste wie Dropbox, Google Drive oder GitHub lassen sich in Slack integrieren.
