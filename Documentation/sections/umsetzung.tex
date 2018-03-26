@@ -49,80 +49,42 @@ Hauptunterschiede zwischen der klassischen Netzwerkarchitektur und der "Modernen
 		\hline
 		\multicolumn{2}{| c |}{Seite A} & \multicolumn{2}{ c |}{Seite B} \\
 		\hline
-		isr4431-1.access & port1 & WAN & - \\
+		isr4431-1.access & GE0/0/0 & WAN & -\\
 		\hline
-		isr4431-1.access & port2 & isr4431-2.access & port2 \\
+		isr4431-1.access & GE0/0/1 & isr4431-2.access & GE0/0/1 \\
 		\hline
-		isr4431-1.access & port3 & c9300-1.dist & port1 \\
+		isr4431-1.access & GE0/0/2 & c9300-1.dist & GE1/0/1 \\
 		\hline
-		isr4431-2.access & port1 & WAN & - \\
+		isr4431-2.access & GE0/0/0 & WAN & - \\
 		\hline
-		isr4431-2.access & port2 & isr4431-1.access & port2 \\
-		\hline
-		isr4431-2.access & port3 & c9300-2.dist & port1 \\
-		\hline
-		c9300-1.dist & port1 & isr4431-1.access & port3 \\
-		\hline
-		c9300-1.dist & port2 & c9300-2.dist & port2 \\
-		\hline
-		c9300-1.dist & port3 & c3850-1.core & port1 \\
-		\hline
-		c9300-1.dist & port4 & c3850-2.core & port1 \\
-		\hline
-		c9300-2.dist & port1 & isr4431-1.access & port3 \\
-		\hline
-		c9300-2.dist & port2 & c9300-1.dist & port2 \\
-		\hline
-		c9300-2.dist & port3 & c3850-1.core & port2 \\
-		\hline
-		c9300-2.dist & port4 & c3850-2.core & port2 \\
-		\hline
-		c3850-1.core & port1 & c9300-1.dist & port3 \\
-		\hline
-		c3850-1.core & port2 & c9300-2.dist & port3 \\
-		\hline
-		c3850-1.core & port3 & c3850-2.core & port3 \\
-		\hline
-		c3850-1.core & port4 & c3850-1.access & port1 \\
-		\hline
-		c3850-1.core & port5 & c9300-1.access & port1 \\
-		\hline
-		c3850-1.core & port6 & c3850-2.access & port1 \\
+		isr4431-2.access & GE0/0/1 & isr4431-1.access & GE0/0/1 \\
 		\hline		
-		c3850-1.core & port7 & c9300-2.access & port1 \\
+		c9300-1.dist & GE1/0/2 & c9300-2.dist & GE1/0/2  \\
 		\hline
-		c3850-2.core & port1 & c9300-1.dist & port4 \\
-		\hline	
-		c3850-2.core & port2 & c9300-2.dist & port4 \\
+		c9300-1.dist & GE1/0/3 & isr4431-1.core & GE0/0/0 \\
 		\hline
-		c3850-2.core & port3 & c3850-1.core & port3 \\
+		c9300-2.dist & GE1/0/3 & isr4431-2.core & GE0/0/0 \\
 		\hline
-		c3850-2.core & port4 & c3850-1.access & port2 \\
+		c9300-2.dist & GE1/0/4 & HSR Lab & - \\
 		\hline
-		c3850-2.core & port5 & c9300-1.access & port2 \\
+		isr4431-1.core & GE0/0/1 & isr4431-2.core & GE0/0/1 \\
 		\hline
-		c3850-2.core & port6 & c3850-2.access & port2 \\
-		\hline		
-		c3850-2.core & port7 & c9300-2.access & port2 \\
+		isr4431-1.core & GE0/0/2 & c3850.g1.dist & GE1/0/1 \\
 		\hline
-		c3850-1.access & port1 & c3850-1.core & port4 \\
+		isr4431-1.core & GE0/0/3 & c3850.g2.access & GE1/0/1 \\
 		\hline
-		c3850-1.access & port2 & c3850-2.core & port4 \\
+		isr4431-1.core & GE0/1/0 & c9300.g3.access & GE1/0/1 \\
 		\hline
-		c3850-1.access & port3 & c3650-1.access & port1 \\
+		isr4431-2.core & GE0/0/2 & c3850.g1.dist & GE2/0/1 \\
 		\hline
-		c3650-1.access & port1 & c3850-1.access & port3 \\
+		isr4431-2.core & GE0/0/3 & c3850.g2.access & GE1/0/2 \\
 		\hline
-		c9300-1.access & port1 & c3850-1.core & port5 \\
+		isr4431-2.core & GE0/1/0 & c9300.g3.access & GE1/0/2 \\
 		\hline
-		c9300-1.access & port2 & c3850-2.core & port5 \\
+		c3850.g1.dist & GE1/0/2 & c3850.g1.access & GE1/0/1 \\
 		\hline
-		c3850-2.access & port1 & c3850-1.core & port6 \\
+		c3850.g1.dist & GE2/0/2 & c9300.g1.access & GE1/0/1 \\
 		\hline
-		c3850-2.access & port2 & c3850-2.core & port6 \\
-		\hline
-		c9300-2.access & port1 & c3850-1.core & port7 \\
-		\hline
-		c9300-2.access & port2 & c3850-2.core & port7 \\
+		c3850.g1.access & GE1/0/3 & c3650.g1.access & GE0/1 \\
 		\hline
 \end{longtable}
