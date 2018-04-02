@@ -170,7 +170,7 @@ LISP verwendet für SDA/Fabric eine VXLAN-Kapselung. Um die VXLAN-Kapselung für
 		
 	\end{tabularx}
 	\caption{LISP Elements}
-	\label{tab:my-label}
+	\label{tab:LISP Elements}
 \end{table}
 
 \subsubsection{Campus Fabric und LISP}
@@ -212,7 +212,7 @@ VXLAN ist ein Encapsulation-Protokoll, um ein Overlay-Netzwerk auf einer existie
 Technisch gesehen erzeugt ein VXLAN logische Layer 2 Netzwerke, die dann in standardmässige Layer 3 Pakete eingepackt werden. VXLAN dient dazu um in sehr grossen Netzwerkumgebung die Probleme zu lösen, die durch beschränkte Anzahl von VLANS betroffen sind. Mit VXLAN sind insgesamt 16’777’215 (24 Bit) Layer-2-Umgebungen möglich, die ihrerseits wieder jeweils 4096 VLANs beinhalten können. 
 
 \subsubsection{VXLAN Encapsulation}
-Die Data Plane basiert auf VXLAN, im Gegensatz zur Control Plane, welche auf LISP basiert. Die VXLAN-Kapselung ist IP/UDP-basiert, was bedeutet, dass sie von jedem IP-basierten Netzwerk (Legacy- oder nicht-Cisco-Netzwerk) weitergeleitet werden kann und effektiv den Overlay-Aspekt des SD-Access-Fabric erzeugt. Die VXLAN-Kapselung wird (statt der LISP-Kapselung) aus zwei Hauptgründen verwendet. VXLAN umfasst den Source Layer 2 (Ethernet) -Header (LISP nicht) und bietet auch spezielle Felder für zusätzliche Informationen (wie die ID des virtuellen Netzwerks [VN] und die ID der Gruppe [Segment]). \cite{sda-whitepaper}\\
+Die Data Plane basiert auf VXLAN, im Gegensatz zur Control Plane, welche auf LISP basiert. Die VXLAN-Kapselung ist IP/UDP-basiert, was bedeutet, dass sie von jedem IP-basierten Netzwerk (Legacy- oder nicht-Cisco-Netzwerk) weitergeleitet werden kann und effektiv den Overlay-Aspekt des SD-Access-Fabric erzeugt. Die VXLAN-Kapselung wird (statt der LISP-Kapselung) aus zwei Hauptgründen verwendet. VXLAN umfasst den Source Layer 2 (Ethernet) -Header (LISP nicht) und bietet auch spezielle Felder für zusätzliche Informationen, wie die ID des virtuellen Netzwerks (VN) und die ID der Gruppe (Segment). \cite{sda-whitepaper}\\
 
 Diese Technologie bietet mehrere Vorteile für SD-Access, z. B. Unterstützung für virtuelle Layer-2 und Layer-3-Topologien (Overlays) und die Möglichkeit, über jedes IP-basierte Netzwerk mit integrierter Netzwerksegmentierung (VRF/VN) und gruppenbasierter Richtlinie zu arbeiten. \\ 
 
@@ -244,6 +244,20 @@ Ausgelöst durch LISP-Control-Plane-Ereignisse
 	\item ARP oder NDP Learning auf L3 Gateways
 	\item Map-Reply oder Cache auf Routing Locators
 \end{itemize}
+
+\subsubsection{Fabric Data Plane}
+RFC 7348 definiert die Verwendung von Virtual Extensible LAN (VXLAN) als eine Möglichkeit, ein Layer 2-Netzwerk über einem Layer 3-Netzwerk zu überlagern. Mit VXLAN tunneln Sie den ursprünglichen Layer 2-Frame mit UDP/IP über das Layer 3-Netzwerk. Die Tunnelschnittstelle an jedem Knoten wird VXLAN-Tunnelendpunkt (VTEP) genannt. VTEPs beruhen auf dem Lernen der Data Plane oder Control Plane, um den entfernten Endpunkt für das VTEP-Mapping für die Verkapselung des Datenverkehrs zu bestimmen. Jedes Overlay-Netzwerk wird als VXLAN-Segment bezeichnet und mithilfe einer 24-Bit-VXLAN-Netzwerk-ID identifiziert, die bis zu 16 Millionen VXLAN-Segmente unterstützt.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\linewidth]{img/RFC7348-VXLAN-Header.png}\\[1px]
+	\caption{RFC7348 VXLAN Header}
+	\label{fig:RFC7348 VXLAN Header}
+\end{figure}
+
+Das SDA Fabric verwendet die VXLAN Data Plane, um das vollständige ursprünglichen Layer-2-Frame bereitzustellen und verwendet zusätzlich LISP als Control Plane, um die Endpunkt zu VTEP Zuordnungen aufzulösen. Das SDA Fabric ersetzt 16 der reservierten Bits im VXLAN-Header, um bis zu 64'000 SGTs zu transportieren. Dabei wird ein modifiziertes VXLAN-GPO-Format verwendet.
+
+Der VNI wird einer virtuellen Routing- und Weiterleitungsinstanz für Layer-3-Overlays zugeordnet, während ein Layer-2-VNI einer VLAN-Broadcastdomäne zugeordnet wird. Beide bieten den Mechanismus zur Isolierung von Daten und Steuerungsebene für jedes einzelne virtuelle Netzwerk. Die SGT trägt Gruppenmitgliedschaftsinformationen von Benutzern und stellt eine Datenebenensegmentierung innerhalb des virtualisierten Netzwerks bereit. \cite{sda-designguide}
 
 \subsection{Slack}
 Slack ist ein webbasierter Instant-Messaging-Dienst des US-amerikanischen Unternehmens Slack Technologies zur Kommunikation innerhalb von Arbeitsgruppen. Slack erlaubt, Nachrichten auszutauschen, mit Einzelpersonen oder in einer Gruppe zu chatten sowie gemeinsam Dokumente zu bearbeiten. Andere Online-Dienste wie Dropbox, Google Drive oder GitHub lassen sich in Slack integrieren.
