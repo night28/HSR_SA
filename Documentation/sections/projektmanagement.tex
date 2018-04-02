@@ -33,7 +33,7 @@ Die zeitliche Planung erfolgte in Gant und die Verwaltung der Arbeitspakete auf 
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=5cm]{img/ZeitlichePlanung.png}
+	\includegraphics[height=5cm]{img/ZeitlichePlanung_v2.png}
 	\caption{Projektplanung}
 	\label{fig:Projektplanung}
 \end{figure} 
@@ -106,7 +106,7 @@ Sollten sich während dem Projekt neue potenzielle Risiken zeigen, wird dieses D
 	\hline
 	\rot{Nummer} & \rot{Titel} & \rot{Beschreibung} & \rot{\shortstack[l]{maximaler\\Schaden [h]}} & \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit}} & \rot{\shortstack[l]{Gewichteter\\Schaden [h]}} & \rot{Vorbeugung} & \rot{\shortstack[l]{Verhalten beim\\Eintreten}} \\
 	\hline\hline
-	1 & Ausfall eines Teammiglieds & Ausfall auf Grund unvorhergesehener Erreignisse wie Krankheit, Unfall etc. & 40 & 15\% & 6 & Reserven einplanen, Kommunikation sicherstellen, sodass der Rest Aufgaben übernehmen kann & Tasks des ausgefallen Mitglieds möglichst auf den Rest des Teams aufteilen. \\ 
+	1 & Ausfall eines Teammitglieds & Ausfall auf Grund unvorhergesehener Ereignisse wie Krankheit, Unfall etc. & 40 & 15\% & 6 & Reserven einplanen, Kommunikation sicherstellen, sodass der Rest Aufgaben übernehmen kann & Tasks des ausgefallen Mitglieds möglichst auf den Rest des Teams aufteilen. \\ 
 	\hline
 	2 & Hardwareausfall DNA-Center & DNA-Center Appliance fällt durch Hardwaredefekt aus & 30 & 5\% & 1.5 & keine Verbeugenden Massnahmen möglich & Austausch im Rahmen der Garantie veranlassen \\
 	\hline
@@ -130,5 +130,67 @@ Sollten sich während dem Projekt neue potenzielle Risiken zeigen, wird dieses D
 
 \includepdf{pdfincludes/risikograph}
 
+\subsubsection{Eingetretene Risiken}
+Nachfolgend werden die eingetretenen Risiken genauer erläutert.
+\paragraph{Lieferverzögerung Hardware}
+Leider wurde die Hardware nicht wie geplant geliefert. Deshalb wurde die Projektplanung an die neuen Gegebenheiten angepasst. \\
+Nachfolgend die alte Projektplanung:
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/ZeitlichePlanung_v1.png}
+	\caption{alte Projektplanung}
+	\label{fig:alte Projektplanung}
+\end{figure} 
 
+Folgende Meilensteine waren für das Projekt definiert:
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{p{1cm}| p{2.5cm}| X}
+		\rowcolor{gray!50}
+		\textbf{Nr} & \textbf{Datum} & \textbf{Meilenstein} \\
+		\hline	
+		M0 & 27.02.2018 & Kickoff Meeting \\
+		M1 & 20.03.2018 & Projektplanung abgeschlossen \\
+		M2 & 03.04.2018 & Inbetriebnahme Hardware abgeschlossen \\
+		M3 & 17.04.2018 & Definierung von Benutzer- und Geräteprofilen \\
+		M4 & 01.05.2018 & Integration von bestehenden IPAM in DNA Center \\
+		M5 & 15.05.2018 & Reporting \& Monitoring \\
+		M6 & 28.05.2018 & Freigabe des Abstracts \\
+		M7 & 01.06.2018 & Abgabe Projekt \\
+	\end{tabularx}
+	\caption{alte Meilensteine}
+	\label{tab:alte Meilensteine}
+\end{table}
+
+Die neue Projektplanung sieht nun folgendermassen aus:
+Nachfolgend die alte Projektplanung:
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/ZeitlichePlanung_v2.png}
+	\caption{neue Projektplanung}
+	\label{fig:neue Projektplanung}
+\end{figure} 
+
+
+Folgende Meilensteine waren für das Projekt definiert:
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{p{1cm}| p{2.5cm}| X}
+		\rowcolor{gray!50}
+		\textbf{Nr} & \textbf{Datum} & \textbf{Meilenstein} \\
+		\hline	
+		M0 & 27.02.2018 & Kickoff Meeting \\
+		M1 & 03.04.2018 & Projektplanung abgeschlossen \\
+		M2 & 17.04.2018 & Inbetriebnahme Hardware abgeschlossen \\
+		M3 & 24.04.2018 & Definierung von Benutzer- und Geräteprofilen \\
+		M4 & 08.05.2018 & Integration von bestehenden IPAM in DNA Center \\
+		M5 & 22.05.2018 & Reporting \& Monitoring \\
+		M6 & 28.05.2018 & Freigabe des Abstracts \\
+		M7 & 01.06.2018 & Abgabe Projekt \\
+	\end{tabularx}
+	\caption{neue Meilensteine}
+	\label{tab:neue Meilensteine}
+\end{table}
 
