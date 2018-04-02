@@ -262,5 +262,35 @@ Der VNI wird einer virtuellen Routing- und Weiterleitungsinstanz für Layer-3-Ov
 \subsection{Slack}
 Slack ist ein webbasierter Instant-Messaging-Dienst des US-amerikanischen Unternehmens Slack Technologies zur Kommunikation innerhalb von Arbeitsgruppen. Slack erlaubt, Nachrichten auszutauschen, mit Einzelpersonen oder in einer Gruppe zu chatten sowie gemeinsam Dokumente zu bearbeiten. Andere Online-Dienste wie Dropbox, Google Drive oder GitHub lassen sich in Slack integrieren.
 
+\subsection{SDA Mechanismus Beispiel}
+
+Ausgangslage:
+
+Wenn ein IP Paket über SD-A von PC1 172.16.1.1/24 nach PC2 10.0.2.34/24 geschickt ist, was passiert mit dem Paket?
+
+\begin{itemize}
+	\item 172.16.1.1 will 10.0.2.34 erreichen
+	\item da Destination nicht im gleichen Netz ist, an GW des Client
+	\item ARP Lookup für Default GW
+	\item Antwort von Edge Node (GW ist anycast Adresse und wird von jedem Edge Node beantwortet)
+	\item Paket an GW (src mac: PC1, dst mac: gw)
+	\item GW erhält Paket
+	\item Falls Destination nicht im lokalen LISP Map Cache ist:
+	\item    1. Control Plane Node anfragen (Map Resolver)
+	\item    2. Control Plane antwortet mit Edge Node (RLOC IP) für die Destination
+	\item    3. Destination in lokalen LISP Map Cache eintragen
+	\item Encapsulation in VXLAN
+	\item Senden an RLOC IP (Destination Edge Node)
+	\item Routing via Intermediate Nodes
+	\item Destination Edge Node erhält Paket
+	\item VXLAN Decapsulation
+	\item Forwarding to 10.0.2.34
+	
+\end{itemize}
+
+\subsubsection{Sonderfälle:}
+\begin{itemize}
+	\item  Wäre die Destination nicht in der HTDP des Map Resolver gewesen, hätte der Edge Node das Paket an den Border Node gesendet (Gateway for external Networks)
+\end{itemize}
 
 
