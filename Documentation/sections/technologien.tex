@@ -8,9 +8,7 @@ So können Organisationen sicherstellen, dass für jeden Benutzer oder jedes Ger
 SDA wird aus mehreren Komponenten zusammengesetzt. Dazu gehört das DNA-Center, welches die grundsätzliche Funktion des Netzwerks sicherstellt, sowie Identity Service Engine (ISE), welches die Benutzeridentitäten und Profile verwaltet. \cite{sda-definition}
 
 \subsubsection{Campus Fabric}
-Um eine konsistente Benutzererfahrung zu erreichen, braucht man eine Switching-Infrastruktur mit der sich der Zugang zu bestimmten IP-Subnetzen ortsunabhängig realisieren lässt.
-
-Cisco hat nun ein neues Overlay für diesen Zweck erfunden, die "Campus Fabric". Das Overlay ist hierbei eine Kombination aus LISP und VXLAN. \cite{campusfabric-introduction}
+Um eine konsistente Benutzererfahrung zu erreichen, braucht man eine Switching-Infrastruktur mit der sich der Zugang zu bestimmten IP-Subnetzen ortsunabhängig realisieren lässt. \cite{campusfabric-introduction} \\
 
 \begin{figure}[H]
 	\centering
@@ -19,9 +17,25 @@ Cisco hat nun ein neues Overlay für diesen Zweck erfunden, die "Campus Fabric".
 	\label{fig:Campus Fabric}
 \end{figure}
 
-Die Fabric bildet ein Overlay Netz. Das Overlay Netz bildet eine virtuelle Topologie um Geräte miteinander zu verbinden, welches auf einer beliebigen physischen Underlay Topologie aufgebaut ist. Das Overlay Netzwerk verwendet oft alternative Weiterleitungsattribute, um zusätzliche Dienste bereitzustellen, die nicht vom Underlay Netzwerk bereitgestellt werden.
+Die SDA Architektur wird durch die für den Campus implementierte Fabric Technologie unterstützt, welche die Verwendung virtueller Netzwerke (Overlay Network) in einem physischen Netzwerk (Underlay Network) ermöglicht, um alternative Topologien für die Verbindung von Geräten zu erstellen. Overlay Netzwerke werden in Data Center häufig verwendet, um die Mobilität von virtuellen Maschinen über Layer 2 und Layer 3 bereitzustellen (Beispiele: ACI, VXLAN und Fabric Path). Overlay-Netzwerke werden auch in Wide-Area-Netzwerken verwendet, um sicheres Tunneling von Remote-Standorten aus zu ermöglichen (Beispiele: MPLS, DMVPN und GRE). \cite{sda-designguide}
 
-In der nachfolgenden Abbildung ist der Aufbau eines Campus Fabric etwas detaillierter aufgezeigt.
+\paragraph{Overlay Network}
+Die Fabric bildet ein Overlay Netz. Das Overlay Netz bildet eine virtuelle Topologie um Geräte miteinander zu verbinden, welches auf einer beliebigen physischen Underlay Topologie aufgebaut ist. Das Overlay Netzwerk verwendet oft alternative Weiterleitungsattribute, um zusätzliche Dienste bereitzustellen, die nicht vom Underlay Netzwerk bereitgestellt werden. 
+Die Datenebenenverkehrs- und Steuerungsebenen-Signalisierung ist in jedem virtualisierten Netzwerk enthalten, wobei zusätzlich zu der Isolation von dem Underlay Netzwerk eine Isolation zwischen den Netzwerken aufrechterhalten wird. Der SDA Fabric implementiert die Virtualisierung, indem er den Benutzerdatenverkehr über IP-Pakete einkapselt, die an den Grenzen des Fabrics bereitgestellt und abgeschlossen werden.
+Overlay Netzwerke können über alle oder eine Teilmenge der Underlay Netzwerkgeräte hinweg ausgeführt werden. Mehrere Overlay Netzwerke können aber auch über das gleiche Underlay Netzwerk laufen, um Multi-Tenancy durch Virtualisierung zu unterstützen. Die Netzwerkvirtualisierung, welche sich ausserhalb der Fabric erstreckt, wird mithilfe herkömmlicher Virtualisierungstechnologien wie VRF-Lite und MPLS VPN beibehalten.
+Die IPv4 Multicast wird gekapselt und an interessierte Fabric-Edge-Switches gesendet, welche den Multicast wiederrum entkapseln und an die Empfänger weiterleiten. Ist der Empfänger ein drahtloser Client, so wird der Multicast (genau wie ein Unicast) durch den Fabric-Edge in Richtung des AP mit dem Multicast-Empfänger gekapselt. Die Multicast-Quelle kann entweder innerhalb oder ausserhalb eines Overlay vorhanden sein. \cite{sda-designguide}
+
+\paragraph{Underlay Network}
+Das Underlay Netzwerk wird durch die physischen Switches und Router definiert, die Teil des SDA Netzwerks sind. Jegliche Geräte die dem Underlay Netzwerk angehören, müssen über ein Routing Protokoll eine IP Konnektivität herstellen. Obwohl auf dem Underlay beliebige Topologie- und Routing-Protokolle verwendet werden können, wird von Cisco die Implementierung einer gut überlegten Layer 3 Grundlage bis zur Campus Edge empfohlen, um die hohe Leistung, sowie Skalierbarkeit und Verfügbarkeit des Netzwerkes zu gewährleisten. 
+Um dieses Ziel für Underlay Deployments zu erreichen, welche nicht manuell erstellt werden, werden bei der DNA Center LAN-Automatisierung neue Netzwerke mit einem IS-IS-Routing Access Design bereitgestellt. Obwohl es viele Alternativen gibt, bietet diese Auswahl betriebliche Vorteile wie zum Beispiel dem Nachbarschaftsaufbau ohne IP-Protokollabhängigkeiten, Peering-Fähigkeit unter Verwendung von Loopback-Adressen und agnostische Behandlung von IPv4-, IPv6- und Nicht-IP-Verkehr. \cite{sda-designguide}
+
+\paragraph{Fabric Data Plane and Control Plane}
+SDA konfiguriert das Overlay Netzwerk mit einer Fabric Datenebene mithilfe der VXLAN Technologie. VXLAN kapselt und durchtunnelt komplette Layer 2-Frames über das Underlay Netzwerk, wobei jedes Overlay-Netzwerk durch eine VXLAN-Netzwerk-ID (VNI) identifiziert wird. Der VXLAN-Header enthält auch die SGTs, die für die Mikrosegmentierung erforderlich sind.
+
+Das Mapping und Auflösen von Endpunkten, die VXLAN-Tunnelendpunkten (VTEPs) zugeordnet sind, erfordert ein Steuerungsebenenprotokoll, und SD-Access verwendet das Locator / ID Separation Protocol (LISP) für diese Aufgabe. LISP bietet den Vorteil, dass das Routing nicht nur auf der IP-Adresse als Endpunktkennung (EID) für ein Gerät basiert, sondern auch eine zusätzliche IP-Adresse als Routing Locator (RLOC) zur Verfügung stellt, um den Netzwerkstandort dieses Geräts darzustellen. Die EID- und RLOC-Kombination bietet alle erforderlichen Informationen für die Weiterleitung von Datenverkehr, selbst wenn ein Endpunkt eine unveränderte IP-Adresse verwendet, wenn er an einem anderen Netzwerkstandort angezeigt wird. Gleichzeitig ermöglicht die Entkopplung der Endpunktidentität von ihrem Standort, dass Adressen in demselben IP-Teilnetzwerk hinter mehreren Layer-3-Gateways verfügbar sind, gegenüber der Eins-zu-eins-Kopplung von IP-Teilnetzwerk mit Netzwerk-Gateway in herkömmlichen Netzwerken Beispiel für zwei Subnetze, die Teil des Overlay-Netzwerks sind. Die Subnetze erstrecken sich über physisch getrennte Layer 3-Geräte. Die RLOC-Schnittstelle ist die einzige routbare Adresse, die zum Herstellen der Verbindung zwischen Endpunkten desselben oder eines anderen Subnetzes erforderlich ist. Weitere detailliertere Informationen zu LISP und VXLAN folgen in den nächsten Kapiteln. \cite{sda-designguide} \\
+
+
+In der nachfolgenden Abbildung ist der Aufbau eines Campus Fabric mit allen Komponenten etwas detaillierter aufgezeigt.
 
 \begin{figure}[H]
 	\centering
@@ -39,27 +53,81 @@ Dieses Campus Fabric besteht aus folgenden Elementen:
 	\item Intermediate Nodes: Normale L3 (IP) Forwarder im Underlay Netzwerk
 \end{itemize}
 
+\paragraph{Control-Plane Nodes}
+Der SDA Fabric Control Plane basiert auf der LISP Map Server (MS) und LISP Map Resolver (MR), welche auf demselben Node kombiniert sind. Die Funktion des Control Planes wird am Border Node oder Dedicated Node instanziiert. Der Control Plane Node ermöglicht folgende Funktionen: \cite{sda-designguide}
+\begin{itemize}	
+	\item Host Tracking Database: Die Host Tracking Database (HTDB) ist ein zentrales Repository von EID zu Fabric Edge Nodes Verbindungen.
+	\item Map Server: Der LISP-MS wird verwendet, um die HTDB mit Registrierungsnachrichten von Fabric-Edge-Geräten zu füllen.
+	\item Map Resolver: Der LISP MR wird verwendet, um auf Map Abfragen von Fabric-Edge-Geräten zu reagieren, die RLOC-Mapping-Informationen für Ziel-EIDs anfordern.
+\end{itemize}
+
+\paragraph{Fabric Border Nodes}
+Die Fabric Border Nodes dienen als Gateway zwischen der SDA Fabric Domäne und dem Netzwerk ausserhalb der Fabric. Der Fabric Border Node ist für die Netzwerkvirtualisierung und die SGT Propagierung vom Fabric zum Rest des Netzwerks verantwortlich. Die Fabric Border Nodes können entweder als Gateway für bestimmte Netzwerkadressen, z.B. ein Netzwerk für gemeinsam genutzte Dienste, oder in einer Standard-Border-Rolle, die für das Internet oder einen gemeinsamen Austrittspunkt aus einer Fabric nützlich ist. Border Nodes implementieren die folgenden Funktionen: \cite{sda-designguide}
+\begin{itemize}	
+	\item Advertisement von EID Subnetzen: SDA konfiguriert das Border Gateway Protocol (BGP) als bevorzugtes Routing-Protokoll zum Anbieten der EID-Präfixe ausserhalb der Fabric und der für EID-Subnetze von ausserhalb der Fabric bestimmte Verkehr durchläuft die Border Nodes. Diese EID-Präfixe werden nur in den Routingtabellen am Border angezeigt. Im gesamten Fabric werden die EID-Informationen über den Fabric Control Plane abgerufen.
+	\item Fabric Domain Exit Point: Der Standard Fabric Border ist der Gateway für den letzten Exit Point für die Fabric Edge Nodes. Dies wird mithilfe der LISP Proxy Tunnel Funktionalität implementiert.
+	\item Mapping von LISP Instanzen zu VRF: Der Fabric Border kann die Netzwerkvirtualisierung von innerhalb des Fabrics nach ausserhalb des Fabrics erweitern, indem externe VRF Instanzen verwendet werden, um die Virtualisierung beizubehalten.
+	\item Policy Mapping: Der Fabric Border Node bildet auch SGT-Informationen aus dem Fabric ab, die beim Verlassen des Fabric entsprechend gepflegt werden. Tags aus dem VXLAN-Header werden Cisco Meta Data (CMD) zugeordnet, wenn Inline-Tagging-Funktionen verwendet werden, oder alternativ werden die Tags über das SGT-Austauschprotokoll (SXP) transportiert, sodass eine nahtlose Integration in die Cisco TrustSec-Lösung möglich ist.
+\end{itemize}
+
+
+\paragraph{Fabric Edge Nodes}
+Die SDA Fabric Edge Nodes entsprechen einem Access-Layer Switch in einem herkömmlichen Campus-Design. die Edge Nodes implementieren ein Layer 3 Access Design mit den folgenden Fabric Funtkionen: \cite{sda-designguide}
+\begin{itemize}	
+	\item Endpunktregistrierung: Nachdem ein Endpunkt von der Fabric Edge erkannt wurde, wird er einem lokalen Host-Tracking Datenbank (EID Tabelle) hinzugefügt. Das Edge Gerät gibt auch eine LISP Map Register Nachricht aus, um den Control Plane Node über den erkannten Endpunkt zu informieren, damit dieser die Informationen in die HTDB einfügen kann.
+	\item Zuordnung von Benutzer zu virtuellem Netzwerk: Endpunkte werden in virtuellen Netzwerken platziert, indem der Endpunkt einem VLAN zugewiesen wird, das einer LISP-Instanz zugeordnet ist. Die Zuordnung von Endpunkten zu VLANs kann statisch oder dynamisch mit 802.1X erfolgen. Eine SGT wird ebenfalls zugewiesen, und eine SGT kann verwendet werden, um Segmentierung und Richtliniendurchsetzung an der Fabric Edge bereitzustellen.
+	\item Anycast Layer 3 Gateway: Ein gemeinsamer Gateway (IP- und MAC-Adressen) kann an jedem Knoten verwendet werden, der sich ein gemeinsames EID-Subnetz teilt, um eine optimale Weiterleitung und Mobilität zwischen verschiedenen RLOCs zu gewährleisten.
+	\item LISP Forwarding und VXLAN Encapsulation/De-Encapsulation: Anstelle einer typischen routingbasierten Entscheidung fragen die Fabric Edge Nodes den Map Server an, um den der Ziel-IP zugeordneten RLOC zu ermitteln und den Verkehr mit VXLAN-Headern zu kapseln. Schlägt die Abfrage fehl, so wird der Traffic an einen Default Fabric Border gesendet, auf dem die globale Routing-Tabelle für das Weiterleiten verwendet wird. Die von Map Server empfangene Antwort wird im LISP Map Cache gespeichert. 
+\end{itemize} 
+
+\paragraph{Fabric Intermediate Nodes (Underlay)}
+Die Fabric Intermediate Nodes sind Teil des Layer 3 Netzwerk, das für Verbindungen zwischen den Edge Nodes zu den Border Nodes verwendet wird. Im Falle das ein 3 Tier Campus Design mit einem Core, Distribution und Access Layer verwendet wird, sind die  Intermediate Nodes äquivalent zu Distribution Switches. Intermediate Nodes routen nur den IP-Verkehr innerhalb der Fabric. \cite{sda-designguide}
+
+
+
+
+
 \subsection{Cisco Digital Network Architecture Center (Cisco DNA-Center)}
+Im Zentrum der Automatisierung der SDA Lösung steht das Cisco DNA Center. DNA Center ist ein Controller für die Planung und Vorbereitung, Installation und Integration. SDA ist eines der vielen Softwarepakete, die auf dem DNA Center laufen und ist die Grundlage des Cisco DNA. Es ermöglicht den Netzwerkzugriff in Minuten für jeden Benutzer oder jedes Gerät für jede Anwendung, ohne Kompromisse. Bei SDA folgen die festgelegten Richtlinien automatisch dem Benutzer über alle Netzwerkdomänen hinweg.
 DNA Center ist das zentrale Überwachungs-Dashboard für Netzwerke, mit dem alle Cisco DNA-Produkte und -Lösungen verwaltet werden können.
-DNA Center gibt die Möglichkeit unter einem Grafischen Nutzer Interface direkt mit APIC(Application Policy Infrastructure Controller)-EM 2.x Applikationen mit der Identity Services Engine (ISE) und mit Network Data Plattform (NDP) unserer Assurance und Analytics Plattform zu sprechen. Alle Parameter die angezeigt oder konfiguriert werden müssen kann man unter DNA Center ausführen und muss nicht zwischen den einzelnen Modulen und Oberflächen hin und her springen.
+
+DNA Center gibt die Möglichkeit unter einem Grafischen Nutzer Interface direkt mit APIC(Application Policy Infrastructure Controller)-EM 2.x Applikationen mit der Identity Services Engine (ISE) und mit Network Data Plattform (NDP) unserer Assurance und Analytics Plattform zu sprechen. Alle Parameter die angezeigt oder konfiguriert werden müssen, kann man unter DNA Center ausführen und muss nicht zwischen den einzelnen Modulen und Oberflächen hin und her springen.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=7cm]{img/DNAC-1.jpg}
 	\caption{DNA Solution}
 	\label{fig:Aufbau einer DNA Solution}
 \end{figure}
-APIC-EM 2.x automatisiert dann die notwendigen Konfigurationen und spricht mit dem Netzwerk. Auch die Integration von IP Address Management Lösungen wie zB Infoblox werden nur über die DNA Center Oberfläche konfiguriert. \\
+APIC-EM 2.x automatisiert dann die notwendigen Konfigurationen und spricht mit dem Netzwerk. Auch die Integration von IP Address Management Lösungen wie z.B. Infoblox werden nur über die DNA Center Oberfläche konfiguriert. \\
 \\
-SD-Access ist die Grundlage von Cisco DNA. Es ermöglicht Netzwerkzugriff in Minuten für jeden Benutzer oder jedes Gerät für jede Anwendung, ohne Kompromisse. Bei SD-Access folgen die festgelegten Richtlinien automatisch dem Benutzer über alle Netzwerkdomänen hinweg.
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=10cm]{img/DNA-Dashboard.png}
+	\caption{DNA Dashboard}
+	\label{fig:DNA Dashboard}
+\end{figure}
+
+Das DNA Center verwaltet zentral folgende vier Hauptbereiche: \cite{sda-designguide}
+\paragraph{Design}
+Konfiguriert globale Geräteeinstellungen, Netzwerkstandortprofile für die physische Geräteinventur, DNS, DHCP, IP-Adressierung, Software-Image-Verwaltung, Plug-and-Play und Benutzerzugriff.
+\paragraph{Policy}
+Definiert die Geschäftsabsicht für die Bereitstellung im Netzwerk, einschließlich der Erstellung virtueller Netzwerke, der Zuweisung von Endpunkten zu virtuellen Netzwerken und der Definition von Richtlinienverträgen für Gruppen.
+\paragraph{Provision}
+Stellt Geräte für das Management bereit und erstellt Fabric-Domänen, Control Plane Nodes, Border Nodes, Edge Nodes, Fabric-Wireless und externe Konnektivität.
+
+\paragraph{Assurance}
+Aktiviert das Health-Score-Dashboard, Client/Gerät-360 Grad-Ansichten, Knoten-, Client- und Pfad-Traces. DNA Center unterstützt die Integration mithilfe von APIs. Zum Beispiel ist die Integration von IP-Adressen von Infoblox und die Integration von Policy Enforcement mit ISE über DNA Center verfügbar. Ein umfassendes Set von Northbound-REST-APIs ermöglicht Automatisierung, Integration und Innovation.
+
+
 
 \subsection{Identity Service Engine (ISE)}
-Mit der Cisco ISE können Benutzer und Geräte, die mit dem Unternehmensnetzwerk verbunden sind, angezeigt und gesteuert werden. Das alles von einer zentralen Stelle aus. ISE ermöglicht es einem Netzwerkadministrator, Zugriffsrichtlinien für kabelgebundene und drahtlose Endpunkte basierend auf Informationen zentral zu steuern, die über RADIUS-Nachrichten gesammelt werden, die zwischen dem Gerät und dem ISE-Knoten übertragen werden. Dies wird auch als Profiling bezeichnet. Die Profiling-Datenbank wird regelmäßig aktualisiert, um mit den neuesten und besten Geräten Schritt zu halten, so dass keine Lücken in der Gerätesichtbarkeit bestehen. \\
+Cisco ISE ist ein wesentlicher Bestandteil von SDA für die Richtlinienimplementierung. Mit der Cisco ISE können Benutzer und Geräte, die mit dem Unternehmensnetzwerk verbunden sind, angezeigt und gesteuert werden. Das alles von einer zentralen Stelle aus. ISE ermöglicht es einem Netzwerkadministrator, Zugriffsrichtlinien für kabelgebundene und drahtlose Endpunkte basierend auf Informationen zentral zu steuern, die über RADIUS-Nachrichten gesammelt werden, die zwischen dem Gerät und dem ISE-Knoten übertragen werden. Dies wird auch als Profiling bezeichnet. Die Profiling-Datenbank wird regelmäßig aktualisiert, um mit den neuesten und besten Geräten Schritt zu halten, so dass keine Lücken in der Gerätesichtbarkeit bestehen. \\
 \\
 Im Wesentlichen hängt ISE eine Identität an ein Gerät an, basierend auf Benutzer-, Funktions- oder anderen Attributen, um Richtliniendurchsetzung und Sicherheitskonformität bereitzustellen, bevor das Gerät autorisiert wird, auf das Netzwerk zuzugreifen. Basierend auf den Ergebnissen einer Vielzahl von Variablen kann ein Endpunkt mit bestimmten Zugriffsregeln auf das Netzwerk zugelassen werden, die auf die Schnittstelle angewendet werden, mit der er verbunden ist. Andernfalls kann er vollständig verweigert oder basierend auf den spezifischen Unternehmensrichtlinien gewährt werden. \\
 \\
-DNA Center bietet einen Mechanismus zum Erstellen einer vertrauenswürdigen Kommunikationsverbindung mit Cisco Identity Services Engine (ISE) und ermöglicht den beiden Anwendungen, Daten auf sichere Weise miteinander zu teilen. Sobald die ISE beim DNA Center registriert ist, wird jedes Gerät, das ISE entdeckt, zusammen mit der entsprechenden Konfiguration und anderen Daten an das DNA Center weitergeleitet. Benutzer können beide Anwendungen verwenden, um Geräte zu erkennen und dann sowohl DNA Center- als auch ISE-Funktionen auf sie anzuwenden, da diese Geräte in beiden Anwendungen verfügbar sind. DNA Center- und ISE-Geräte werden alle durch ihre Gerätenamen eindeutig identifiziert. \\
+DNA Center bietet einen Mechanismus zum Erstellen einer vertrauenswürdigen Kommunikationsverbindung mit Cisco ISE und ermöglicht den beiden Anwendungen, Daten auf sichere Weise miteinander zu teilen. ISE integriert sich in DNA Center mit Hilfe von Cisco Platform Exchange Grid (pxGrid) und REST APIs zum Austausch von Client-Informationen und zur Automatisierung von Fabric-bezogenen Konfigurationen auf ISE. Sobald die ISE beim DNA Center registriert ist, wird jedes Gerät, das ISE entdeckt, zusammen mit der entsprechenden Konfiguration und anderen Daten an das DNA Center weitergeleitet. Benutzer können beide Anwendungen verwenden, um Geräte zu erkennen und dann sowohl DNA Center- als auch ISE-Funktionen auf sie anzuwenden, da diese Geräte in beiden Anwendungen verfügbar sind. DNA Center- und ISE-Geräte werden alle durch ihre Gerätenamen eindeutig identifiziert. \\
 \\
-In ähnlicher Weise werden DNA-Center-Geräte, sobald sie bereitgestellt werden und zu einer bestimmten Site in der DNA Center-Standorthierarchie gehören, an ISE übergeben. Alle Aktualisierungen an einem DNA Center-Gerät (z. B. Änderungen an der IP-Adresse, SNMP- oder CLI-Anmeldeinformationen, gemeinsamer ISE-Schlüssel usw.) werden automatisch an die entsprechende Geräteinstanz auf der ISE weitergeleitet. Wenn ein DNA Center-Gerät gelöscht wird, wird es ebenfalls aus der ISE entfernt.
+In ähnlicher Weise werden DNA-Center-Geräte sobald sie bereitgestellt werden und zu einer bestimmten Seite in der DNA Center-Standorthierarchie gehören, an ISE übergeben. Alle Aktualisierungen an einem DNA Center-Gerät (z. B. Änderungen an der IP-Adresse, SNMP- oder CLI-Anmeldeinformationen, gemeinsamer ISE-Schlüssel usw.) werden automatisch an die entsprechende Geräteinstanz auf der ISE weitergeleitet. Wenn ein DNA Center-Gerät gelöscht wird, wird es ebenfalls aus der ISE entfernt.
 
 \subsection{Locator ID Separation Protocol (LISP)} 
 LISP ist das Produkt einer Arbeitsgruppe in der Internet Engineering Taskforce (IETF), um was wachsende Problem des doppelten Verwendungszwecks der IP-Adressen zu bereinigen. Zur Zeit wird die IP-Adresse benutzt um die Identität eines Hosts festzulegen und auch den Ort zu bestimmen, an dem er sich im Internet befindet. Dies hat zur Folge das sich bei einem Aufenthalsortwechsel auch die IP-Adresse des Hosts ändert, was bedeutet das die Identität verloren geht und die alten IP-Verbindungen verfallen. \\
