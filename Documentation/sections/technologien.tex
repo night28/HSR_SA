@@ -303,13 +303,11 @@ Wenn ein IP Paket über SD-A von PC1 172.16.1.1/24 nach PC2 10.0.2.34/24 geschic
 		\end{itemize} 
 	\end{itemize}
 	\item VXLAN Encapsulation (SGT 5, VNI1234)
-	\item UDP Encapsulation
-	\item Outer IP Encapsulation(Underlay Network)
+	\item UDP und Outer IP Header hinzufügen (Underlay Network)
 	\item Senden an RLOC IP (Destination Edge Node)
 	\item Paket durch Intermediate Nodes routen
 	\item Edge Node 2 erhält Paket
-	\item Outer IP Decapsulation
-	\item UDP Decapsulation
+	\item Outer IP und UDP Header entfernen (Underlay Network)
 	\item Policy für SGT 5 beim Map Resolver anfragen
 	\item Policy auf Paket anwenden:
 	\begin{itemize}
