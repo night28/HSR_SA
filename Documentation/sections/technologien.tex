@@ -83,8 +83,14 @@ Die SDA Fabric Edge Nodes entsprechen einem Access-Layer Switch in einem herköm
 \paragraph{Fabric Intermediate Nodes (Underlay)}
 Die Fabric Intermediate Nodes sind Teil des Layer 3 Netzwerk, das für Verbindungen zwischen den Edge Nodes zu den Border Nodes verwendet wird. Im Falle das ein 3 Tier Campus Design mit einem Core, Distribution und Access Layer verwendet wird, sind die  Intermediate Nodes äquivalent zu Distribution Switches. Intermediate Nodes routen nur den IP-Verkehr innerhalb der Fabric. \cite{sda-designguide}
 
-
-
+\subsubsection{Architektur}
+Cisco SDA kann grob in fünf Layer aufgeteilt werden.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{img/cisco-sda-architecture.png}\\[1px]
+	\caption{SDA Architektur}
+	\label{fig:SDA Architektur}
+\end{figure}
 
 
 \subsection{Cisco Digital Network Architecture Center (Cisco DNA-Center)}
@@ -98,8 +104,17 @@ DNA Center gibt die Möglichkeit unter einem Grafischen Nutzer Interface direkt 
 	\caption{DNA Solution}
 	\label{fig:Aufbau einer DNA Solution}
 \end{figure}
-APIC-EM 2.x automatisiert dann die notwendigen Konfigurationen und spricht mit dem Netzwerk. Auch die Integration von IP Address Management Lösungen wie z.B. Infoblox werden nur über die DNA Center Oberfläche konfiguriert. \\
-\\
+APIC-EM 2.x automatisiert dann die notwendigen Konfigurationen und spricht mit dem Netzwerk. Auch die Integration von IP Address Management Lösungen wie z.B. Infoblox werden nur über die DNA Center Oberfläche konfiguriert. Dies geschieht über verschiedene API-basierte Datenaustauschmechanismen sowie einen automatisierten Zertifikataustausch für Partnersysteme (zum Beispiel Cisco ISE). \cite{sda-whitepaper} \\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{img/ControllerLayer.png}\\[1px]
+	\caption{SDA Architektur} 
+	\label{fig:SDA Architektur}
+\end{figure}
+
+Das DNA Center verwaltet zentral folgende vier Hauptbereiche: \cite{sda-designguide}
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=10cm]{img/DNA-Dashboard.png}
@@ -107,7 +122,7 @@ APIC-EM 2.x automatisiert dann die notwendigen Konfigurationen und spricht mit d
 	\label{fig:DNA Dashboard}
 \end{figure}
 
-Das DNA Center verwaltet zentral folgende vier Hauptbereiche: \cite{sda-designguide}
+
 \paragraph{Design}
 Konfiguriert globale Geräteeinstellungen, Netzwerkstandortprofile für die physische Geräteinventur, DNS, DHCP, IP-Adressierung, Software-Image-Verwaltung, Plug-and-Play und Benutzerzugriff.
 \paragraph{Policy}
