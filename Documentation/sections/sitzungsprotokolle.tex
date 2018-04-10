@@ -403,6 +403,12 @@ keine
 	\end{itemize}
 	\item IPv6 Unterstützung -> Out of Scope - es werden private IPv4 Adressen verwendet RFC1918
 	\item Materialliste inkl. den genauen Switch/Router Spezifikationen wird noch geliefert
+	\item SDA Mechanismus
+	\begin{itemize}
+		\item Wie lange hält der Map Cache auf einem Edge Node, kann dieser fürs Troubleshooting angeschaut werden?
+		\item Für die Evaluierung des genauen Ablaufes sollen die Pakete nachher mit Wireshark mitgesnift werden.
+		\item Werden die SGT immer mit dem Controller Node abgeglichen? (Wahrscheinlich für die Synchronisation der SGT, damit immer alle Fabrics über die Zugriffe Bescheid wissen.)
+	\end{itemize}
 \end{itemize}
 
 \paragraph{Offene Punkte (erledigt vor nächster Sitzung)} \mbox{}
@@ -459,6 +465,79 @@ Jessica Kalberer am 27. März 2018
 
 \paragraph{Beschlüsse (Diskussion)}
 \begin{itemize}	
+	\item Hardware ist bereits in Bern, wird diese Woche noch an die HSR geliefert und steht ab nächster Woche bereit.
+	\begin{itemize}
+		\item bei nächstem Meeting erhalten wir alle Informationen
+		\item Geräte werden von Urs vorbereitet, aber nicht Konfiguriert
+		\item Zugriff auf Geräte und Infrastruktur ist nach nächstem Meeting möglich (sie werden schauen ob wir einen Schlüssel bekommen, um auch ausserhalb der Zugangszeiten Zugriff zu erhalten)
+	\end{itemize}
+	\item Netzwerktopologie
+	\begin{itemize}
+		\item wurde erneut mit Industriepartner besprochen und festgestellt, dass die aktuelle Netzwerktopologie zu weit von der Three-Tier Topologie entfernt ist.
+		\item es gibt neu 2 Fabrics, um den Use Case 4 "Einsatz von SGT zusammen mit VXLAN" und den Use Case 2 "Degradation Szenarien"
+		\item Switche wurde angepasst, da 9300 nur Capable sind. Darum sind nun zwei 3850XS Border Nodes, da diese von Cisco CVD Certifies sind. 3850-24 werden als L3-Switch fürs Routing eingesetzt und sind zu den 3850XS mit Kupfer verbunden.
+		\item Wireless Antennen wurden im Kit mitgesendet und können bei ausreichender Zeit 
+		\item bei der Definitions der Fabrics muss darauf geachtet werden, dass die Anzahl Maximaler Control plane nodes per Fabric Domain nicht überschritten wird (siehe DNA Center Maximum Scale Constraints Fabric)
+	\end{itemize}
+	\item Fünf Use Cases von FUB
+	\begin{itemize}
+		\item Testprotokolle erstellen (Use Case 2: verschiedene Testprotokolle für diverse Szenarien, damit herausgefunden werden kann wie alles genau funktioniert)
+	\end{itemize}
+	\item x
+\end{itemize}
+
+\paragraph{Offene Punkte (erledigt vor nächster Sitzung)} \mbox{}
+
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{X | p{4.5cm}}
+		\rowcolor{gray!50}
+		\textbf{Was} & \textbf{Verantwortlichkeit} \\
+		\hline
+		Netzwerk-Topologie anpassen & x \\
+		DNA Installationsvideo anschauen & x \\
+		Installationguide lesen & x \\
+		Use Cases FUB dokumentieren & x \\	
+		Testprotokolle für Use Case erstellen & x \\
+	\end{tabularx}
+	\label{tab:my-label}
+\end{table}
+
+\paragraph{Nächster Termin}
+\begin{itemize}	
+	\item Meeting mit Betreuer: 17. April 2018, 15.10 Uhr, 60 Minuten
+\end{itemize}
+
+\paragraph{Kommende Abwesenheiten} \mbox{}\\
+keine
+
+
+
+
+
+
+\subsection{Sitzungsprotokoll 17.04.2018}
+
+\paragraph{Sitzungsteilnehmer}
+\begin{itemize}	
+	\item Laurent Metzger 
+	\item Urs Baumann
+	\item Philipp Albrecht
+	\item Sandro Kaspar
+	\item Jessica Kalberer
+\end{itemize}
+
+\paragraph{Traktanden}
+\begin{itemize}	
+	\item Use Cases Review
+	\item x
+	\item x
+	\item x
+\end{itemize}
+
+\paragraph{Beschlüsse (Diskussion)}
+\begin{itemize}	
 	\item x
 	\begin{itemize}
 		\item x
@@ -483,7 +562,7 @@ Jessica Kalberer am 27. März 2018
 
 \paragraph{Nächster Termin}
 \begin{itemize}	
-	\item Meeting mit Betreuer: 17. April 2018, 15.10 Uhr, 60 Minuten
+	\item Meeting mit Betreuer: 24. April 2018, 15.10 Uhr, 60 Minuten
 \end{itemize}
 
 \paragraph{Kommende Abwesenheiten} \mbox{}\\
