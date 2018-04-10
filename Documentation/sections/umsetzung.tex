@@ -19,7 +19,7 @@ Folgende zentrale Überlegungen sind eingeflossen:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=10cm]{img/LabNetworkArchitecture.png}
+	\includegraphics[width=1\linewidth]{img/LabNetworkArchitecture.png}\\[1px]
 	\caption{SDN Netzwerk Architektur}
 	\label{fig:LabNetworkArchitecture}
 \end{figure}
@@ -36,9 +36,39 @@ Hauptunterschiede zwischen der klassischen Netzwerkarchitektur und der "Modernen
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=12cm]{img/LabNetworkArchitecture_Vergleich.png}
+	\includegraphics[width=1\linewidth]{img/LabNetworkArchitecture_Vergleich.png}\\[1px]
 	\caption{Netzwerk Architektur Vergleich}
 	\label{fig:LabNetworkArchitectureVergleich}
+\end{figure}
+
+\subsection{Maximale Skalierungen}
+Nachfolgend werden die aktuell maximalen Skalierungen des DNA Centers, sowie der Border und Edge Nodes aufgelistet.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{img/MaximumScale-HACluster.png}\\[1px]
+	\caption{DNA Center Maximum Scale Constraints HA Cluster}
+	\label{fig:Maximum Scale HACluster}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{img/MaximumScale-Fabric.png}\\[1px]
+	\caption{DNA Center Maximum Scale Constraints Fabric}
+	\label{fig:Maximum Scale Fabric}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{img/MaximumScale-EdgeNode.png}\\[1px]
+	\caption{SDA Edge Node Scale Constraints}
+	\label{fig:SDA Edge Node Scale Constraints}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{img/MaximumScale-BorderNode.png}\\[1px]
+	\caption{SDA Border Node Scale Constraints}
+	\label{fig:SDA Border Node Scale Constraints}
 \end{figure}
 
 \pagebreak
@@ -49,80 +79,44 @@ Hauptunterschiede zwischen der klassischen Netzwerkarchitektur und der "Modernen
 		\hline
 		\multicolumn{2}{| c |}{Seite A} & \multicolumn{2}{ c |}{Seite B} \\
 		\hline
-		isr4431-1.access & port1 & WAN & - \\
+		isr4431-1.access & GE0/0/0 & WAN & -\\
 		\hline
-		isr4431-1.access & port2 & isr4431-2.access & port2 \\
+		isr4431-1.access & GE0/0/1 & isr4431-2.access & GE0/0/1 \\
 		\hline
-		isr4431-1.access & port3 & c9300-1.dist & port1 \\
+		isr4431-1.access & GE0/0/2 & c9300-1.dist & GE1/0/1 \\
 		\hline
-		isr4431-2.access & port1 & WAN & - \\
+		isr4431-2.access & GE0/0/0 & WAN & - \\
 		\hline
-		isr4431-2.access & port2 & isr4431-1.access & port2 \\
-		\hline
-		isr4431-2.access & port3 & c9300-2.dist & port1 \\
-		\hline
-		c9300-1.dist & port1 & isr4431-1.access & port3 \\
-		\hline
-		c9300-1.dist & port2 & c9300-2.dist & port2 \\
-		\hline
-		c9300-1.dist & port3 & c3850-1.core & port1 \\
-		\hline
-		c9300-1.dist & port4 & c3850-2.core & port1 \\
-		\hline
-		c9300-2.dist & port1 & isr4431-1.access & port3 \\
-		\hline
-		c9300-2.dist & port2 & c9300-1.dist & port2 \\
-		\hline
-		c9300-2.dist & port3 & c3850-1.core & port2 \\
-		\hline
-		c9300-2.dist & port4 & c3850-2.core & port2 \\
-		\hline
-		c3850-1.core & port1 & c9300-1.dist & port3 \\
-		\hline
-		c3850-1.core & port2 & c9300-2.dist & port3 \\
-		\hline
-		c3850-1.core & port3 & c3850-2.core & port3 \\
-		\hline
-		c3850-1.core & port4 & c3850-1.access & port1 \\
-		\hline
-		c3850-1.core & port5 & c9300-1.access & port1 \\
-		\hline
-		c3850-1.core & port6 & c3850-2.access & port1 \\
-		\hline		
-		c3850-1.core & port7 & c9300-2.access & port1 \\
-		\hline
-		c3850-2.core & port1 & c9300-1.dist & port4 \\
+		isr4431-2.access & GE0/0/1 & isr4431-1.access & GE0/0/1 \\
 		\hline	
-		c3850-2.core & port2 & c9300-2.dist & port4 \\
+		isr4431-2.access & GE0/0/2 & c9300-2.dist & GE1/0/1 \\
+		\hline			
+		c9300-1.dist & GE1/0/2 & c9300-2.dist & GE1/0/2  \\
 		\hline
-		c3850-2.core & port3 & c3850-1.core & port3 \\
+		c9300-1.dist & GE1/0/3 & isr4431-1.core & GE0/0/0 \\
 		\hline
-		c3850-2.core & port4 & c3850-1.access & port2 \\
+		c9300-2.dist & GE1/0/3 & isr4431-2.core & GE0/0/0 \\
 		\hline
-		c3850-2.core & port5 & c9300-1.access & port2 \\
+		c9300-2.dist & GE1/0/4 & HSR Lab & - \\
 		\hline
-		c3850-2.core & port6 & c3850-2.access & port2 \\
-		\hline		
-		c3850-2.core & port7 & c9300-2.access & port2 \\
+		isr4431-1.core & GE0/0/1 & isr4431-2.core & GE0/0/1 \\
 		\hline
-		c3850-1.access & port1 & c3850-1.core & port4 \\
+		isr4431-1.core & GE0/0/2 & c3850.g1.dist & GE1/0/1 \\
 		\hline
-		c3850-1.access & port2 & c3850-2.core & port4 \\
+		isr4431-1.core & GE0/0/3 & c3850.g2.access & GE1/0/1 \\
 		\hline
-		c3850-1.access & port3 & c3650-1.access & port1 \\
+		isr4431-1.core & GE0/1/0 & c9300.g3.access & GE1/0/1 \\
 		\hline
-		c3650-1.access & port1 & c3850-1.access & port3 \\
+		isr4431-2.core & GE0/0/2 & c3850.g1.dist & GE2/0/1 \\
 		\hline
-		c9300-1.access & port1 & c3850-1.core & port5 \\
+		isr4431-2.core & GE0/0/3 & c3850.g2.access & GE1/0/2 \\
 		\hline
-		c9300-1.access & port2 & c3850-2.core & port5 \\
+		isr4431-2.core & GE0/1/0 & c9300.g3.access & GE1/0/2 \\
 		\hline
-		c3850-2.access & port1 & c3850-1.core & port6 \\
+		c3850.g1.dist & GE1/0/2 & c3850.g1.access & GE1/0/1 \\
 		\hline
-		c3850-2.access & port2 & c3850-2.core & port6 \\
+		c3850.g1.dist & GE2/0/2 & c9300.g1.access & GE1/0/1 \\
 		\hline
-		c9300-2.access & port1 & c3850-1.core & port7 \\
-		\hline
-		c9300-2.access & port2 & c3850-2.core & port7 \\
+		c3850.g1.access & GE1/0/3 & c3650.g1.access & GE0/1 \\
 		\hline
 \end{longtable}

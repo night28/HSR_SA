@@ -1,0 +1,238 @@
+\section{Use Cases}
+
+\subsection{Use Cases Brief}
+\subsubsection{UC01: }
+
+
+\subsubsection{UC02: }
+
+\subsection{Use Cases Fully dressed}
+\subsubsection{UC01: Definierung von Benutzer und Geräteprofilen }
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{l | X}
+		Primary Actor      & Administrator        \\
+		\hline
+		Beschreibung       & Ein Administrator definiert die Profile für Benutzer, Gruppen oder Geräte, sodass diese auf alle nötigen Ressourcen zugreifen können, unberechtigter Zugriff aber verhindert wird. \\ 
+		\hline
+		Stakeholders       &  
+		\begin{itemize}	
+			\item Administrator
+			\item User
+		\end{itemize}              \\
+		\hline
+		Preconditions      & 
+		\begin{itemize}	
+			\item DNA Center komplett konfiguriert
+			\item ISE konfiguriert und mit DNA Center verbunden
+		\end{itemize}  \\
+		\hline
+		Postconditions     & 
+		\begin{itemize}	
+			\item User kann auf all nötigen Ressourcen zugreifen
+			\item Zugriffe auf nicht berechtige Ressourcen werden blockiert
+		\end{itemize}  \\
+		\hline
+		Main Success Story & 
+		1.  Profil wird definiert\newline
+		2.  Profil wird Usern oder Geräten zugewiesen\newline
+		3.  Entsprechende Geräte und Benutzer haben Zugriff auf benötigte Ressourcen (und keine zusätzlichen)\newline
+		\\
+		\hline
+		Alternative Flows  & 
+		1a Definitionen fehlen \newline
+		\noindent\hspace*{6mm} 1. Netzwerksegmente oder Ressourcen definieren \newline
+		\noindent\hspace*{6mm} 2. Profil definieren
+		\newline
+		2a User oder Geräte fehlen \newline
+		\noindent\hspace*{6mm} 1.User oder Geräte erfassen \newline
+		\noindent\hspace*{6mm} 2. Profil wird Usern oder Geräten zugewiesen
+	\end{tabularx}
+	\caption{Fully Dressed UC01}
+	\label{tab:UC02}
+\end{table}
+\subsubsection{UC02: Gastzugang}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{l | X}
+		Primary Actor   & Guest        \\
+		\hline
+		Beschreibung   & Ein Gast (unbekannter User mit unbekanntem Gerät) steckt sich im Netzwerk an. Er erhält Zugriff auf alle definierten Ressourcen. Im einfachsten Fall einfach Internetzugriff.  \\ 
+		\hline
+		Stakeholders       & - \\ 
+		Preconditions      &
+		\begin{itemize}	
+			\item Profil für Gastzugriff definiert
+			\item Gast ist mit dem Netzwerk verbunden
+		\end{itemize}  \\
+		\hline
+		Postconditions     & 
+		\begin{itemize}	
+			\item Gast hat Zugriff auf definierte Ressourcen
+			\item Gast hat keinen Zugriff auf interne Ressourcen
+		\end{itemize}  \\
+		\hline
+		Main Success Story & 
+		1.  Gast verbindet sich mit dem Netzwerk\newline
+		2.  Gast erhält Zugriff auf defnierte Ressourcen\newline
+		3.  Gast verlässt das Netzwerk\newline
+		\\
+		\hline
+		Alternative Flows  & -
+	\end{tabularx}
+	\caption{Fully Dressed UC02}
+	\label{tab:UC02}
+\end{table}
+
+\subsubsection{UC03: Backup and Restore DNA Center}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{l | X}
+		Primary Actor   & Netzwerkadministrator        \\
+		\hline
+		Beschreibung   & Auf Grund eines Problems des DNA-Centers muss die Appliance ausgetauscht oder auf einen vorherigen Konfigurationsstand zurückgesetzt werden. Um eine Neukonfiguration des Systems zu verhindern, wird eine zuvor gesicherte Konfiguration wiederhergestellt.  \\ 
+		\hline
+		Stakeholders       & Alle Netzwerkbenutzer \\ 
+		Preconditions      &
+		\begin{itemize}	
+			\item Ein Backup der DNA Center Konfiguration existiert
+		\end{itemize}  \\
+		\hline
+		Postconditions     & 
+		\begin{itemize}	
+			\item Appliance läuft mit einer zuvor gesicherten Konfiguration
+		\end{itemize}  \\
+		\hline
+		Main Success Story & 
+		1.  Passendes Backup wählen\newline
+		2.  Appliance auf den Stand des Backups zurücksetzen\newline
+		\\
+		\hline
+		Alternative Flows  & -
+	\end{tabularx}
+	\caption{Fully Dressed UC03}
+	\label{tab:UC03}
+\end{table}
+
+\subsubsection{UC04: Reporting}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{l | X}
+		Primary Actor   & Netzwerkadministrator        \\
+		\hline
+		Beschreibung   & Es werden regelmässig Reports über relevante Netzwerkaktivitäten erstellt und den zuständigen Personen via Mail und/oder Slack zugestellt  \\ 
+		\hline
+		Stakeholders       & 
+		\begin{itemize}
+			\item Netzwerkadministratoren
+			\item Management
+		\end{itemize} \\ 
+		Preconditions      &
+		\begin{itemize}	
+			\item Alle nötigen Daten zur Erstellung der Reports stehen im DNA Center zur Verfügung.
+		\end{itemize}  \\
+		\hline
+		Postconditions     & 
+		\begin{itemize}	
+			\item Definierte Benutzer erhalten regelmässige Reports
+		\end{itemize}  \\
+		\hline
+		Main Success Story & 
+		1.  Relevante Informationen aus dem DNA Center werden erfasst\newline
+		2.  Informationen werden aufbereitet, Report wird generiert\newline
+		3.  Report wird per Mail an alle definierten Personen \newline
+		\\
+		\hline
+		Alternative Flows  & 
+		3a Alternativer Messenger \newline
+		\noindent\hspace*{6mm} 1. Report wird via Slack an alle definierten Personen gesendet \newline
+	\end{tabularx}
+	\caption{Fully Dressed UC04}
+	\label{tab:UC04}
+\end{table}
+
+\subsubsection{UC05: Hardware Ersatz}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{l | X}
+		Primary Actor   & Netzwerkadministrator        \\
+		\hline
+		Beschreibung   & Ein Switch muss auf Grund eines Hardwaredefekts oder ähnlichen Gründen ausgetauscht werden.  \\ 
+		\hline
+		Stakeholders       & 
+		\begin{itemize}
+			\item Netzwerkadministratoren
+			\item User am betroffenen Switch
+		\end{itemize} \\ 
+		Preconditions      &
+		\begin{itemize}	
+			\item Ersatzhardware verfügbar
+		\end{itemize}  \\
+		\hline
+		Postconditions     & 
+		\begin{itemize}	
+			\item Ersatzhardware hat die Funktionalität des auszutauschenden Geräts vollständig übernommen
+		\end{itemize}  \\
+		\hline
+		Main Success Story & 
+		1.  Auszutauschendes Gerät wird entfernt\newline
+		2.  Neues Gerät wird installiert\newline
+		3.  Neues Gerät wird verkabelt\newline
+		4.  Neues Gerät wird im DNA Center erfasst\newline
+		5.  DNA Center installiert Konfiguration des alten Geräts auf das neue\newline
+		6.  Neues Gerät übernimmt Funktion des alten Geräts\newline
+		7.  Altes Gerät im DNA Center entfernen\newline
+		\\
+		\hline
+		Alternative Flows  & 
+		4a Andere Hardware \newline
+		\noindent\hspace*{6mm} 1. Ersatzhardware ist nicht identisch mit dem alten Gerät \newline
+		\noindent\hspace*{6mm} 2. Konfiguration wird im DNA Center angepasst \newline
+	\end{tabularx}
+	\caption{Fully Dressed UC05}
+	\label{tab:UC05}
+\end{table}
+
+\subsubsection{UC06: Benutzermobilität}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{l | X}
+		Primary Actor   & Mobiler Benutzer        \\
+		\hline
+		Beschreibung   & Ein User ändert seinen Arbeitsplatz, das Gebäude oder den Arbeitsort. Er muss an allen Standorten dieselben Policies erhalten und auf dieselben Ressourcen zugreifen können.  \\ 
+		\hline
+		Stakeholders       & 
+		\begin{itemize}
+			\item User
+		\end{itemize} \\ 
+		Preconditions      &
+		\begin{itemize}	
+			\item User / Gerät erfasst und entsprechende Policies definiert
+		\end{itemize}  \\
+		\hline
+		Postconditions     & 
+		\begin{itemize}	
+			\item User kann nach einem Standortwechsel alle Ressourcen verwenden, die ihm auch vor dem Wechsel zur Verfügung standen
+		\end{itemize}  \\
+		\hline
+		Main Success Story & 
+		1.  User trennt Verbindung am alten Standort\newline
+		2.  User verbindet sich am neuen Standort\newline
+		3.  User authentifiziert sich\newline
+		4.  Die SDA Lösung gewährt dem User Rechte gemäss Policies\newline
+		5.  User kann auf dieselben Ressourcen zugreifen wie am alten Standort\newline
+		\\
+		\hline
+		Alternative Flows  & 
+		4a Während des Standortwechsels wurden die Policies angepasst \newline
+		\noindent\hspace*{6mm} 1.User erhält Rechte gemäss aktualisierten Policies \newline
+	\end{tabularx}
+	\caption{Fully Dressed UC06}
+	\label{tab:UC06}
+\end{table}

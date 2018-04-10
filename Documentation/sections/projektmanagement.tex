@@ -1,7 +1,96 @@
 \section{Projektmanagement}
-\subsection{Projektplan}
+
+\subsection{Projektübersicht}
+Das Hauptziel dieser Studienarbeit ist die Installation von DNA-Center und Integration vom bestehenden Labor-Netzwerk.
+
+\subsubsection{Ziele der Projektes}
+Da Software-Defined Access Neuland im Campus Bereich ist, wollen wir die SD-Access Lösung vom Hersteller Cisco ausarbeiten. Dazu gehören folgende Ziele:
+
+\begin{itemize}
+	\item Installation von DNA-Center und Integration vom bestehenden Campus Labor-Netzwerk.
+	\item Definieren von Benutzer- und Geräteprofilen, um basierend auf Geschäftsanforderungen die Zugriffsrechte und Netzwerksegmentierung zu veralten und so das Netzwerk sicher zu halten.
+	\item Verwendung von Erkenntnissen von DNA Analytics and Assurance für eine proaktive Überwachung, Fehlerbehebung und Optimierung des Netzwerks.
+	\item Integration vom bestehenden IP Address Management Tool im DNA Center
+	\item Durch APIs, Erstellung von wöchentlichen Reports über den Campus Netzwerk Status in einem E-Mail und einer Slack Message. 
+\end{itemize}
+
+\subsection{Projektorganisation}
+Diese Studienarbeit wird von drei Personen umgesetzt und durch zwei Betreuer überwacht.
+
+\subsubsection{Organisationsstruktur}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/Organisationsstruktur.png}
+	\caption{Organisationsstruktur}
+	\label{fig:Organisationsstruktur}
+\end{figure}
+
+\subsection{Management Abläufe}
+Für die Umsetzung der Studienarbeit stehen insgesamt 15 Wochen und pro Person 240 Stunden zur Verfügung. In einer Woche liegt das Arbeitspensum von 16 Stunden pro Person vor. Das Projekt startet am 19. Februar 2018 und endet am 1. Juni 2018.
+
+\subsubsection{Zeitliche Planung}
+Die zeitliche Planung erfolgte in Gant und die Verwaltung der Arbeitspakete auf Waffle.io. Die Planung wird während dem Projekt laufend aktualisiert und angepasst. Die Zeiterfassung erfolgt während der Arbeitsausführung mit Toggle getrackt.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/ZeitlichePlanung_v3.png}
+	\caption{Projektplanung}
+	\label{fig:Projektplanung}
+\end{figure} 
+
+\subsubsection{Meilensteine}
+Folgende Meilensteine sind für das Projekt definiert:
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{p{1cm}| p{2.5cm}| X}
+		\rowcolor{gray!50}
+		\textbf{Nr} & \textbf{Datum} & \textbf{Meilenstein} \\
+		\hline	
+		M0 & 27.02.2018 & Kickoff Meeting \\
+		M1 & 20.03.2018 & Projektplanung abgeschlossen \\
+		M2 & 10.04.2018 & Inbetriebnahme Hardware abgeschlossen \\
+		M3 & 17.04.2018 & Definierung von Benutzer- und Geräteprofilen \\
+		M4 & 01.05.2018 & Integration von bestehenden IPAM in DNA Center \\
+		M5 & 15.05.2018 & Reporting \& Monitoring \\
+		M6 & 28.05.2018 & Freigabe des Abstracts \\
+		M7 & 01.06.2018 & Abgabe Projekt \\
+	\end{tabularx}
+	\caption{Meilensteine}
+	\label{tab:Meilensteine}
+\end{table}
+
+\subsubsection{Arbeitspakete}
+Alle Arbeitspakete werden in Waffle.io erfasst und sind unter folgendem Link ersichtlich:
+\href{Waffle.io}{https://waffle.io/night28/HSR\_SA}
+\subsubsection{Besprechungen}
+Die Besprechungen mit dem Betreuer finden an den nachfolgend aufgelisteten Tagen statt:
+\begin{itemize}
+	\item jeden Dienstag zwischen 15.10 - 16.10 Uhr
+\end{itemize}
+
+Offene Traktanden und Probleme werden mit dem Betreuer kommuniziert und diskutiert. Nach dieser Besprechung wird jeweils in einem Team-Meeting das weitere Vorgehen geplant.
 
 
+\subsection{Infrastruktur}
+Die Organisation der Arbeit und Teammitglieder wird durch folgende Werkzeuge unterstützt:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=6cm]{img/InterneOrganisationsstruktur.png}
+	\caption{Interne Organisationsstruktur}
+	\label{fig:Interne Organisationsstruktur}
+\end{figure} 
+
+Unsere Tools sind unter folgenden Links ersichtlich:
+\paragraph{GitHub} \href{https://github.com/night28/HSR_SA}{https://github.com/night28/HSR\_SA} 
+
+\paragraph{Waffle.io} \href{https://waffle.io/night28/HSR\_SA}{https://waffle.io/night28/HSR\_SA}
+
+\paragraph{Toggl} \href{https://toggl.com/}{https://toggl.com/}
+
+\paragraph{Agantty} \href{https://app.agantty.com/\#/project/203670}{https://app.agantty.com/\#/project/203670}
+ 
 \subsection{Risiko Management}
 
 \subsubsection{Umgang mit Risiken}
@@ -17,7 +106,7 @@ Sollten sich während dem Projekt neue potenzielle Risiken zeigen, wird dieses D
 	\hline
 	\rot{Nummer} & \rot{Titel} & \rot{Beschreibung} & \rot{\shortstack[l]{maximaler\\Schaden [h]}} & \rot{\shortstack[l]{Eintritts-\\wahrscheinlichkeit}} & \rot{\shortstack[l]{Gewichteter\\Schaden [h]}} & \rot{Vorbeugung} & \rot{\shortstack[l]{Verhalten beim\\Eintreten}} \\
 	\hline\hline
-	1 & Ausfall eines Teammiglieds & Ausfall auf Grund unvorhergesehener Erreignisse wie Krankheit, Unfall etc. & 40 & 15\% & 6 & Reserven einplanen, Kommunikation sicherstellen, sodass der Rest Aufgaben übernehmen kann & Tasks des ausgefallen Mitglieds möglichst auf den Rest des Teams aufteilen. \\ 
+	1 & Ausfall eines Teammitglieds & Ausfall auf Grund unvorhergesehener Ereignisse wie Krankheit, Unfall etc. & 40 & 15\% & 6 & Reserven einplanen, Kommunikation sicherstellen, sodass der Rest Aufgaben übernehmen kann & Tasks des ausgefallen Mitglieds möglichst auf den Rest des Teams aufteilen. \\ 
 	\hline
 	2 & Hardwareausfall DNA-Center & DNA-Center Appliance fällt durch Hardwaredefekt aus & 30 & 5\% & 1.5 & keine Verbeugenden Massnahmen möglich & Austausch im Rahmen der Garantie veranlassen \\
 	\hline
@@ -41,5 +130,67 @@ Sollten sich während dem Projekt neue potenzielle Risiken zeigen, wird dieses D
 
 \includepdf{pdfincludes/risikograph}
 
+\subsubsection{Eingetretene Risiken}
+Nachfolgend werden die eingetretenen Risiken genauer erläutert.
+\paragraph{Lieferverzögerung Hardware}
+Leider wurde die Hardware nicht wie geplant geliefert. Deshalb wurde die Projektplanung an die neuen Gegebenheiten angepasst. \\
+Nachfolgend die alte Projektplanung:
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/ZeitlichePlanung_v1.png}
+	\caption{alte Projektplanung}
+	\label{fig:alte Projektplanung}
+\end{figure} 
 
+Folgende Meilensteine waren für das Projekt definiert:
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{p{1cm}| p{2.5cm}| X}
+		\rowcolor{gray!50}
+		\textbf{Nr} & \textbf{Datum} & \textbf{Meilenstein} \\
+		\hline	
+		M0 & 27.02.2018 & Kickoff Meeting \\
+		M1 & 20.03.2018 & Projektplanung abgeschlossen \\
+		M2 & 03.04.2018 & Inbetriebnahme Hardware abgeschlossen \\
+		M3 & 17.04.2018 & Definierung von Benutzer- und Geräteprofilen \\
+		M4 & 01.05.2018 & Integration von bestehenden IPAM in DNA Center \\
+		M5 & 15.05.2018 & Reporting \& Monitoring \\
+		M6 & 28.05.2018 & Freigabe des Abstracts \\
+		M7 & 01.06.2018 & Abgabe Projekt \\
+	\end{tabularx}
+	\caption{alte Meilensteine}
+	\label{tab:alte Meilensteine}
+\end{table}
+
+Die neue Projektplanung sieht nun folgendermassen aus:
+Nachfolgend die alte Projektplanung:
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/ZeitlichePlanung_v3.png}
+	\caption{neue Projektplanung}
+	\label{fig:neue Projektplanung}
+\end{figure} 
+
+
+Folgende Meilensteine sind nun aufgrund der Lieferverzögerung für das Projekt definiert:
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{p{1cm}| p{2.5cm}| X}
+		\rowcolor{gray!50}
+		\textbf{Nr} & \textbf{Datum} & \textbf{Meilenstein} \\
+		\hline	
+		M0 & 27.02.2018 & Kickoff Meeting \\
+		M1 & 10.04.2018 & Projektplanung abgeschlossen \\
+		M2 & 17.04.2018 & Inbetriebnahme Hardware abgeschlossen \\
+		M3 & 24.04.2018 & Definierung von Benutzer- und Geräteprofilen \\
+		M4 & 08.05.2018 & Integration von bestehenden IPAM in DNA Center \\
+		M5 & 22.05.2018 & Reporting \& Monitoring \\
+		M6 & 28.05.2018 & Freigabe des Abstracts \\
+		M7 & 01.06.2018 & Abgabe Projekt \\
+	\end{tabularx}
+	\caption{neue Meilensteine}
+	\label{tab:neue Meilensteine}
+\end{table}
 

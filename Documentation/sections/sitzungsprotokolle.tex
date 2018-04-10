@@ -343,11 +343,11 @@ keine
 		\rowcolor{gray!50}
 		\textbf{Was} & \textbf{Verantwortlichkeit} \\
 		\hline
-		Genaue Modelle der Switche bekanntgeben & Metzger \\	
-		Verkabelungsplan erstellen (Switch Ports) & x \\
-		IP-Adressen Plan & x \\
-		Mapping zwischen SDA und LISP Name Definitions & x \\
-		Regelmässige Updates der Doku an Betreuer & x \\
+		Genaue Modelle der Switche bekanntgeben & Laurent Metzger \\	
+		Verkabelungsplan erstellen (Switch Ports) & Sandro \\
+		IP-Adressen Plan & Philipp, Sandro, Jessica \\
+		Mapping zwischen SDA und LISP Name Definitions & Jessica \\
+		Regelmässige Updates der Doku an Betreuer & Philipp, Sandro, Jessica \\
 	\end{tabularx}
 	\label{tab:my-label}
 \end{table}
@@ -383,6 +383,78 @@ keine
 	\item LabNetzwerkArchitektur
 	\item Zwischenstand aktuelle Dokumentation
 	\item Dokumentatorisches: Quellenangaben
+	\item Genaue Modelle der Switche (Laurent Metzger) - kommt noch
+	\item IP Adress Plan - Vorgabe von Lab Infrastruktur (Urs Baumann) - kommt noch
+	\item IPv6 Unterstützung? (Out of Scope - es werden private IPv4 Adressen verwendet RFC1918)
+\end{itemize}
+
+\paragraph{Beschlüsse (Diskussion)}
+\begin{itemize}	
+	\item Use Cases werden bis 27.März 2018 vom Industriepartner übergeben (Herr Metzger wird nochmal bei FUB nachhaken, damit diese wirklich geliefert werden)
+	\item Netzwerk Architektur wurde nach Besprechung mit FUB noch angepasst. Es werden zwei weitere Router im Core Layer hinzugefügt und die Catalyst 3850 in den Distribution Layer hoch geschoben
+	\item Im Core Layer wird für den Cisco ISR 4431 ein Modul hinzugefügt. Zu beschreiben als Port 01-0 (mittleres bedeutet Modul 1)
+	\item Hardware Aufbau inkl. Installation beginnt nach Ostern (1. April 2018) - Zeitaufwand wird exponentiell steigen
+	\item Voranalyse Technologien (LISP Komponenten, Skalierbarkeit, Ablauf Kommunikation...)
+	\begin{itemize}
+		\item Single Point of Failure
+		\item mögliche Topologien (mehrere Gebäude, Standorte, etc.), wo macht was Sinn? Grosse Instanzen, mehrere kleinere, etc.
+		\item Skalierungsprobleme
+		\item Abläufe: was passiert wann (ARP Request, Abfolge, Zuständigkeiten, etc.)
+	\end{itemize}
+	\item IPv6 Unterstützung -> Out of Scope - es werden private IPv4 Adressen verwendet RFC1918
+	\item Materialliste inkl. den genauen Switch/Router Spezifikationen wird noch geliefert
+\end{itemize}
+
+\paragraph{Offene Punkte (erledigt vor nächster Sitzung)} \mbox{}
+
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{X | p{4.5cm}}
+		\rowcolor{gray!50}
+		\textbf{Was} & \textbf{Verantwortlichkeit} \\
+		\hline
+		Quellenangaben in Literaturverzeichnis übernehmen & Jessica \\
+		Meilensteine anpassen & Philipp, Sandro, Jessica \\
+		Analysephase & 	Philipp, Sandro, Jessica \\
+		Topologie korrigieren & Philipp \\
+		Design Guide lesen & hilipp, Sandro, Jessica \\
+	\end{tabularx}
+	\label{tab:my-label}
+\end{table}
+
+\paragraph{Nächster Termin}
+\begin{itemize}	
+	\item Meeting mit Betreuer: 27. März 2018, 15.10 Uhr, 60 Minuten (abgesagt)
+	\item Meeting mit Betreuer: 03. April 2018, 15.10 Uhr, 60 Minuten (abgesagt)
+	\item Meeting mit Betreuer: 10. April 2018, 16.10 Uhr, 60 Minuten
+\end{itemize}
+
+\paragraph{Kommende Abwesenheiten} \mbox{}\\
+Jessica Kalberer am 27. März 2018
+\newpage
+
+
+
+
+
+\subsection{Sitzungsprotokoll 10.04.2018}
+
+\paragraph{Sitzungsteilnehmer}
+\begin{itemize}	
+	\item Laurent Metzger 
+	\item Urs Baumann
+	\item Philipp Albrecht
+	\item Sandro Kaspar
+	\item Jessica Kalberer
+\end{itemize}
+
+\paragraph{Traktanden}
+\begin{itemize}	
+	\item Use Cases Industriepartner
+	\item Use Cases von uns besprechen
+	\item Hardware nun eingetroffen? Erste Schritte besprechen
+	\item Mechanismus von SDA in Details eventuell anschauen
 \end{itemize}
 
 \paragraph{Beschlüsse (Diskussion)}
@@ -411,18 +483,18 @@ keine
 
 \paragraph{Nächster Termin}
 \begin{itemize}	
-	\item Meeting mit Betreuer: 27. März 2018, 15.10 Uhr, 60 Minuten
+	\item Meeting mit Betreuer: 17. April 2018, 15.10 Uhr, 60 Minuten
 \end{itemize}
 
 \paragraph{Kommende Abwesenheiten} \mbox{}\\
-Jessica Kalberer
-\newpage
+keine
 
 
 
 
 
-\subsection{Sitzungsprotokoll 27.03.2018}
+
+\subsection{Sitzungsprotokoll 17.04.2018}
 
 \paragraph{Sitzungsteilnehmer}
 \begin{itemize}	
@@ -430,6 +502,7 @@ Jessica Kalberer
 	\item Urs Baumann
 	\item Philipp Albrecht
 	\item Sandro Kaspar
+	\item Jessica Kalberer
 \end{itemize}
 
 \paragraph{Traktanden}
@@ -466,11 +539,8 @@ Jessica Kalberer
 
 \paragraph{Nächster Termin}
 \begin{itemize}	
-	\item Meeting mit Betreuer: 03. April 2018, 15.10 Uhr, 60 Minuten
+	\item Meeting mit Betreuer: 24. April 2018, 15.10 Uhr, 60 Minuten
 \end{itemize}
-
-
-
 
 \paragraph{Kommende Abwesenheiten} \mbox{}\\
 keine
