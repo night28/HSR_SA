@@ -341,37 +341,40 @@ Integration Infoblox DDI mit dem DNA-Center für die Provisionierung von IP-Adre
 	\rowcolors{2}{gray!25}{white}
 	\centering
 	\begin{tabularx}{\textwidth}{l | X}
-		Primary Actor   & TBA       \\
+		Primary Actor   & Netzwerkadministrator       \\
 		\hline
-		Beschreibung   & TBA  \\ 
+		Beschreibung   & Die Fabric muss mit Komponenten, die nicht der Fabric angehören kommunizieren können.  \\ 
 		\hline
 		Stakeholders       & 
 		\begin{itemize}
-			\item TBA
+			\item Netzwerkadministrator
+			\item Benutzer
 		\end{itemize} \\ 
 		Preconditions      &
 		\begin{itemize}	
-			\item TBA
+			\item Fabric funktioniert
+			\item Es sind Komponenten oder Teile des Netzwerks vorhanden, die nicht zu einer Fabric gehören.
 		\end{itemize}  \\
 		\hline
 		Postconditions     & 
 		\begin{itemize}	
-			\item TBA
+			\item Kommunikation funktioniert auch über nicht-Fabric Komponenten hinweg
+			\item Policies können auch bei Kommunikation über nicht-Fabric Komponenten angewendet werden
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
 		\begin{enumerate}
-			\item TBA
-			\item TBA
+			\item Ein User kommuniziert mit Ressourcen ausserhalb der Fabric
+			\item Kommunikation funktioniert einwandfrei
+			\item Policies können wie bei der Kommunikation innerhalb der Fabric angewendet werden
 		\end{enumerate}
 		\\
 		\hline
 		Alternative Flows  & 
 		\begin{itemize}
-			\item[1a.]  TBA
-			\begin{enumerate}
-				\item TBA
-			\end{enumerate}
+			\item[1a.]  Ein User ausserhalb der Fabric will mit Ressourcen innerhalb der Fabric kommunizieren
+			\item[2a.] Kommunikation funktioniert einwandfrei
+			\item[3a.] Policies können wie bei der Kommunikation innerhalb der Fabric angewendet werden
 		\end{itemize}
 	\end{tabularx}
 	\caption{UC08 Fully Dressed}
@@ -383,38 +386,41 @@ Integration Infoblox DDI mit dem DNA-Center für die Provisionierung von IP-Adre
 	\rowcolors{2}{gray!25}{white}
 	\centering
 	\begin{tabularx}{\textwidth}{l | X}
-		Primary Actor   & TBA       \\
+		Primary Actor   & Netzwerkadministrator       \\
 		\hline
-		Beschreibung   & TBA  \\ 
+		Beschreibung   & Ein bestehendes Netzwerk nach klassischem Campusdesign soll in eine moderne Fabric migriert werden  \\ 
 		\hline
 		Stakeholders       & 
 		\begin{itemize}
-			\item TBA
+			\item Netzwerkadministrator
+			\item Netzwerkbenutzer
 		\end{itemize} \\ 
 		Preconditions      &
 		\begin{itemize}	
-			\item TBA
+			\item Netzwerk nach klassischem Campusdesign existiert und funktioniert einwandfrei
+			\item DNA Center Appliance inkl. aller Abhängigkeiten ist vorhanden
+			\item Netzwerkkomponenten sind fähig in einer Fabric verwendet zu werden
 		\end{itemize}  \\
 		\hline
 		Postconditions     & 
 		\begin{itemize}	
-			\item TBA
+			\item Fabric ist erstellt
+			\item DNA Center läuft und verwaltet Fabric(s)
+			\item Policies, die in der traditionellen Infrastruktur vorhanden waren funktionieren weiterhin
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
 		\begin{enumerate}
-			\item TBA
-			\item TBA
+			\item Bestehende Infrastruktur wird analysiert und inventarisiert
+			\item DNA Center wird aufgesetzt (inkl. aller Abhängigkeiten)
+			\item User, Gruppen, Policies etc. werden in DNA Center übernommen
+			\item Falls nötig wird das Netzwerkdesign angepasst
+			\item Bestehende Netzwerkgeräte werden in die Fabric übernommen
+			\item Benutzer können Fabric analog der traditionellen Infrastruktur nutzen
 		\end{enumerate}
 		\\
 		\hline
-		Alternative Flows  & 
-		\begin{itemize}
-			\item[1a.]  TBA
-			\begin{enumerate}
-				\item TBA
-			\end{enumerate}
-		\end{itemize}
+		Alternative Flows  & -
 	\end{tabularx}
 	\caption{UC09 Fully Dressed}
 	\label{tab:UC09}
@@ -431,16 +437,16 @@ Integration Infoblox DDI mit dem DNA-Center für die Provisionierung von IP-Adre
 		\hline
 		Stakeholders       & 
 		\begin{itemize}
-			\item TBA
+			\item Administrator
 		\end{itemize} \\ 
-		Preconditions      & DNA Center muss mit dem ISE verbunden sein und alle ISE SGT-Gruppen und -Geräte müssen im DNA Center vorhanden sein
+		Preconditions      & 
 		\begin{itemize}	
-			\item TBA
+			\item DNA Center muss mit dem ISE verbunden sein und alle ISE SGT-Gruppen und -Geräte müssen im DNA Center vorhanden sein
 		\end{itemize}  \\
 		\hline
 		Postconditions     & 
 		\begin{itemize}	
-			\item TBA
+			\item SGT Gruppen ersichtlich
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
@@ -453,9 +459,9 @@ Integration Infoblox DDI mit dem DNA-Center für die Provisionierung von IP-Adre
 		\hline
 		Alternative Flows  & 
 		\begin{itemize}
-			\item[1a.]  TBA
+			\item[1a.]  
 			\begin{enumerate}
-				\item TBA
+				\item 
 			\end{enumerate}
 		\end{itemize}
 	\end{tabularx}
@@ -468,36 +474,39 @@ Integration Infoblox DDI mit dem DNA-Center für die Provisionierung von IP-Adre
 	\rowcolors{2}{gray!25}{white}
 	\centering
 	\begin{tabularx}{\textwidth}{l | X}
-		Primary Actor   & TBA       \\
+		Primary Actor   & Administrator       \\
 		\hline
-		Beschreibung   & TBA  \\ 
+		Beschreibung   & Infoblox ist die IP-Adressmanagement-Lösung (IPAM) für das Cisco Digital Network Architecture (DNA) Center. IP-Adresspools werden zwischen DNA Center und Infoblox synchronisiert. Mit dieser Integration kann die Zuweisung von IP-Adressen automatisiert werden, was eine richtlinienbasierte Bereitstellung in einem einzigen Vorgang ermöglicht und so die Betriebseffizienz verbessert.  \\ 
 		\hline
 		Stakeholders       & 
 		\begin{itemize}
-			\item TBA
+			\item Administrator
 		\end{itemize} \\ 
 		Preconditions      &
 		\begin{itemize}	
-			\item TBA
+			\item Infoblox Server ist eingerichtet
 		\end{itemize}  \\
 		\hline
 		Postconditions     & 
 		\begin{itemize}	
-			\item TBA
+			\item Unter Design / Network Settings / IP Address Pools sind nun die IP-Adressen ersichtlich.
+			\item Anpassungen an Addresspool werdne zwischen DNA Center und Infoblox synchronisiert
+			\item Infoblox verwendet die im DNA Center erstellten Infos für weitere Dienste wie DNS oder DHCP
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
 		\begin{enumerate}
-			\item TBA
-			\item TBA
+			\item Login auf DNA Center
+			\item Unter Settings / IP Adress Manager kann ein Infoblox Server hinterlegt werden.
+			\item Unter Design / Network Settings / IP Address Pools können nun die IP-Adressen angezeigt werden
 		\end{enumerate}
 		\\
 		\hline
 		Alternative Flows  & 
 		\begin{itemize}
-			\item[1a.]  TBA
+			\item[1a.]  
 			\begin{enumerate}
-				\item TBA
+				\item 
 			\end{enumerate}
 		\end{itemize}
 	\end{tabularx}
