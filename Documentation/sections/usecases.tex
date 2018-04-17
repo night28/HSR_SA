@@ -386,38 +386,41 @@ Integration Infoblox DDI mit dem DNA-Center für die Provisionierung von IP-Adre
 	\rowcolors{2}{gray!25}{white}
 	\centering
 	\begin{tabularx}{\textwidth}{l | X}
-		Primary Actor   & TBA       \\
+		Primary Actor   & Netzwerkadministrator       \\
 		\hline
-		Beschreibung   & TBA  \\ 
+		Beschreibung   & Ein bestehendes Netzwerk nach klassischem Campusdesign soll in eine moderne Fabric migriert werden  \\ 
 		\hline
 		Stakeholders       & 
 		\begin{itemize}
-			\item TBA
+			\item Netzwerkadministrator
+			\item Netzwerkbenutzer
 		\end{itemize} \\ 
 		Preconditions      &
 		\begin{itemize}	
-			\item TBA
+			\item Netzwerk nach klassischem Campusdesign existiert und funktioniert einwandfrei
+			\item DNA Center Appliance inkl. aller Abhängigkeiten ist vorhanden
+			\item Netzwerkkomponenten sind fähig in einer Fabric verwendet zu werden
 		\end{itemize}  \\
 		\hline
 		Postconditions     & 
 		\begin{itemize}	
-			\item TBA
+			\item Fabric ist erstellt
+			\item DNA Center läuft und verwaltet Fabric(s)
+			\item Policies, die in der traditionellen Infrastruktur vorhanden waren funktionieren weiterhin
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
 		\begin{enumerate}
-			\item TBA
-			\item TBA
+			\item Bestehende Infrastruktur wird analysiert und inventarisiert
+			\item DNA Center wird aufgesetzt (inkl. aller Abhängigkeiten)
+			\item User, Gruppen, Policies etc. werden in DNA Center übernommen
+			\item Falls nötig wird das Netzwerkdesign angepasst
+			\item Bestehende Netzwerkgeräte werden in die Fabric übernommen
+			\item Benutzer können Fabric analog der traditionellen Infrastruktur nutzen
 		\end{enumerate}
 		\\
 		\hline
-		Alternative Flows  & 
-		\begin{itemize}
-			\item[1a.]  TBA
-			\begin{enumerate}
-				\item TBA
-			\end{enumerate}
-		\end{itemize}
+		Alternative Flows  & -
 	\end{tabularx}
 	\caption{UC09 Fully Dressed}
 	\label{tab:UC09}
