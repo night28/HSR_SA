@@ -1,13 +1,41 @@
 \section{Use Cases}
 
 \subsection{Use Cases Brief}
-\subsubsection{UC01: }
+\subsubsection{UC01: Definierung von Benutzer und Geräteprofilen}
+Ein Administrator definiert die Profile für Benutzer, Gruppen oder Geräte, sodass diese auf alle nötigen Ressourcen zugreifen können, unberechtigter Zugriff aber verhindert wird.
 
+\subsubsection{UC02: Gastzugang}
+Ein Gast (unbekannter User mit unbekanntem Gerät) steckt sich im Netzwerk an. Er erhält Zugriff auf alle definierten Ressourcen. Im einfachsten Fall einfach Internetzugriff.
 
-\subsubsection{UC02: }
+\subsubsection{UC03: Backup and Restore DNA Center}
+Auf Grund eines Problems des DNA-Centers muss die Appliance ausgetauscht oder auf einen vorherigen Konfigurationsstand zurückgesetzt werden. Um eine Neukonfiguration des Systems zu verhindern, wird eine zuvor gesicherte Konfiguration wiederhergestellt.
+
+\subsubsection{UC04: Reporting}
+Es werden regelmässig Reports über relevante Netzwerkaktivitäten erstellt und den zuständigen Personen via Mail und/oder Slack zugestellt.
+
+\subsubsection{UC05: Hardware Ersatz}
+Ein Switch muss auf Grund eines Hardwaredefekts oder ähnlichen Gründen ausgetauscht werden.
+
+\subsubsection{UC06: Benutzermobilität}
+Ein User ändert seinen Arbeitsplatz, das Gebäude oder den Arbeitsort. Er muss an allen Standorten dieselben Policies erhalten und auf dieselben Ressourcen zugreifen können.
+
+\subsubsection{UC07: Degradation}
+Bearbeitung von mögliche Degradations-Szenarios mit den entsprechenden Degradationstests.
+
+\subsubsection{UC08: Integration von nicht Fabric Komponenten}
+Netzintegration von „nicht Campus-Fabric Netzkomponenten“ (zum Beispiel traditionelle Access und Distribution Switches).
+
+\subsubsection{UC09:  Migration von bestehenden klassichen Campus}
+Migrationskonzept bestehende CampusLAN Lösung zu einem Campus-Fabric Lösung mit DNA-Center
+
+\subsubsection{UC10: Einsatz von SGT}
+Einsatz von SGT zusammen mit VXLAN (Netzdesign, Design-Rules, Transport innerhalb und aussehlab des Fabrics, Schnittstelle L2/L3 und Überführung des IP-Konnektivität an einem IP-Backbone zB MPLS VPN).
+
+\subsubsection{UC11: Infoblox}
+Integration Infoblox DDI mit dem DNA-Center für die Provisionierung von IP-Adresse für das Management von neuen Netzkomponenten in die Fabric (zB Access-Switches, usw).
 
 \subsection{Use Cases Fully dressed}
-\subsubsection{UC01: Definierung von Benutzer und Geräteprofilen }
+\subsubsection{UC01: Definierung von Benutzer und Geräteprofilen}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
@@ -35,22 +63,29 @@
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
-		1.  Profil wird definiert\newline
-		2.  Profil wird Usern oder Geräten zugewiesen\newline
-		3.  Entsprechende Geräte und Benutzer haben Zugriff auf benötigte Ressourcen (und keine zusätzlichen)\newline
+		\begin{enumerate}
+			\item Profil wird definiert
+			\item Profil wird Usern oder Geräten zugewiesen
+			\item Entsprechende Geräte und Benutzer haben Zugriff auf benötigte Ressourcen (und keine zusätzlichen)
+		\end{enumerate}
 		\\
 		\hline
 		Alternative Flows  & 
-		1a Definitionen fehlen \newline
-		\noindent\hspace*{6mm} 1. Netzwerksegmente oder Ressourcen definieren \newline
-		\noindent\hspace*{6mm} 2. Profil definieren
-		\newline
-		2a User oder Geräte fehlen \newline
-		\noindent\hspace*{6mm} 1.User oder Geräte erfassen \newline
-		\noindent\hspace*{6mm} 2. Profil wird Usern oder Geräten zugewiesen
+		\begin{itemize}
+			\item[1a.] Definitionen fehlen
+			\begin{enumerate}
+				\item Netzwerksegmente oder Ressourcen definieren
+				\item Profil definieren
+			\end{enumerate}
+			\item[2a.] User oder Geräte fehlen
+			\begin{enumerate}
+				\item User oder Geräte erfassen
+				\item Profil wird Usern oder Geräten zugewiesen
+			\end{enumerate}
+		\end{itemize}
 	\end{tabularx}
-	\caption{Fully Dressed UC01}
-	\label{tab:UC02}
+	\caption{UC01 Fully Dressed}
+	\label{tab:UC01}
 \end{table}
 \subsubsection{UC02: Gastzugang}
 \begin{table}[H]
@@ -75,14 +110,16 @@
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
-		1.  Gast verbindet sich mit dem Netzwerk\newline
-		2.  Gast erhält Zugriff auf defnierte Ressourcen\newline
-		3.  Gast verlässt das Netzwerk\newline
+		\begin{enumerate}
+			\item Gast verbindet sich mit dem Netzwerk
+			\item Gast erhält Zugriff auf defnierte Ressourcen
+			\item Gast verlässt das Netzwerk
+		\end{enumerate}
 		\\
 		\hline
 		Alternative Flows  & -
 	\end{tabularx}
-	\caption{Fully Dressed UC02}
+	\caption{UC02 Fully Dressed}
 	\label{tab:UC02}
 \end{table}
 
@@ -107,13 +144,15 @@
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
-		1.  Passendes Backup wählen\newline
-		2.  Appliance auf den Stand des Backups zurücksetzen\newline
+		\begin{enumerate}
+			\item Passendes Backup wählen
+			\item Appliance auf den Stand des Backups zurücksetzen
+		\end{enumerate}
 		\\
 		\hline
 		Alternative Flows  & -
 	\end{tabularx}
-	\caption{Fully Dressed UC03}
+	\caption{UC03 Fully Dressed}
 	\label{tab:UC03}
 \end{table}
 
@@ -142,16 +181,22 @@
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
-		1.  Relevante Informationen aus dem DNA Center werden erfasst\newline
-		2.  Informationen werden aufbereitet, Report wird generiert\newline
-		3.  Report wird per Mail an alle definierten Personen \newline
+		\begin{enumerate}
+			\item Relevante Informationen aus dem DNA Center werden erfasst
+			\item Informationen werden aufbereitet, Report wird generiert
+			\item Report wird per Mail an alle definierten Personen
+		\end{enumerate}
 		\\
 		\hline
 		Alternative Flows  & 
-		3a Alternativer Messenger \newline
-		\noindent\hspace*{6mm} 1. Report wird via Slack an alle definierten Personen gesendet \newline
+		\begin{itemize}
+			\item[3a.] Alternativer Messenger
+			\begin{enumerate}
+				\item Report wird via Slack an alle definierten Personen gesendet
+			\end{enumerate}
+		\end{itemize}
 	\end{tabularx}
-	\caption{Fully Dressed UC04}
+	\caption{UC04 Fully Dressed}
 	\label{tab:UC04}
 \end{table}
 
@@ -180,21 +225,27 @@
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
-		1.  Auszutauschendes Gerät wird entfernt\newline
-		2.  Neues Gerät wird installiert\newline
-		3.  Neues Gerät wird verkabelt\newline
-		4.  Neues Gerät wird im DNA Center erfasst\newline
-		5.  DNA Center installiert Konfiguration des alten Geräts auf das neue\newline
-		6.  Neues Gerät übernimmt Funktion des alten Geräts\newline
-		7.  Altes Gerät im DNA Center entfernen\newline
+		\begin{enumerate}
+			\item Auszutauschendes Gerät wird entfernt
+			\item Neues Gerät wird installiert
+			\item Neues Gerät wird verkabelt
+			\item Neues Gerät wird im DNA Center erfasst
+			\item DNA Center installiert Konfiguration des alten Geräts auf das neue
+			\item Neues Gerät übernimmt Funktion des alten Geräts
+			\item Altes Gerät im DNA Center entfernen
+		\end{enumerate}
 		\\
 		\hline
 		Alternative Flows  & 
-		4a Andere Hardware \newline
-		\noindent\hspace*{6mm} 1. Ersatzhardware ist nicht identisch mit dem alten Gerät \newline
-		\noindent\hspace*{6mm} 2. Konfiguration wird im DNA Center angepasst \newline
+		\begin{itemize}
+			\item[4a.] Andere Hardware
+			\begin{enumerate}
+				\item Ersatzhardware ist nicht identisch mit dem alten Gerät
+				\item Konfiguration wird im DNA Center angepasst
+			\end{enumerate} 
+		\end{itemize}
 	\end{tabularx}
-	\caption{Fully Dressed UC05}
+	\caption{UC05 Fully Dressed}
 	\label{tab:UC05}
 \end{table}
 
@@ -222,17 +273,235 @@
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
-		1.  User trennt Verbindung am alten Standort\newline
-		2.  User verbindet sich am neuen Standort\newline
-		3.  User authentifiziert sich\newline
-		4.  Die SDA Lösung gewährt dem User Rechte gemäss Policies\newline
-		5.  User kann auf dieselben Ressourcen zugreifen wie am alten Standort\newline
+		\begin{enumerate}
+			\item User trennt Verbindung am alten Standort
+			\item User verbindet sich am neuen Standort
+			\item User authentifiziert sich
+			\item Die SDA Lösung gewährt dem User Rechte gemäss Policies
+			\item User kann auf dieselben Ressourcen zugreifen wie am alten Standort
+		\end{enumerate}
 		\\
 		\hline
 		Alternative Flows  & 
-		4a Während des Standortwechsels wurden die Policies angepasst \newline
-		\noindent\hspace*{6mm} 1.User erhält Rechte gemäss aktualisierten Policies \newline
+		\begin{itemize}
+			\item[4a.]  Während des Standortwechsels wurden die Policies angepasst
+			\begin{enumerate}
+				\item User erhält Rechte gemäss aktualisierten Policies
+			\end{enumerate}
+		\end{itemize}
 	\end{tabularx}
-	\caption{Fully Dressed UC06}
+	\caption{UC06 Fully Dressed}
 	\label{tab:UC06}
 \end{table}
+
+\subsubsection{UC07: Degradation}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{l | X}
+		Primary Actor   & TBA       \\
+		\hline
+		Beschreibung   & TBA  \\ 
+		\hline
+		Stakeholders       & 
+		\begin{itemize}
+			\item TBA
+		\end{itemize} \\ 
+		Preconditions      &
+		\begin{itemize}	
+			\item TBA
+		\end{itemize}  \\
+		\hline
+		Postconditions     & 
+		\begin{itemize}	
+			\item TBA
+		\end{itemize}  \\
+		\hline
+		Main Success Story & 
+		\begin{enumerate}
+			\item TBA
+			\item TBA
+		\end{enumerate}
+		\\
+		\hline
+		Alternative Flows  & 
+		\begin{itemize}
+			\item[1a.]  TBA
+			\begin{enumerate}
+				\item TBA
+			\end{enumerate}
+		\end{itemize}
+	\end{tabularx}
+	\caption{UC07 Fully Dressed}
+	\label{tab:UC07}
+\end{table}
+
+\subsubsection{UC08: Integration von nicht Fabric Komponenten}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{l | X}
+		Primary Actor   & TBA       \\
+		\hline
+		Beschreibung   & TBA  \\ 
+		\hline
+		Stakeholders       & 
+		\begin{itemize}
+			\item TBA
+		\end{itemize} \\ 
+		Preconditions      &
+		\begin{itemize}	
+			\item TBA
+		\end{itemize}  \\
+		\hline
+		Postconditions     & 
+		\begin{itemize}	
+			\item TBA
+		\end{itemize}  \\
+		\hline
+		Main Success Story & 
+		\begin{enumerate}
+			\item TBA
+			\item TBA
+		\end{enumerate}
+		\\
+		\hline
+		Alternative Flows  & 
+		\begin{itemize}
+			\item[1a.]  TBA
+			\begin{enumerate}
+				\item TBA
+			\end{enumerate}
+		\end{itemize}
+	\end{tabularx}
+	\caption{UC08 Fully Dressed}
+	\label{tab:UC08}
+\end{table}
+
+\subsubsection{UC09: Migration von bestehenden klassichen Campus}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{l | X}
+		Primary Actor   & TBA       \\
+		\hline
+		Beschreibung   & TBA  \\ 
+		\hline
+		Stakeholders       & 
+		\begin{itemize}
+			\item TBA
+		\end{itemize} \\ 
+		Preconditions      &
+		\begin{itemize}	
+			\item TBA
+		\end{itemize}  \\
+		\hline
+		Postconditions     & 
+		\begin{itemize}	
+			\item TBA
+		\end{itemize}  \\
+		\hline
+		Main Success Story & 
+		\begin{enumerate}
+			\item TBA
+			\item TBA
+		\end{enumerate}
+		\\
+		\hline
+		Alternative Flows  & 
+		\begin{itemize}
+			\item[1a.]  TBA
+			\begin{enumerate}
+				\item TBA
+			\end{enumerate}
+		\end{itemize}
+	\end{tabularx}
+	\caption{UC09 Fully Dressed}
+	\label{tab:UC09}
+\end{table}
+
+\subsubsection{UC10: Einsatz von SGT}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{l | X}
+		Primary Actor   & Administrator       \\
+		\hline
+		Beschreibung   & Im DNA Center können über das ISE Panel definierte SGT Gruppen hinzugefügt und angepasst werden.  \\ 
+		\hline
+		Stakeholders       & 
+		\begin{itemize}
+			\item TBA
+		\end{itemize} \\ 
+		Preconditions      & DNA Center muss mit dem ISE verbunden sein und alle ISE SGT-Gruppen und -Geräte müssen im DNA Center vorhanden sein
+		\begin{itemize}	
+			\item TBA
+		\end{itemize}  \\
+		\hline
+		Postconditions     & 
+		\begin{itemize}	
+			\item TBA
+		\end{itemize}  \\
+		\hline
+		Main Success Story & 
+		\begin{enumerate}
+			\item Login auf DNA Center
+			\item Unter Systemeinstellungen Cisco ISE Panel auswählen
+			\item Unter Policy / Registry / Scalable Groups können neue SGT Gruppen hinzugefügt werden
+		\end{enumerate}
+		\\
+		\hline
+		Alternative Flows  & 
+		\begin{itemize}
+			\item[1a.]  TBA
+			\begin{enumerate}
+				\item TBA
+			\end{enumerate}
+		\end{itemize}
+	\end{tabularx}
+	\caption{UC10 Fully Dressed}
+	\label{tab:UC10}
+\end{table}
+
+\subsubsection{UC11: Infoblox}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabularx}{\textwidth}{l | X}
+		Primary Actor   & TBA       \\
+		\hline
+		Beschreibung   & TBA  \\ 
+		\hline
+		Stakeholders       & 
+		\begin{itemize}
+			\item TBA
+		\end{itemize} \\ 
+		Preconditions      &
+		\begin{itemize}	
+			\item TBA
+		\end{itemize}  \\
+		\hline
+		Postconditions     & 
+		\begin{itemize}	
+			\item TBA
+		\end{itemize}  \\
+		\hline
+		Main Success Story & 
+		\begin{enumerate}
+			\item TBA
+			\item TBA
+		\end{enumerate}
+		\\
+		\hline
+		Alternative Flows  & 
+		\begin{itemize}
+			\item[1a.]  TBA
+			\begin{enumerate}
+				\item TBA
+			\end{enumerate}
+		\end{itemize}
+	\end{tabularx}
+	\caption{UC11 Fully Dressed}
+	\label{tab:UC11}
+\end{table}
+
