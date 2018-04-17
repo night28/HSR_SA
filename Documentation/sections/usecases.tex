@@ -299,36 +299,47 @@ Integration Infoblox DDI mit dem DNA-Center für die Provisionierung von IP-Adre
 	\rowcolors{2}{gray!25}{white}
 	\centering
 	\begin{tabularx}{\textwidth}{l | X}
-		Primary Actor   & TBA       \\
+		Primary Actor   & Netzwerkadministrator       \\
 		\hline
-		Beschreibung   & TBA  \\ 
+		Beschreibung   & Es soll aufgezeigt werden, wie sich das System beim Ausfall von verschiedenen Komponenten verhält, wo Single Point of Failures liegen und wie diese allenfalls eliminiert werden können.  \\ 
 		\hline
 		Stakeholders       & 
 		\begin{itemize}
-			\item TBA
+			\item Netzwerkadministrator
+			\item Netzwerkbenutzer
 		\end{itemize} \\ 
 		Preconditions      &
 		\begin{itemize}	
-			\item TBA
+			\item Netzwerkinfrastruktur läuft einwandfrei
 		\end{itemize}  \\
 		\hline
 		Postconditions     & 
 		\begin{itemize}	
-			\item TBA
+			\item Ausfall oder Probleme bei einer oder mehrerer Komponenten
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
 		\begin{enumerate}
-			\item TBA
-			\item TBA
+			\item Netzwerk funktioniert einwandfrei
+			\item Eine oder mehrere Komponenten fallen aus oder weisen sonstige Probleme auf
+			\item Netzwerkfunktionalität ist durch den Ausfall nicht beeinträchtigt
+			\item Fehler wird behoben, System wieder im Sollzustand
 		\end{enumerate}
 		\\
 		\hline
 		Alternative Flows  & 
 		\begin{itemize}
-			\item[1a.]  TBA
+			\item[3a.]  Durch den Ausfall kommt es zu einer Störung im Netzwerk
 			\begin{enumerate}
-				\item TBA
+				\item Was sind die genauen Auswirkungen? Wer ist betroffen?
+				\item Wie kann die Funktionalität wiederhergestellt werden?
+				\item Kann die Fehlerursache verhindert werden?
+			\end{enumerate}
+			\item[3b.]  Es kommt zum kompletten Ausfall des Netzwerks
+			\begin{enumerate}
+				\item Was sind die genauen Auswirkungen?
+				\item Wie kann die Funktionalität wiederhergestellt werden?
+				\item Kann die Fehlerursache verhindert werden?
 			\end{enumerate}
 		\end{itemize}
 	\end{tabularx}
