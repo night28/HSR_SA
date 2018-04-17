@@ -341,37 +341,40 @@ Integration Infoblox DDI mit dem DNA-Center für die Provisionierung von IP-Adre
 	\rowcolors{2}{gray!25}{white}
 	\centering
 	\begin{tabularx}{\textwidth}{l | X}
-		Primary Actor   & TBA       \\
+		Primary Actor   & Netzwerkadministrator       \\
 		\hline
-		Beschreibung   & TBA  \\ 
+		Beschreibung   & Die Fabric muss mit Komponenten, die nicht der Fabric angehören kommunizieren können.  \\ 
 		\hline
 		Stakeholders       & 
 		\begin{itemize}
-			\item TBA
+			\item Netzwerkadministrator
+			\item Benutzer
 		\end{itemize} \\ 
 		Preconditions      &
 		\begin{itemize}	
-			\item TBA
+			\item Fabric funktioniert
+			\item Es sind Komponenten oder Teile des Netzwerks vorhanden, die nicht zu einer Fabric gehören.
 		\end{itemize}  \\
 		\hline
 		Postconditions     & 
 		\begin{itemize}	
-			\item TBA
+			\item Kommunikation funktioniert auch über nicht-Fabric Komponenten hinweg
+			\item Policies können auch bei Kommunikation über nicht-Fabric Komponenten angewendet werden
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
 		\begin{enumerate}
-			\item TBA
-			\item TBA
+			\item Ein User kommuniziert mit Ressourcen ausserhalb der Fabric
+			\item Kommunikation funktioniert einwandfrei
+			\item Policies können wie bei der Kommunikation innerhalb der Fabric angewendet werden
 		\end{enumerate}
 		\\
 		\hline
 		Alternative Flows  & 
 		\begin{itemize}
-			\item[1a.]  TBA
-			\begin{enumerate}
-				\item TBA
-			\end{enumerate}
+			\item[1a.]  Ein User ausserhalb der Fabric will mit Ressourcen innerhalb der Fabric kommunizieren
+			\item[2a.] Kommunikation funktioniert einwandfrei
+			\item[3a.] Policies können wie bei der Kommunikation innerhalb der Fabric angewendet werden
 		\end{itemize}
 	\end{tabularx}
 	\caption{UC08 Fully Dressed}
