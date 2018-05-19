@@ -8,7 +8,7 @@
 \usepackage{pdfpages}
 \usepackage{graphicx}
 \usepackage{float}
-\usepackage{array}
+\usepackage{colortbl,array}
 \usepackage[justification=centering]{caption}
 \usepackage{enumitem}
 \usepackage{chngcntr}
@@ -23,6 +23,17 @@
 \usepackage{acronym}
 \usepackage{listings}
 
+\definecolor{warningbackground}{RGB}{252,226,158}
+
+\newcommand{\alertwarningbox}[1]{
+	\centering
+	\begin{tabularx}{\linewidth}{
+			>{\columncolor{warningbackground}}c
+			>{\columncolor{warningbackground}}X}
+		\raisebox{\dimexpr2\baselineskip-\height} &
+		\raisebox{\tabcolsep}{\strut}#1\raisebox{-\tabcolsep}{\strut}
+	\end{tabularx}
+}
 
 %Syntax-highlighting]
 %\usepackage{minted}

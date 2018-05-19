@@ -3,6 +3,7 @@
 \subsection{DNA Center Setup}
 
 \subsubsection{Installation}
+\label{DNACenterSetup_Installation}
 Die Installation des DNA Centers erfolgt direkt an der Konsole oder über die Cisco IMC. Dabei wird die maglev-config-wizard ausgeführt. Dieser Befehl kann im nachhinein jederzeit zur Anpassung der Konfiguration ausgeführt werden. 
 
 Wie in \cite{cisco-dna-installation-guide} Kapitel 2 beschrieben werden folgende Angaben benötigt:
@@ -120,6 +121,79 @@ Nach einem Update wurde die Reihenfolge von System und Package Update angepasst.
 	\includegraphics[height=4cm]{img/sc_010.png}
 	\caption{DNA Center App Management - Alte Menü Anordnung}
 	\label{fig:dna-center-gui-update-2}
+\end{figure}
+
+\paragraph{Cisco CCO Login für Updates notwendig}
+Application Packages und Updats können nur Installiert werden, wenn die Cisco CCO Credentials hinterlegt sind.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=4cm]{img/dan-center-cisco-credentials-required.png}
+	\caption{DNA Center Upgrade - Cisco Credentials required}
+	\label{fig:dna-center-cisco-credentials-required}
+\end{figure}
+
+
+
+
+\subsubsection{DNA Center Reset}
+Da nach einigen Versuchen weder ein funktionsfähiges Under- noch Overlay Netzwerk vorhanden war, hatten wir uns entschieden das DNA Center neu zu Konfigurieren.
+
+\begin{lstlisting}[language=bash]
+$ maglev-config-wizard #DO NOT EXECUTE THIS COMMAND
+\end{lstlisting}
+
+Als folge dieses Befehls, nachdem alle Parameter eingegeben wurden, kam die folgende Meldung:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=10cm]{img/dna-center-reset-fail-1.png}
+	\caption{DNA Center - maglev-config-wizard - Fehlermeldung}
+	\label{fig:dna-center-reset-1}
+\end{figure}
+
+Nach einem Neustart der Appliance kam die folgende Meldung und das System bootete nicht mehr. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=1cm]{img/dna-center-reset-fail-2.png}
+	\caption{DNA Center - Boot Fehlermeldung}
+	\label{fig:dna-center-reset-2}
+\end{figure}
+
+In der Anleitung wird dieser Befehl so nicht erwähnt. Bei einem früheren Versuch diesen Befehl auszuführen, um den NTP Server zu ändern, führte es jedoch nicht zu diesem Fehler. 
+
+\paragraph{Neuinstallation}
+In folge war es notwendig die Cisco DNA Center Appliance neu zu installieren. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=2cm]{img/dna-center-reset-iso.png}
+	\caption{DNA Center - Neuinstallation - Installations ISO wird auf USB Drive kopiert}
+	\label{fig:dna-center-iso-1}
+\end{figure}
+
+Das USB Drive wird direkt in die Appliance gesteckt und gebootet. Der weitere Installationsprozess sieht aus wie im Abschnitt \ref{DNACenterSetup_Installation} gezeigt. 
+
+\alertwarningbox{
+	Nach der Neuinstallation sind alle Daten und die Konfiguration gelöscht. Eine Option die Konfiguration beizubehalten gibt es nicht.
+}
+
+\subsubsection{Unterschiedliche Versionsangabe}
+
+Beim Updatevorgang kann es zu Verwirrungen kommen, weil die Versionangabe von der Funktion About von der Version des System Packages abweicht.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=3cm]{img/dna-center-about.png}
+	\caption{DNA Center - About - Version}
+	\label{fig:dna-center-about}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=2.5cm]{img/dna-center-system-upgrade-version.png}
+	\caption{DNA Center - System Upgrade - Version}
+	\label{fig:dna-center-system-upgrade}
 \end{figure}
 
 \subsection{DNA Center Network Discovery}
