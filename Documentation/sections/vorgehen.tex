@@ -356,6 +356,25 @@ Die Lizenzen bezieht das DNA Center automatisch von den Cisco Server.
 
 \subsection{BGP über Legacy Netzwerk}
 
+Für das Overlay Provisioning verwendet das DNA Center BGP. Dabei ist uns aufgefallen das die Cisco Catalyst 3850 Series Switche nur eine Lizenz für IP Base installiert haben und BGP nur in der IP Services Lizenz unterstützt wird. Die genauen Unterschiedene der verschiedenen IOS Software Features sind in untenstehender Grafik ersichtlich\cite{cisco-3850-faq}:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{img/IPBaseServices.png}
+	\caption{IP Base and Services}
+	\label{fig:IP Base and Services}
+\end{figure}
+
+Über die CLI konnten konnten wir eine IP Services Evaluation Lizenz für 90 Tage aktivieren.
+
+\begin{lstlisting}[language=bash]
+sh license right-to-use activate ipservices all accepptEULA
+reload
+show license right-to-use
+\end{lstlisting}
+
+
+
 \subsection{Fabric Konfigurieren}
 
 \subsection{Policies definieren}
