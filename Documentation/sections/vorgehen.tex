@@ -244,7 +244,66 @@ Da die automatische Erstellung des Underlay Netzwerkes nicht funktionierte, muss
 
 \subsection{Netzwerkgeräte zu Inventory hinzufügen}
 
-\subsection{Manuell Geräte im DNA Center hinzufügen}
+
+\subsection{Manuel Geräte im DNA Center hinzufügen}
+Da alle Versuche die Geräte automatisch hinzuzufügen gescheitert sind, entschieden wir uns den Vorgang manuell Durchzuführen. 
+
+Im Dashboard klickt man dazu auf Inventory (Siehe \ref{fig:dna-center-inventory-button})
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=3cm]{img/dna-center-inventory-button.PNG}
+	\caption{DNA Center Dashboard - Inventory Knopf}
+	\label{fig:dna-center-inventory-button}
+\end{figure}
+
+Anschliessend wählt man "Add" (siehe \ref{fig:dna-center-inventory-add})
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=3cm]{img/dna-center-inventory-add.PNG}
+	\caption{DNA Center Inventory - Gerät hinzufügen}
+	\label{fig:dna-center-inventory-add}
+\end{figure}
+
+Anschliessend müssen folgende Informationen eingegeben werden:
+\begin{itemize}
+	\item Device Type
+	\item Device IP \ Name
+	\item SNMP (Version, Read und Write Community)
+	\item CLI (via SSH oder Telnet) \textit{oder}
+	\item NETCONF
+\end{itemize}
+
+Wir entschieden uns CLI via SSH zu nehmen. Von NETCONF und CLI muss nur eine von beiden Optionen gewählt werden. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/dna-center-inventory-add-form.png}
+	\caption{DNA Center Inventory - Formular Gerät hinzufügen}
+	\label{fig:dna-center-inventory-add-form}
+\end{figure}
+
+Danach erscheint das Gerät in der Liste (Siehe \ref{fig:dna-center-inventory-index-new})
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=2cm]{img/dna-center-inventory-index-new.png}
+	\caption{DNA Center Inventory - Neue Geräte in der Liste}
+	\label{fig:dna-center-inventory-index-new}
+\end{figure}
+
+TBA: Neue Images herunterladen und mit Golden Tag versehen. 
+
+\subsection{Image Repository}
+Im DNA Center können Netzwerkgeräte automatisch geupdatet werden. Sobald ein Gerät im Inventory erfolgreich hinzugefügt worden ist, sucht das DNA Center nach Updates. Die Verfügbaren Images sind unter Desing => Global => Image Repository zu finden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=2cm]{img/dna-center-design-image-repository.png}
+	\caption{DNA Center Design - Image Respository}
+	\label{fig:dna-center-design-image-repository}
+\end{figure}
 
 \subsection{Automatisches Softwareupdate von Netzwerkgeräten}
 
@@ -350,6 +409,14 @@ Die Lizenzen bezieht das DNA Center automatisch von den Cisco Server.
 	Cisco Catalyst 3850 Series Ethernet Stackable Switch & Ja \\
 	Cisco 4400 Series Integrated Services Routers & Nein \\
 \end{tabular}
+
+\subsection{Device Provisioning via DNA Center}
+Um den einzelnen Netzwerkgeräten einen Namen und die Basis Konfiguration zu geben, wird im DNA Center unter \textit{Provision -> Devices} die zu provisionierende Geräte ausgewählt. Danach wird \textit{Action -> Provision Device} der Provision Vorgang gestartet.
+
+Dazu muss zuerst im Template Editor ein Template hinzugefügt werden.
+
+TBA: Template Editor Screenshots
+
 
 \subsection{Overlay Provisioning via DNA Center}
 
