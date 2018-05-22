@@ -307,8 +307,6 @@ Im DNA Center können Netzwerkgeräte automatisch geupdatet werden. Sobald ein G
 
 \subsection{Automatisches Softwareupdate von Netzwerkgeräten}
 
-\subsection{Manuelles Softwareupdate via separaten TFTP Server}
-
 Im DNA Center besteht die Möglichkeit bei "claimed Devices" ein automatisches Softwareupdate durchzuführen. Dies hat bei keinen von unseren Switches oder Routern geklappt. 
 
 \begin{tabular}{ | l | l |}
@@ -321,6 +319,7 @@ Im DNA Center besteht die Möglichkeit bei "claimed Devices" ein automatisches S
 	CLI - TFTP     & Erfolgreich (Siehe \ref{fig:dna-center-provision-updates-4}) \\	
 	\hline	
 \end{tabular}
+\captionof{table}{Softwareupdate - Übersicht Methoden und ausgeführten Versuche}
 
 \begin{figure}[H]
 	\centering
@@ -336,6 +335,9 @@ Im DNA Center besteht die Möglichkeit bei "claimed Devices" ein automatisches S
 	\caption{Fehlermeldung Updatevorgang via DNA Center}
 	\label{fig:dna-center-provision-updates-1}
 \end{figure}
+
+\subsection{Manuelles Softwareupdate via separaten TFTP Server}
+Weil das automatische Update nicht funktioniert hat, mussten wir die Images manuell auf die Switches und Router aufspielen.
 
 \begin{figure}[H]
 	\centering
@@ -440,11 +442,46 @@ reload
 show license right-to-use
 \end{lstlisting}
 
-
-
 \subsection{Fabric Konfigurieren}
+Nach der manuellen Konfiguration des Underlays, dem hinzufügen der Geräte, dem Update und dem Provisionieren, konnten wir endlich die Fabric konfigurieren. 
+
+Erreichbar ist das unter \textit{Provision -> Fabric}. Nachfolgend wir der entsprechende Standort ausgewählt.
+
+Den einzelnen Netzwerkgeräten werden nun mit Rechtsklick folgende Rollen zugeteilt:
+\begin{itemize}
+	\item Border
+	\item Border + CP (Control Plane)
+	\item Edge
+\end{itemize}
+
+Nachdem alle Geräte der entsprechenden Fabric zugeteilt worden sind, kann die Konfiguration gespeichert und wird auf die Geräte geschrieben. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{img/dna-center-fabric-1.png}
+	\caption{DNA Center Provision - Fabric - Nach der Zuteilung wird die Konfiguration auf die Geräte geschrieben.}
+	\label{fig:IP Base and Services}
+\end{figure}
+
+
+\begin{tabular}{| l | l | l | l | l |}
+	\textbf{Darstellung} & \makecell{\textbf{Teil der}\\ \textbf{Fabric}} & \makecell{\textbf{Änderung}\\ \textbf{ausstehend}} & \textbf{Provisioniert} & \textbf{Bemerkung} \\
+	\hline
+	Grau & Ja & Nein & Nein & \\
+	Schwarz & Nein & Nein & Nein & \\
+	Grau mit blauem Rand & Ja & Ja & Nein & \\
+	Blau & Ja & Nein & Ja & \\
+	Umrandung mit Pfeil & - & - & - & Gruppierte Geräte\\	
+
+\end{tabular}
+\captionof{table}{DNA Center Provision - Fabric - Darstellung}
 
 \subsection{Policies definieren}
+Damit die Fabric Konfiguriert werden kann, müssen folgende Bedienungen erfüllt sein:
+
+
+
+
 
 \subsection{Cisco ISE Verknüpfen und Gruppen anlegen}
 
