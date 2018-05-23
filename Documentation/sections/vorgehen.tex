@@ -535,15 +535,69 @@ Im ersten Versuch haben wir die LAN Automation übersprungen. Das stellt jedoch 
 \subsection{DNA Center Netzwerk Design}
 Wie im ersten Teil
 
-\subsection{Alle Netzwerkkomponenten vorgehen}
+\subsection{Downgrade aller Netzwerkkomponenten}
+Nach Absprache mit dem Experten von Cisco, mussten alle Switch und Router auf eine spezifische Version zurückgesetzt werden.
+
+Neue Version: 16.6.3
 
 \subsection{ISE reset}
+Um die Störungen durch alte Konfigurationen zu vermeiden, wurde das Cisco ISE Center ebenfalls zurückgesetzt. Dies kann einfach mittels eines Befehls durchgeführt werden.
+
+\begin{lstlisting}[language=bash]
+ISE/admin# applicaiton reset-config ise
+\end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=6cm]{img/secondtry/s2t-cisco-ise-reset.png}
+	\caption{Cisco ISE Reset}
+	\label{fig:dna-ise-reset-1}
+\end{figure}
 
 \subsection{Credentials korrekt hinterlegen}
 
-\subsection{Fabric Border - Seeddevice}
 
 \subsection{ISE Integration}
 
+\subsection{Fabric Border - Seeddevice}
+Bevor die LAN Automation gestartet werden kann, müssen folgende Bedinungen erfüllt sein:
+\begin{itemize}
+	\item Aktives SSH
+	\item IP Konnektivität
+\end{itemize}
+
+\subsubsection{Verbindung zwischen Legacy Router und Border Switch}
+Um eine Verbindung über den Legacy Router zu ermöglichen, musste ein VLAN angelegt werden.
+
+\paragraph{Konfiguration auf Border Switch}
+\begin{lstlisting}[language=bash]
+# interace XY
+# switchport trunk native vlan 100
+# interface vlan 100
+# ip adress 10.22.31.1 255.255.255.252
+# exit
+# ip route 10.22.0.0 255.255.255.0 10.22.31.0
+\end{lstlisting}
+
+\paragraph{Konfiguration auf Legacy Router}
+\begin{lstlisting}[language=bash]
+# interface GigabitEthernet0/0/1.100
+# encapsulation dot1Q 100
+# ip address 10.22.31.2 255.255.255.252
+\end{lstlisting}
+
+\subsection{Border BGP}
+\begin{lstlisting}[language=bash]
+router bgp 10
+bgp log-neighbor-changes
+neighbor 10.22.11.1 remote-as 30
+address-family ipv4
+redistribute connected
+neighbor 10.22.11.1 activate
+exit-address-family
+\end{lstlisting}
+
+
 \subsection{Netzwork Discovery - LAN Automation}
 
+\subsection{Trustpool}
