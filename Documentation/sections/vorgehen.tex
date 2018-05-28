@@ -644,9 +644,10 @@ Die Netzwerk Discovery braucht mehr Eingriffe als erwartet. Im ersten Schritt ha
 \subsection{Broken ISIS - Gründe}
 TBA
 
-\subsection{Farbic - Provisioning}
+\subsection{Provisioning}
 
 \subsubsection{Script Template}
+\label{Script Template}
 Damit der Hostname der Switches und Router via Provisioning gesetzt werden kann, muss ein Template angelegt werden.
 
 Über das Hauptmenü \textit{Tools $\rightarrow$ Template Editor} kann mit \textit{Add (Pluszeichen) $\rightarrow$ Create Project} ein neues Projekt anlegt werden. (Siehe: \ref{fig:dna-center-template-editor-add-project})
@@ -688,7 +689,7 @@ Unter \textit{Design $\rightarrow$ Network Profiles $\rightarrow$ Add Profile} k
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=5cm]{img/secondtry/dna-center-network-profile-new.png}
+	\includegraphics[height=4cm]{img/secondtry/dna-center-network-profile-new.png}
 	\caption{Cisco DNA Center - Network Profile - New Profile}
 	\label{fig:dna-center-network-profile-new}
 \end{figure}
@@ -697,14 +698,237 @@ Weiter wird festgelegt für welche \textit{Sites} das Netzwerkprofil verwendet w
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=5cm]{img/secondtry/dna-center-network-profile-new.png}
-	\caption{Cisco DNA Center - Network Profile - New Profile}
+	\includegraphics[height=5cm]{img/secondtry/dna-center-network-profile-assign-sites.png}
+	\caption{Cisco DNA Center - Network Profile - Assign Sites}
 	\label{fig:dna-center-network-profile-assign-sites}
 \end{figure}
 
-\subsubsection{Random}
+\subsubsection{Claimed Netzwerkgeräte Provisionierung}
+
+Die Provisionierung gestaltet sich im Normalfall sehr einfach. Im Modul \textit{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}
+
+Das zu provisionierende Gerät wird in der Liste ausgewählt. Über \textit{Action $\rightarrow$ Provision} wird die Provision gestartet. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/secondtry/dna-center-provision-device.png}
+	\caption{Cisco DNA Center - Netzwerkgerät konfigurieren}
+	\label{fig:dna-center-provision-device}
+\end{figure}
+
+Im ersten Schritt (Siehe: \ref{fig:dna-center-provision-step1}) wird die entsprechende \textit{Site} ausgewählt. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=3cm]{img/secondtry/dna-center-provision-step1.png}
+	\caption{Cisco DNA Center - Provision Step 1}
+	\label{fig:dna-center-provision-step1}
+\end{figure}
+
+Im zweiten Schritt gibt es keine wählbaren Optionen. 
+
+Im dritten Schritt kann das in im Abschnitt \cite{Script Template} ausgewählt werden. Die offnen Variablen (im Falle \ref{fig:dna-center-provision-step3}) werden hier hinterlegt. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=4cm]{img/secondtry/dna-center-provision-step3.png}
+	\caption{Cisco DNA Center - Provision Step 3}
+	\label{fig:dna-center-provision-step3}
+\end{figure}
+
+Im letzte Schritt erscheint eine Übersicht. Mit einem Klick auf \textit{Deploy} wird der Script provisioniert. Die dabei automatisch ausgeführten Befehle durch das DNA Center sind in Listing \ref{lst:commands-executed-during-provision} ersichtlich.
 
 
+\begin{lstlisting}[caption={Befehle automatisch ausgeführt durch das DNA Center während der Provisionierung},label={lst:commands-executed-during-provision},language=bash]
+enable
+no ip domain-lookup 
+ip access-list extended ACL_WEBAUTH_REDIRECT
+180 permit tcp any any eq www 
+190 permit tcp any any eq 443 
+200 permit tcp any any eq 8443 
+210 permit udp any any eq domain 
+220 permit udp any eq bootpc  any eq bootps 
+170 deny ip any host 10.22.0.22
+exit 
+ip tacacs source-interface Loopback0 
+ip radius source-interface Loopback0 
+aaa new-model 
+ip radius source-interface Loopback 0
+exit 
+aaa group server radius dnac-network-radius-group
+server name dnac-radius_10.22.0.22
+ip radius source-interface Loopback 0
+exit 
+aaa accounting dot1x default start-stop group dnac-client-radius-group
+aaa accounting update newinfo periodic 600
+aaa accounting exec default start-stop group dnac-network-radius-group
+aaa authorization network dnac-cts-list group dnac-client-radius-group
+aaa authorization exec VTY_author group dnac-network-radius-group local if-authenticated 
+aaa authorization exec VTY_author group dnac-network-radius-group local 
+aaa authentication login default local 
+aaa authentication dot1x default group dnac-client-radius-group
+aaa authentication login VTY_authen group dnac-network-radius-group local 
+dot1x system-auth-control 
+radius server dnac-radius_10.22.0.22
+address ipv4 10.22.0.22 auth-port 1812 acct-port 1813
+pac key *
+retransmit 1
+radius-server deadtime 30
+radius-server attribute 25 access-request include 
+radius-server attribute 8 include-in-access-req 
+radius-server attribute 6 on-for-login-auth 
+radius-server attribute 6 support-multiple 
+cts authorization list dnac-cts-list
+line vty 0 97
+login authentication VTY_authen
+authorization exec VTY_author
+transport input all 
+enable
+enable
+banner motd #\"Welcome to our SA Lab!\"#
+hostname c9300-2.edge.g2.f2
+enable
+enable
+enable
+enable
+enable
+enable
+enable
+\end{lstlisting}
 
+\subsection{Fabric}
+
+\subsubsection{Device Role zuordnen}
+
+\subsubsection{Add to Fabric}
+Screenshots und vorgehen. 
+
+\begin{lstlisting}[caption={Befehle automatisch ausgeführt durch das DNA Center während dem hinzufügen zur Fabric},label={lst:commands-executed-during-add-to-fabric},language=bash]
+!exec: enable
+ip dhcp snooping 
+cts role-based enforcement 
+vrf definition DEFAULT_VN
+address-family ipv4 
+vlan 4000
+name VOICE_VLAN
+exit 
+vlan 3999
+name CRITICAL_VLAN
+exit 
+interface GigabitEthernet1/0/3 
+no load-interval 
+no spanning-tree portfast 
+no switchport trunk native vlan 
+switchport 
+switchport mode dynamic auto 
+switchport access vlan 1
+exit 
+interface GigabitEthernet1/0/4 
+no load-interval 
+no switchport trunk native vlan 
+switchport 
+switchport mode dynamic auto 
+switchport access vlan 1
+exit 
+interface GigabitEthernet1/0/7 
+no load-interval 
+no spanning-tree portfast 
+no switchport trunk native vlan 
+switchport 
+no switchport trunk native vlan 
+switchport 
+switchport mode dynamic auto 
+switchport access vlan 1
+exit 
+interface GigabitEthernet1/0/10 
+no load-interval 
+no spanning-tree portfast 
+no switchport trunk native vlan 
+switchport 
+interface GigabitEthernet1/0/12 
+no load-interval 
+no spanning-tree portfast 
+no switchport trunk native vlan 
+switchport 
+switchport mode dynamic auto 
+switchport access vlan 1
+exit 
+interface GigabitEthernet1/0/13 
+no load-interval 
+no switchport trunk native vlan 
+switchport 
+switchport mode dynamic auto 
+switchport access vlan 1
+exit 
+interface GigabitEthernet1/0/15 
+no load-interval 
+no spanning-tree portfast 
+no switchport trunk native vlan 
+switchport 
+switchport 
+switchport mode dynamic auto 
+switchport access vlan 1
+exit 
+interface GigabitEthernet1/0/18 
+no load-interval 
+no spanning-tree portfast 
+no switchport trunk native vlan 
+switchport 
+switchport mode dynamic auto 
+switchport access vlan 1
+exit 
+interface GigabitEthernet1/0/21 
+no load-interval 
+no spanning-tree portfast 
+no switchport trunk native vlan 
+switchport 
+switchport mode dynamic auto 
+switchport access vlan 1
+exit 
+switchport access vlan 1
+exit 
+router lisp 
+ipv4 source-locator Loopback0 
+locator-set rloc_def9f1a7-9572-4e74-afaf-44215f0fbbde
+IPv4-interface Loopback0 priority 10 weight 10
+exit 
+locator-table default 
+locator default-set rloc_def9f1a7-9572-4e74-afaf-44215f0fbbde
+service ipv4 
+etr map-server 10.22.10.67 proxy-reply 
+etr 
+sgt 
+use-petr 10.22.10.67
+use-petr 10.22.30.1
+exit 
+service ethernet 
+database-mapping limit dynamic 5000
+map-cache-limit 25000
+itr map-resolver 10.22.30.1
+ipv4 locator reachability exclude-default 
+ip dhcp relay information option 
+banner motd #\"Welcome to our SA Lab!\"#
+ip sla 1
+icmp-echo 10.22.0.22 source-ip 10.22.10.65
+frequency 60
+threshold 3
+timeout 5000
+ip sla schedule 1  life forever start-time now 
+banner motd #\"Welcome to our SA Lab!\"#
+ip sla 2
+icmp-echo 10.22.10.67 source-ip 10.22.10.65
+frequency 60
+threshold 3
+timeout 5000
+ip sla schedule 2  life forever start-time now 
+banner motd #\"Welcome to our SA Lab!\"#
+ip sla 3
+icmp-echo 10.22.30.1 source-ip 10.22.10.65
+frequency 60
+threshold 3
+timeout 5000
+ip sla schedule 3  life forever start-time now 
+banner motd #\"Welcome to our SA Lab!\"#
+\end{lstlisting}
 
 
