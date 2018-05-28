@@ -106,7 +106,7 @@ Der Updateprozess bringt einige Hürden mit sich:
 	\item Während dem Updateprozess können Teile des Web-GUIs Fehlermeldungen anzeigen oder überhaupt nicht mehr erreichbar sein.
 \end{itemize}
 
-Folgende Ansicht ist unter Einstellungen (Zahnrad-Symbol) => Management zu finden:
+Folgende Ansicht ist unter \textit{Einstellungen (Zahnrad-Symbol) $\rightarrow$} Management zu finden:
 
 \begin{figure}[H]
 	\centering
@@ -205,7 +205,7 @@ Bevor es jedoch so weit kam, wurden verschiedene Fehlermeldungen angezeigt. Dies
 \subsubsection{Network Hierarchy}
 
 Gemäss unserem \ref{fig:LabNetworkArchitecture} haben wir zwei Standorte. Rapperswil mit zwei Gebäuden und Jona mit einem Gebäude.
-In DNA Center können diese sehr einfach im Abschnitt Design => Network Hierarchy hinzugefügt werden.
+In DNA Center können diese sehr einfach im Abschnitt \textit{Design $\rightarrow$ Network Hierarchy} hinzugefügt werden.
 
 \begin{figure}[H]
 	\centering
@@ -239,9 +239,9 @@ In DNA Center können diese sehr einfach im Abschnitt Design => Network Hierarch
 Da die automatische Erstellung des Underlay Netzwerkes nicht funktionierte, mussten wir es selber Konfigurieren. 
 
 \subsubsection{Script Automation}
-
+TBA
 \subsubsection{ISIS}
-
+TBA
 \subsection{Netzwerkgeräte zu Inventory hinzufügen}
 
 
@@ -296,7 +296,7 @@ Danach erscheint das Gerät in der Liste (Siehe \ref{fig:dna-center-inventory-in
 TBA: Neue Images herunterladen und mit Golden Tag versehen. 
 
 \subsection{Image Repository}
-Im DNA Center können Netzwerkgeräte automatisch geupdatet werden. Sobald ein Gerät im Inventory erfolgreich hinzugefügt worden ist, sucht das DNA Center nach Updates. Die Verfügbaren Images sind unter Desing => Global => Image Repository zu finden.
+Im DNA Center können Netzwerkgeräte automatisch geupdatet werden. Sobald ein Gerät im Inventory erfolgreich hinzugefügt worden ist, sucht das DNA Center nach Updates. Die Verfügbaren Images sind unter \textit{Desing $\rightarrow$ Global $\rightarrow$ Image Repository} zu finden.
 
 \begin{figure}[H]
 	\centering
@@ -413,7 +413,7 @@ Die Lizenzen bezieht das DNA Center automatisch von den Cisco Server.
 \end{tabular}
 
 \subsection{Device Provisioning via DNA Center}
-Um den einzelnen Netzwerkgeräten einen Namen und die Basis Konfiguration zu geben, wird im DNA Center unter \textit{Provision -> Devices} die zu provisionierende Geräte ausgewählt. Danach wird \textit{Action -> Provision Device} der Provision Vorgang gestartet.
+Um den einzelnen Netzwerkgeräten einen Namen und die Basis Konfiguration zu geben, wird im DNA Center unter \textit{Provision $\rightarrow$ Devices} die zu provisionierende Geräte ausgewählt. Danach wird \textit{Action $\rightarrow$ Provision Device} der Provision Vorgang gestartet.
 
 Dazu muss zuerst im Template Editor ein Template hinzugefügt werden.
 
@@ -421,7 +421,7 @@ TBA: Template Editor Screenshots
 
 
 \subsection{Overlay Provisioning via DNA Center}
-
+TBA
 
 \subsection{BGP über Legacy Netzwerk}
 
@@ -445,7 +445,7 @@ show license right-to-use
 \subsection{Fabric Konfigurieren}
 Nach der manuellen Konfiguration des Underlays, dem hinzufügen der Geräte, dem Update und dem Provisionieren, konnten wir endlich die Fabric konfigurieren. 
 
-Erreichbar ist das unter \textit{Provision -> Fabric}. Nachfolgend wir der entsprechende Standort ausgewählt.
+Erreichbar ist das unter \textit{Provision $\rightarrow$ Fabric}. Nachfolgend wir der entsprechende Standort ausgewählt.
 
 Den einzelnen Netzwerkgeräten werden nun mit Rechtsklick folgende Rollen zugeteilt:
 \begin{itemize}
@@ -480,10 +480,8 @@ Nachdem alle Geräte der entsprechenden Fabric zugeteilt worden sind, kann die K
 Damit die Fabric Konfiguriert werden kann, müssen folgende Bedienungen erfüllt sein:
 
 
-
-
-
 \subsection{Cisco ISE Verknüpfen und Gruppen anlegen}
+TBA
 
 \subsection{Ping zwischen zwei Clients}
 
@@ -555,9 +553,10 @@ ISE/admin# applicaiton reset-config ise
 \end{figure}
 
 \subsection{Credentials korrekt hinterlegen}
-
+TBA
 
 \subsection{ISE Integration}
+TBA
 
 \subsection{Fabric Border - Seeddevice}
 Bevor die LAN Automation gestartet werden kann, müssen folgende Bedinungen erfüllt sein:
@@ -597,7 +596,115 @@ neighbor 10.22.11.1 activate
 exit-address-family
 \end{lstlisting}
 
+\subsection{Trustpool}
+Zuvor ist das Zertifikat des DNA Centers ersetzt worden. Den gemäss \cite{cisco-dna-appliance-installation-guide-release-1-1} ist es für den ISE Version 2.4 erforderlich, dass die IP Adresse des DNA Centers im Zertifikat hinterlegt worden. Da die Version 2.4 sowieso nicht mit dem DNA Center Version 1.1.5 kompatibel ist, musste der ISE in der Version 2.3 neu installiert werden. Dies hat diese spezielle Anforderung an das Zertifikat nicht. Da das benutzerdefinierte Zertifikat die LAN Automation behinderte. Stellten wir das alte Zertifikat wieder her.
+
+Mit dem folgenden Befehl konnte das ursprüngliche Zertifikat lokal heruntergeladen.
+
+\begin{lstlisting}[language=bash]
+scp -r -P 2222 maglev@10.22.0.100:/etc/maglev/.pki .
+\end{lstlisting}
+
+In DNA Center unter \textit{System Settings $\rightarrow$ Settings $\rightarrow$ Certificate} wurde das gebergte Zertifikat eingespielt. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=8cm]{img/secondtry/dna-center-replace-certificate.png}
+	\caption{Cisco DNA Center - Zertifikat ändern}
+	\label{fig:dna-zertificate-1}
+\end{figure}
+
 
 \subsection{Netzwork Discovery - LAN Automation}
+Die Netzwerk Discovery braucht mehr Eingriffe als erwartet. Im ersten Schritt haben wir versucht alle Geräte auf der Seite Rapperswil einzuspielen. Dies hat nicht geklappt. Das PNP schlägt fehl. Deshalb sind wir wie folgt vorgegangen:
+\begin{enumerate}
+	\item Ein Netzwerkgerät im \textit{Initial Config Dialog} Zustand lassen. (Siehe: \ref{fig:cisco-switch-initial-config})
+	\item LAN Automation durchführen. (Siehe \ref{fig:dna-lan-automation-dialog})
+	\item Vorgang wiederholen, bis alle Geräte hinzugefügt sind. 
+\end{enumerate}
 
-\subsection{Trustpool}
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.5cm]{img/secondtry/cisco-switch-initial-config.png}
+	\caption{Cisco Switch - Initial Config - Versucht DHCP und PNP zu machen, solange der Dialog aktiv ist.}
+	\label{fig:cisco-switch-initial-config}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=7cm]{img/secondtry/dna-lan-automation-dialog.png}
+	\caption{Cisco Switch - DNA LAN Automation}
+	\label{fig:dna-lan-automation-dialog}
+\end{figure}
+
+\alertwarningbox{
+	Die LAN Automation funktionierte nur mit den Standard Zertifikaten. 
+}
+
+\subsection{Broken ISIS - Gründe}
+TBA
+
+\subsection{Farbic - Provisioning}
+
+\subsubsection{Script Template}
+Damit der Hostname der Switches und Router via Provisioning gesetzt werden kann, muss ein Template angelegt werden.
+
+Über das Hauptmenü \textit{Tools $\rightarrow$ Template Editor} kann mit \textit{Add (Pluszeichen) $\rightarrow$ Create Project} ein neues Projekt anlegt werden. (Siehe: \ref{fig:dna-center-template-editor-add-project})
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=7cm]{img/secondtry/dna-center-template-editor-add-project.png}
+	\caption{Cisco DNA Center - Templateeditor - Add Project}
+	\label{fig:dna-center-template-editor-add-project}
+\end{figure}
+
+Weiter kann mit \textit{Add (Pluszeichen) $\rightarrow$ Add Template} ein neues leeres File angelegt werden. (Siehe \ref{fig:dna-center-template-editor-add-template})
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=7cm]{img/secondtry/dna-center-template-editor-add-template.png}
+	\caption{Cisco DNA Center - Templateeditor - Add Template}
+	\label{fig:dna-center-template-editor-add-template}
+\end{figure}
+
+Wie in Abbilung \ref{fig:dna-center-template-editor-add-template} sind folgende Einstellungen festzulegen:
+\begin{itemize}
+	\item Name des Templates
+	\item Zugehörige Projekt
+	\item Beschreinbung
+	\item Tags
+	\item Für welche \textit{Device Types} das Template verwendet werden soll.
+\end{itemize}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=7cm]{img/secondtry/dna-center-template-editor-edit.png}
+	\caption{Cisco DNA Center - Templateeditor - Template um den Hostname bei der Provisionierung zu setzen.}
+	\label{fig:dna-center-template-editor-edit}
+\end{figure}
+
+\subsubsection{Network Profile anlegen}
+Unter \textit{Design $\rightarrow$ Network Profiles $\rightarrow$ Add Profile} kann ein neues Profil angelegt werden. Dieses Profil wird während des Provisionierungsvorgang verwendet. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/secondtry/dna-center-network-profile-new.png}
+	\caption{Cisco DNA Center - Network Profile - New Profile}
+	\label{fig:dna-center-network-profile-new}
+\end{figure}
+
+Weiter wird festgelegt für welche \textit{Sites} das Netzwerkprofil verwendet werden soll. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/secondtry/dna-center-network-profile-new.png}
+	\caption{Cisco DNA Center - Network Profile - New Profile}
+	\label{fig:dna-center-network-profile-assign-sites}
+\end{figure}
+
+\subsubsection{Random}
+
+
+
+
+
