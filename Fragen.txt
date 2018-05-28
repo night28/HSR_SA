@@ -1,0 +1,329 @@
+Alles dokumentieren (Screenshots)
+
+### Vorgehen ###
+
+- Zwischenpräsentation im Schnelldurchlauf
+- Setup anfangen / Dokumentieren
+  - Wir arbeiten unter Anleitung
+- Fragen / Diskussion
+
+### Fragen ###
+- Out of Band Mgmt nötig?
+  - Sollte ohne funktionieren
+	=> Besser ohne Out of Bound Mgmt
+- Wieso veraltete IOS-XE Version?
+  - DNA Center schlägt selbst modernste Version vor.
+	=> Es sollte max. Release heissen, da Cisco grundsätzlich immer Rückwärts alle Versionen Supportet.
+	=> Sobald ein IOS Release als Golden Release markiert ist, werden bei den Switches die älteren Versionen als outdated angezeigt. Dies steuert man sellbst.
+- Software Update der Netzwerkdevices:
+  - Wieso 9300 via SFTP und 3850 via HTTP?
+- Wieso wird ISO nicht mitgeliefert?
+	=> Versionen zu schnell veraltet, diese wieder zurückzuziehen wäre schwierig. 
+- DNA Center Updates: Wieso Dependencies auf spezifische Versionen?
+  - Wieso spezifische Reihenfolge? Nicht automatisch geregelt.
+	=> wird automatisch geregelt. 
+  - Keine Statusanzeige, gewisse Teile des GUI nicht verfügbar während Update
+	=> Statusanzeigen werden in neueren Releases noch implementiert
+- Gibt es funktionierende Anleitungen? Wo z.Bsp. benötigte Software Version drin steht?
+	=> 
+- Discovery
+- LAN Automation
+- Border Automation?
+	=> Es wird nur der Border automatisiert, der Rest muss nachher manuell gemacht werden
+  - Wieso nur BGP? Integration in bestehende z.Bsp. OSPF Umgebung?
+	=> LAN Automation und Border Automation (Prescriptive). Bei LAN Automation Underlay IS-IS da vorallem schnelle Umschaltzeiten, Overlay BGP
+- Ort um Bugs / Feature Requests zu reporten?
+  - Dürfen wir uns weiterhin melden?
+	=> Es wird ein Slack Channel eingerichtet, auf dem wir jeweils Benachrichtigungen zu neuen Releases bekommen und unsere Fragen stellen können
+- Use Cases besprechen
+  - Ausfall DNA Center / ISE?
+	=> DNA Center: Netz läuft weiterhin, keine Changes mehr möglich, keine Visability
+	=> ISE: Switch pollt ISE, wenn dieser nicht mehr verfügbar ist pollt er auf eine critital VLAN ID
+	=> Control Plane Node: wenn keiner mehr da ist, funktioniert nicht mehr viel. Jeder Edge hat zwar einen Cache(haben TTL Einträge), sobald dieser aber keine Einträge mehr hat, funktioniert kein LISP Routing mehr.
+	=> Redundanz: Access Switch schickt seine Infos immer an beide Control Planes (diese haben untereinander keine Synchronisation). Übers Underlay Routing stellt Edge sicher, welche Clients vorhanden sind und schickt seine Table an beide Border.
+	=> Full Routing im Underlay: Sollte keine Statische Route haben, da er sonst nicht merkt 
+  - Migration von bestehender Infrastruktur
+	=> Es gibt eine Cisco Live Session für eine Migration
+	=> Eher parallell eine Infrastruktur mit DNA Center aufsetzen und mit LAN Automation einen ersten Border in Betrieb nehmen. Im Distribution anfangen mit Routing und auf Access herunter ziehen.
+	=> Am besten andere IPs für Fabrics. Es gibt einen Weg die Access Switche über diese Fabric zu dieses über 
+  - 3650 als "Extension"
+	=> In Version 1.2 ist dieser Supportet als SDA Extension for IoT
+	=> Vorher Multi Host Identication auf jedem Port (ist aber nicht möglich mehrere VLANs zu definieren)
+  - Backup / Restore
+  - ...
+- Wie kann das passieren?
+  - https://tools.cisco.com/security/center/publicationListing.x?product=Cisco&keyword=dna+center&sort=-day_sir#~Vulnerabilities
+	=> 
+  - Software Qualität? Beta?
+	=> In Product Beta - ist auch wirklich eine neue Funktion (Beispiel SNMP Write Beta Vermerkt
+	=> Wird intern auch getestet, aber benötigt eine gewisse Anzahl an Personen die dies in Production einsetzten, damit dies wirklich so genannt eingesetzt werden kann
+- Wie funktionieren Policies etc?
+  - Best Practices etc.
+- Protokoll bitte via Mail bestätigen
+	=> Wird Patrick reviewen und senden
+- Produktive Installationen in der Schweiz?
+	=> In der Schweiz nur eine Produktive die öffentlich ist
+	=> Weltweit ca 100 Kunden die Cisco DNA Center produktiv einsetzten
+
+### Bugs / Kritik / Anregungen ###
+  - Lizenzanzeige
+  - Add Backupserver
+    - Recovery via CLI falls alles kaputt?
+  - Add SFTP Server
+  - System Update ohne Account möglich, Package Update nicht?
+  - OS Update der Switches
+  - Update Reihenfolge tatsächlich nötig?
+    - Dauert ewig
+	=> Update Dauer wird gleich bleiben, Statusmeldungen sind zur Zeit nicht direkt geplant. 
+	=> Reihenfolge ist nicht mehr möglich ab Release 1.6 können alle Packages Updates selektiert und installiert werden.
+  - kein Update Status, GUI random nicht verfügbar
+	=> Es werden im Hintergrund mehrere Docker Container immer wieder neugestartet, darum kann es sein das Teile des GUIS nicht mehr sichtbar sind.
+  - Package Updates werden nicht angezeigt während Download von System Update
+  - Bei Reboot ist GUI "verfügbar" bevor es wirklich funktioniert. (z.Bsp. Bad Gateway Error)
+  - Missing Refresh Button in Packages & Updates
+  - kein Package Download möglich währenddem ein anderer Download oder eine Installation / Upgrade läuft
+  - nach dem Löschen des ISE ist der Schieber "ISE" beim hinzufügen des ISE deaktiviert (sh Screenshot 250)
+    - funktioniert wenn man via System360 -> ISE -> Configure Settings geht
+  - ISE Integration benötigt Cert mit IP oder Hostname in CN oder SAN
+    - Gültigkeit wird aber nicht geprüft
+    - Certificate Replacement dauert mehrere Minuten?
+	=> Grösster Pain mit Certificates (vorallem öffentliche)
+  - ISE Edit Button:
+    - nur Timeout Values editierbar
+  - ISE PW anzeige / Shared Secret Anzeige
+  - CLAIM DEVICE hat nie funktioniert
+	=> Beim Claim sollte ein DHCP Server auf den Legacy Switch installiert werden und die restlichen Devices claimen. Bei uns ist dies schon am installieren des DHCP Servers gescheitert.
+  - Devices in Unclaimed Devices und Inventory (nach manuellem Hinzufügen)
+	=> Sobald Devices geclaimed wurden, sollten diese gar nicht mehr in dieser Ansicht erscheinen.
+  - Port Assignment Interface Anzeige. Auf 9300 werden nur Interfaces angezeigt, die up sind (auf 3850 alle)
+  - Schlechte, unvollständige Fehlermeldungen / Statusanzeigen (verschwinden nach Klick)
+
+**********************************************************************************************************************************************************************************************************
+**********************************************************************************************************************************************************************************************************
+**********************************************************************************************************************************************************************************************************
+ 
+##Anmerkungen von Patrick
+	=> Auf der Jona Seite steht als Border ein ISR mit nur einem 2Gbit Interface, das heisst die Performance wäre sehr limitiert.
+	=> Verbindung zwischen zwei Edge Routern in Rapperswil nicht sinnvoll
+	=> Benutzername auf Devices darf nicht admin sein, da der ISE kein amdin akzeptiert, bzw. schon ein admin user hat. => Bei uns sowieso dnaadmin
+	=> Lan Automation im nächsten Release enthält eine csv Datei mit Host- und Domainname 
+	=> LAN Automation kann man aktuell nicht angeben, dass Seed Device in einem anderen Gebäude ist. Anschliessend müsste man die zwei Switches ins Gebäude 2 schieben.
+	=> Nach Border Provisioning direkt eine Fabric erstellen. So wird nachher das IS-IS Routing automatisch vom DNA Center konfiguriert. Ansonsten müsste dieses manuell gemacht werden.
+		
+	=> Feedback-Session eventuell mit Engineers, damit wir all unsere Erfahrungen und Probleme mitteilen können.
+		
+		
+###Installation
+	=> Design / Device Credentials -> CLI und SNMP Credentials müssen angewählt sein (Bullet Point), dazu muss SNMP Write hinterlegt werden, nicht nur Read.
+		
+		
+###Switch Config Border
+	=> Initial Wizard überspringen
+	=> User anlegen (dna admin priviledge 15 password 0 hallo@1234)
+	=> Minimum für LAN Automation ein C Netz, anschliessend in Fabric ein halbes B Netz
+	=> Border am besten eine IP für Loopback, welches ausserhalb des C Netzes liegt, da er die IPs nachher an die Geräte vergibt
+	=> ip address 10.22.30.1 255.255.255.255 (Loopback)
+	=> Border braucht noch ein Interface, welches zum ISR verbunden ist. Am besten als trunk konfigurieren und ein VLAN dafür machen
+	=> Ein VLAN für den Port der mit dem ISR verbunden ist
+	switchport trunk native vlan 100
+	ip adress 10.22.31.1 255.255.255.252 (Verbindung zum ISR)
+		
+	=> no switchport native vlan
+		
+	Route auf ISR mit 10.22.0.0 255.255.255.0 10.22.31.0
+
+	SSH aktivieren
+		
+###Switch Config ISR
+	=> ip address 10.22.31.2 255.255.255.252 (verbindung zum Border)
+	=> int gi0/0/2.100
+	=> encapsulation 
+	=> no ip route 10.22.32.0 255.255.255.0
+	=> 
+	=> do sh run int gi0/0/2
+	=> default int gi0/0/2
+	=> int gi0/0/2
+	=> default int gi0/0/2.100
+	=> int
+
+	=> ISR Verbindung zu Border Loopback Interface		
+
+	=> SSH Verbindung zu Border aktivieren
+		
+		
+###Discovery starten
+	=> Discovery für den Border starten
+	=> Tools / Discovery
+	=> Inital Discovery, IP Range, 10.22.31.1 - 19.22.31.1, SNMP Credentials müssen nicht definiert sein auf Switch
+	=> Device wurde nicht gefunden, keine SSH Verbindung möglich
+	
+###Switch config Border
+	=> aaa new-model 
+	
+###Discovery 2
+	=> Discovery nochmal starten. Hat diesmal funktioniert. ICMP success, SNMP failed
+	
+###Inventory
+	=> Managed heisst nur, dass er Zugriff auf Device hat. ISR(10.22.0.254) und Legacy Router(10.22.0.10) dahinter wurden gefunden.
+	=> Nach dem abgeschlossenen Discovery wurde ISR auch mit der IP 10.22.31.1 gefunden
+	
+###Provision
+	=> Border Provisioning mit IP 10.22.30.1
+	
+###Fabric erstellen
+	=> Fabric Rapperswil erstellen
+	=> Fabric Jona erstellen
+	=> Fabric Rapperswil anschauen und dem Border als Device Role (BORDER ROUTER) zuweisen.
+		=> Passiert nicht automatisch wenn er als CP-Border konfiguriert wird
+	=> Add as Border
+		=> umbedingt Anywhere auswählen
+		=> IP Pool umbedingt definiere, kann aber auch in einem nächsten Schritt gemacht werden. Border Handoff muss noch nicht angepasst werden.
+	=> Save	
+	=> CFS Provisioning failed
+	
+### Border nochmal anpassen
+	=> ip routing 
+	=> system mtu 9100
+	=> license right-to-use activate ipservices acceptEULA
+	
+### Inventory
+	=> Resync starten
+	=> Particial Failure -> false cli credentials..
+	
+### ISE
+	=> Administration / Network Resources / Default Device (Sollte nicht nötig sein)
+	=> Administration / Network Resources / Network Device (Gerät wurde nicht hinzugefügt)
+	=> Administration / System / Upgrade => Version 2.4.0357 => Version zu neu, ist nicht supportet => Downgrade 2.3
+
+	
+###ISE Löschen und neu Integrieren
+	=> ISE löschen, funktioniert nicht.
+	=> Provision, Border als Border entfernen
+	=> Provision, border, delete Device
+	=> Border ist gelöscht, jetzt kann AAA Server entfernt werden.
+	=> ISE Server erneut hinzufügen
+	=> ISE Passwort reset: application reset-passwd ise admin
+	=> ISE Service via CLI stoppen und wieder starten
+	=> Administration / Deployment / ISE / Enable SXP, PXGrid, and.....
+	=> Administation / System / Settings / ERS Settings -> Enable Read / Write
+	=> Administration / PXGrid -> Hier werden die gestarteten Services angezeigt
+	=> DNA Center / System Settings / Settings / Authentication and Policy Services / ISE hinzufügel =====> failed
+	=> SSH user muss auf ISE Server der gleiche sein wie GUI User => CLI: password ==> passwort stimmt nicht bzw wird nicht angenommen
+	=> Neuer CLI User anlegen zur Sicherheit: 
+		conf t
+		username admin 2 password plain Hallo@1234
+	=> Mit dem neuen User den Passwort Hash vom admin überschreiben und locked status lösen
+	=> ISE Server auf DNA Center neu anlegen
+	=> Auf ISE Server die pxgrids nochmal neu anzeigen lassen, dort sollte nun die pxgrid dnacenter angezeigt werden. Diese noch Approven
+	=> Design / Network Settings / Network ===> AAA Server und Client Endpoint etc alles wieder angeben
+	
+## Network Discovery / LAN Automation
+	=> Network Discovery nochmal neu starten mit gleichen Einstellungen wie vorher
+	=> Provision / Devices => Border sollte automatisch erkannt werden nach einer Weile wieder als "Managed" angezeigt werden
+	=> Tipp von Patrick: Interfaces von beiden Border nach unten zu Distribution und Edge von Gebäude 2 
+	=> Border -> Provision / Rapperswil Geb1 ======> Fehler: Could not complete Action: Bad Request: no AAA.....
+	=> Konfiguration auf Border muss nochmals gelöscht werden, bzw nur AAA Authentication, Authorization, ..... do sh run | inc radius..... radius server einträge entfernen
+	=> Border -> Provision nochmal neu versuchen -> border Provisioned successfully
+	=> ISE / Network Devices -> Switch wird nun angezeigt. Für Switch Access ist ISE der Radius Server, jedes einzelne Device wird hier schlussentlich als Network Device aufgelöst. Switch bauen Kommunikation mit ISE auf, welche Security Group Tags vorhanden sind.
+	=> Border Provisioned, dafür Particial Failure bei Resync. (Authorization Policy auf ISE fehlt
+	=> ISE / Operations / Live Loggs =====> Authentication failed
+	=> Administration / Identities / Add Network Access Users => dnaadmin + passwort
+	=> Administration / Identity Management / Setting / User Authentication Settings-> hier kann angegeben wie sicher die Kennwörter sein müssen (Upper, Lower Case, ..Disable Account after  60 Days)
+	
+	=> DNA Center / Inventory ====> Border wieder Reachable
+	=> DNA Center / Provision ====> Border wieder Managed und auch Provision successfully
+	
+	=> Provision / Fabric Rapperswil / Border -> Device Role Border zuweisen
+		=> Anschliessend werden auf dem Switch schon LISP Interfaces hochgenommen, default VN und Infra VN
+		
+		
+	=> Für beide Standorte zwei Netze definieren
+		Design / Network Settings / IP Adress Pools / Add IP Pool	
+			LAN-Automation, Subnetz: 10.22.10.0, CIDR: /24,...
+			LAN_Automation_Rapperswil, Type: LAN, Global IP Pool: LAN_Automation, IP Pool CIDR: 10.22.10.0 / 25
+			LAN_Automation_Jona: Type: LAN, Global IP Pool: LAN_Automation, IP Pool CIDR: 10.22.10.128 / 25
+			
+			IP Pool Name: Border..... eventuell nachher wieder löschen, wenn nicht gebraucht
+			
+	=> Provision / Fabric / Border / Edit ====> IP Address Pool noch nicht verfügbar
+		=> Design / Network Settings/ Rapperswil / Geb1 / Reserve IP Pool
+			=> Border_Rapperswil_G1, Type LAN, Global IP Pool: Border, IP Adress: 10.22.11.0 / 26
+	=> Provision / Fabric / Border / Edit =====> IP Adress Pool immer noch nicht verfügbar		
+	
+	======> Workaround: Bei Jessi und Philipp konnte ein IP Address Pool angegeben werden...
+	
+	=> auf isr.legacy: 
+		bgp log-neighbor-changes
+		neighbor 10.22.11.1 remote-as 30
+		neighbor 10.22.11.2 activate
+		neighbor 10.22.11.2 weight 65535
+		
+Erklärung: Wir erstellen auf dem Legacy(Fusion) virtuelle Netze die nur auf den Border kommen und routen diese übers Border Automation in die Fabric
+			oder in produktiver Umgebung wird diese Route auf der Firewall gesetzt, wer welche Route aufrufen darf
+			
+	=> Underlay in global lassen und nicht in eine VRF.. besser separiert lassen
+	
+	=> BGP auf beiden Seiten kontrollieren: Border und Legacy... statische Routen entfernen
+	=> von Border auf DNA Center pingen ===> funktioniert
+	=> Border: int vlan 100 -> shutdown
+	=> von Border auf DNA Center pingen ===> funktiniert
+	
+	
+	
+	
+###LAN Automation
+	=> Verbindungen auf Distribution Interfaces down nehmen, so dass nur noch beide Border Switch verfügbar sind.
+	=> LAN Automation starten: Rapperswil/Geb1, Primary Device: border.lab.local, IP-Pool: LAN Automation Rapperswil, Interface 1/11/0
+	=> Mit CLI auf zweiten border verbinden:
+		en
+		wr erase
+		reload
+	======> LAN Automation hat nicht funktioniert
+		router bgp 30
+	=> Border hat dem Legacy Switch bzw Router seine eingetragenen Routen nicht weitergeleitet. Darum müssen diese mit redistribute connected noch weitergereicht werden	
+		=> router bgp 30
+			address-family ipv4
+				redistribute connected
+	=> DNA Konfiguriert auf Border2 einige dinge, aber macht dann doch nichts mehr.
+		wr erase
+		reload
+	
+	
+	=> request platform software package clean (schauen wieviel Platz noch auf Switch vorhanden)
+	=> dir flash
+	=> sh license right-to-use
+	
+	=> reload (Border, damit nochmals bei DNA Center meldet und sicher seine aktuelle Lizenz, also IP Services kund gibt)
+	
+	
+### MyPnP Ansicht
+	=> https://10.22.0.100/mypnp
+		neue Ansicht die in Release 1.2 noch integriert wird.
+	
+	
+	
+	
+	
+### Policy Definition
+	Am besten für die Stufen intern, vertraulich, geheim je eine SGT machen.
+	Definieren das geheim zugriff auf vertraulich und intern hat
+	definieren das vertraulich auch auf intern zugreifen darf
+	definieren das intern nur internen zugriff hat
+	
+	SGT den VN zuweisen mit folgendem Pool
+	
+	Entweder alles auf NO Autorization stellen oder open authorization, wobei Patrick aber no authorisation vorschlägt.
+	
+	
+
+	
+	
+
+	
+	
+
+	
+
+	
+	
+
