@@ -112,6 +112,88 @@ Im Imagerepository muss das Image verfügbar sein. }
 {Siehe Workaround}
 
 
+\bugreport
+% Titel
+{Devices mit Namen "NULL" können nicht gelöscht werden}
+% Komponente
+{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}
+% Dringlichkeit
+{Mittel}
+% Beschreibung
+{Nach der LAN-Automation kommt es vor, dass Devices mit dem Namen "NULL" erscheinen. Diese können nicht über das Action Menü gelöscht werden.}
+% Konsequenzen
+{Wenn die Synchronisation nicht funktioniert und das Device neu hinzugefügt werden muss, kann es nicht entfernt werden.}
+% Workaround
+{"NULL-Device" zusammen mit funktionierendem Netzwerkgerät markieren. Die \textit{Action} Schaltfläche wird dann klickbar. Das funktionierende Device deselektieren. Die Schaltfläche bleibt danach weiterhin klickbar und das "NULL-Device" kann über \textit{Action} $\rightarrow$ \textit{Delete} gelöscht werden.}
+%Reproduzieren
+{
+	Bedingung: "NULL-Device" in \textit{Inventory} vorhanden.
+	\begin{enumerate}
+		\item Provision $\rightarrow$ Devices $\rightarrow$ Inventory
+		\item "NULL-Device" anwählen
+		\item Probieren \textit{Action} Schaltfläche anzuwählen
+	\end{enumerate}
+}
+% Reporter
+{Sandro Kaspar}
+% Feedback Cisco
+{}
+
+\bugreport
+% Titel
+{https://dnacenter/mypnp \textit{Configurations} nicht löschbar}
+% Komponente
+{https://dnacenter/mypnp $\rightarrow$ Configurations}
+% Dringlichkeit
+{Mittel}
+% Beschreibung
+{Im myPNP können Konfigurationen nicht gelöscht werden.}
+% Konsequenzen
+{Annahme: Von dort kommen veraltete Informationen die auf die Netzwerkgeräte geschrieben wird.}
+% Workaround
+{Nicht vorhanden.}
+%Reproduzieren
+{
+	Bedingung: In myPNP sind Konfigurationen vorhanden.
+	\begin{enumerate}
+		\item https://dnacenter/mypnp $\rightarrow$ Configurations
+		\item Beliebige Konfiguration anwählen
+		\item \textit{Delete} klicken
+	\end{enumerate}
+}
+% Reporter
+{Sandro Kaspar}
+% Feedback Cisco
+{}
+
+
+\bugreport
+% Titel
+{9xxx Serie Lizenzzuordnung}
+% Komponente
+{Licence Manager $\rightarrow$ Switches}
+% Dringlichkeit
+{Mittel}
+% Beschreibung
+{In der Tabelle \textit{Switch Licence Usage} werden redudante Einträge für Switches der 9xxx Serie angezeigt. Einerseits gibt es den Eintrag \textit{Cisco Catalyst 9300 Series Switches} andererseits \textit{Cisco Catalyst 9xxx Series Switches} Ein Gerät mit der Version 9300 fällt demnach in zwei Verschiedenen \textit{Model}.}
+% Konsequenzen
+{Die Lizenzen können nicht zugewiesen werden.}
+% Workaround
+{Nicht vorhanden.}
+%Reproduzieren
+{
+Siehe Beschreibung
+}
+% Reporter
+{Sandro Kaspar}
+% Feedback Cisco
+{}
+
+
+
+
+
+
 
 
 
