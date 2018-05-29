@@ -118,7 +118,9 @@ Folgende Ansicht ist unter \textit{Einstellungen (Zahnrad-Symbol) $\rightarrow$}
 Abgestürzte Packete können mit den folgenden Befehlen wieder restauriert werden (Am Beispiel von main-system-package:1.0.4.779):
 
 \begin{lstlisting}[language=bash]
-$ maglev package status | awk  '$3 ~ /[0-9]+/ {print $1":"$3}'| grep -v "^system" |  while read pkg; do maglev catalog package delete $pkg;done
+$ maglev package status | awk  '$3 ~ /[0-9]+/ {print $1":"$3}' | 
+grep -v "^system" |  while read pkg; 
+do maglev catalog package delete $pkg;done
 $ maglev system_update_package install main-system-package:1.0.4.779
 \end{lstlisting}
 
@@ -615,7 +617,8 @@ In DNA Center unter \textit{System Settings $\rightarrow$ Settings $\rightarrow$
 \end{figure}
 
 
-\subsection{Netzwork Discovery - LAN Automation}
+\subsection{Netzwork Discovery - LAN Automation - Zweiter Versuch}
+\label{Netzwork Discovery - LAN Automation - Zweiter Versuch}
 Die Netzwerk Discovery braucht mehr Eingriffe als erwartet. Im ersten Schritt haben wir versucht alle Geräte auf der Seite Rapperswil einzuspielen. Dies hat nicht geklappt. Das PNP schlägt fehl. Deshalb sind wir wie folgt vorgegangen:
 \begin{enumerate}
 	\item Ein Netzwerkgerät im \textit{Initial Config Dialog} Zustand lassen. (Siehe: \ref{fig:cisco-switch-initial-config})
@@ -930,5 +933,21 @@ timeout 5000
 ip sla schedule 3  life forever start-time now 
 banner motd #\"Welcome to our SA Lab!\"#
 \end{lstlisting}
+
+\subsection{LAN Automation - Dritter Versuch}
+Da das DNA Center nur ein Teil der Links zwischen den Switches konfiguriert hat, entschieden wir uns diese nochmals neu durchzuführen. Ausser dem Seed Device haben wir alle Devices gelöscht. Danach starteten wir die LAN Automation nochmals (siehe Abschnitt \ref{Netzwork Discovery - LAN Automation - Zweiter Versuch}).
+
+\begin{enumerate}
+	\item LAN Automation starten
+	\item Switches und Router so lange neu Booten bis PNP erfolgreich ist.
+	\item LAN Automation stoppen
+\end{enumerate}
+
+\paragraph{Resultat}
+Alle Devices und Links wurden erfolgreich konfiguriert. Das "Schritt-für-Schritt" hinzufügen vom vorherigen Versuch funktioniert nicht. Möglicherweise ist das spätere automatische Hinzufügen von Netzwerkgeräten zu einem Underlay nicht möglich. 
+
+\subsection{Lizenzen auf Netzwerkgeräten nach Underlay Automation}
+Geräte haben nicht mer EVAL sondern plötzlich Permanent Lizenzen
+
 
 

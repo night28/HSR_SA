@@ -1,0 +1,119 @@
+\section{Bugs}
+Im folgenden werden Bugs aufgeführt, die während unserer Arbeit aufgetreten sind. 
+
+\newcommand{\bugreport}[9]{
+\subsubsection{#1}
+	\begin{table}[H]
+		\rowcolors{2}{gray!25}{white}
+		\centering
+		\begin{tabularx}{\textwidth}{l | X}
+			Komponente   & #2       \\
+			Dringlichkeit   & #3       \\
+			\hline
+			Beschreibung   & #4  \\ 
+			\hline
+			Konsequenzen   & #5  \\ 
+			\hline
+			Workaround & #6 \\
+			\hline
+			Reproduzieren & 
+			#7
+			\\
+			\hline
+			Reporter  & #8 \\
+			Feedback Cisco & #9 \\
+		\end{tabularx}
+		\caption{Bug: #1}
+	\end{table}
+}
+
+\bugreport
+% Titel
+{Backup Server hinzufügen}
+% Komponente
+{Einstellungen $\rightarrow$ System Settings $\rightarrow$ Backup \& Restore}
+% Dringlichkeit
+{Hoch}
+% Beschreibung
+{Nach der Eingabe der Backup Server Einstellungen und den klick auf \textit{Apply} geschieht nichts. Nach einer Weile werden immer mehr Docker Container gestoppt, bis das DNA Center nicht mehr gebraucht werden kann. Ein Neustart ist erforderlich}
+% Konsequenzen
+{Beim Ausfall der Appliance können die Einstellungen nicht wiederhergestellt werden}
+% Workaround
+{Keiner}
+%Reproduzieren
+{
+	\begin{enumerate}
+		\item Einstellungen $\rightarrow$ System Settings $\rightarrow$ Backup \& Restore
+		\item Im Popup \textit{Configure} wählen. 
+		\item SSH Servereinstellungen eingeben
+		\item \textit{Apply} drücken. 
+	\end{enumerate}
+}
+% Reporter
+{Sandro Kaspar}
+% Feedback Cisco
+{}
+
+\bugreport
+% Titel
+{Netzwerkgerät OS Update}
+% Komponente
+{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}
+% Dringlichkeit
+{Mittel}
+% Beschreibung
+{Im DNA Center können OS Images automatisch auf Netzwerkgeräte aufgespielt werden. Dieser Funktion hat bei allen Versuchen immer zu Fehler geführt. 
+\textbf{Wichtig:}
+Im Imagerepository muss das Image verfügbar sein. }
+% Konsequenzen
+{OS Updates müssen manuell durchgeführt werden.}
+% Workaround
+{Update manuell via TFTP direkt via CLI auf dem Netzwergerät ausführen.}
+%Reproduzieren
+{
+	\begin{enumerate}
+		\item Provision $\rightarrow$ Devices $\rightarrow$ Inventory
+		\item Gewünschtes Gerät anwählen 
+		\item Action $\rightarrow$ Update OS Image
+		\item Im Popup Gerät auswählen $\rightarrow$ Update
+	\end{enumerate}
+}
+% Reporter
+{Sandro Kaspar}
+% Feedback Cisco
+{}
+
+\bugreport
+% Titel
+{DNA Center Update - Appliance nicht nutzbar während Update}
+% Komponente
+{Einstellungen $\rightarrow$ App Management}
+% Dringlichkeit
+{Mittel}
+% Beschreibung
+{Wenn ein \textit{System Update} oder ein \textit{Package Update} durchgeführt wird, kann das GUI des DNA Center nicht verwendet werden. Problematisch: Der Zugriff ist trotzdem möglich. Jedoch sind dann zufällig Funktionen nicht vorhanden oder benutzbar.}
+% Konsequenzen
+{Appliance nicht nutzbar während Update}
+% Workaround
+{Während Update GUI nicht verwenden.}
+%Reproduzieren
+{
+	Bedingung: Updates sind Verfügbar.
+	\begin{enumerate}
+		\item Einstellungen $\rightarrow$ App Management
+		\item \textit{System Update} oder \textit{Package Update} wählen.
+		\item Packages auswählen
+		\item Install oder Update wählen.
+	\end{enumerate}
+}
+% Reporter
+{Philipp Albrecht}
+% Feedback Cisco
+{Siehe Workaround}
+
+
+
+
+
+
+
