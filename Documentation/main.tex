@@ -96,6 +96,27 @@
 %rename Tabe zu Tabelle
 \addto\captionsenglish{\renewcommand{\tablename}{Tabelle}}
 
+% Befehle für die Tabellenerstellung der Testcases
+\newcommand{\testpttb}[3]{
+	\begin{landscape}
+		\subsection{#1}
+		#2
+		\rowcolors{2}{gray!25}{white}
+		\begin{longtable}{| l | l | l | l | l |}
+			\hline
+			\textbf{Nr} & \textbf{Beschreibung} & \textbf{Erwartetes Ergebnis} & \textbf{Tatsächliches Ergebnis} & \textbf{status}
+			\\
+			\hline
+			#3
+			\hline
+		\end{longtable}
+	\end{landscape}
+}
+
+\newcommand{\testptrow}[5]{
+	#1 & #2 & #3 & #4 & #5 \\
+}
+
 \title{Software-Defined Netzwerk im Campus Bereich}
 \author{Sandro Kaspar, Philipp Albrecht, Jessica Kalberer}
 \date{28.02.2017}
@@ -123,6 +144,7 @@
 \input{sections/loesungskonzept}
 \input{sections/technologien}
 \input{sections/usecases}
+\input{sections/testprotokolle}
 \input{sections/umsetzung}
 \input{sections/vorgehen}
 \input{sections/ergebnisse}
@@ -141,7 +163,6 @@
 \input{sections/sitzungsprotokolle}
 \input{sections/erklaerungen}
 \input{sections/verzeichnisse}
-
 
 
 
