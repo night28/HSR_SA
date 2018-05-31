@@ -73,52 +73,11 @@ Nachfolgend werden die aktuell maximalen Skalierungen des DNA Centers, sowie der
 
 \pagebreak
 \subsection{Verkabelungsplan}
-\begin{longtable}{| l | l | l | l |}
-		\hline
-		\multicolumn{4}{| c| }{Verkabelung} \\
-		\hline
-		\multicolumn{2}{| c |}{Seite A} & \multicolumn{2}{ c |}{Seite B} \\
-		\hline
-		isr4431-1.access & GE0/0/0 & WAN & -\\
-		\hline
-		isr4431-1.access & GE0/0/1 & isr4431-2.access & GE0/0/1 \\
-		\hline
-		isr4431-1.access & GE0/0/2 & c9300-1.dist & GE1/0/1 \\
-		\hline
-		isr4431-2.access & GE0/0/0 & WAN & - \\
-		\hline
-		isr4431-2.access & GE0/0/1 & isr4431-1.access & GE0/0/1 \\
-		\hline	
-		isr4431-2.access & GE0/0/2 & c9300-2.dist & GE1/0/1 \\
-		\hline			
-		c9300-1.dist & GE1/0/2 & c9300-2.dist & GE1/0/2  \\
-		\hline
-		c9300-1.dist & GE1/0/3 & isr4431-1.core & GE0/0/0 \\
-		\hline
-		c9300-2.dist & GE1/0/3 & isr4431-2.core & GE0/0/0 \\
-		\hline
-		c9300-2.dist & GE1/0/4 & HSR Lab & - \\
-		\hline
-		isr4431-1.core & GE0/0/1 & isr4431-2.core & GE0/0/1 \\
-		\hline
-		isr4431-1.core & GE0/0/2 & c3850.g1.dist & GE1/0/1 \\
-		\hline
-		isr4431-1.core & GE0/0/3 & c3850.g2.access & GE1/0/1 \\
-		\hline
-		isr4431-1.core & GE0/1/0 & c9300.g3.access & GE1/0/1 \\
-		\hline
-		isr4431-2.core & GE0/0/2 & c3850.g1.dist & GE2/0/1 \\
-		\hline
-		isr4431-2.core & GE0/0/3 & c3850.g2.access & GE1/0/2 \\
-		\hline
-		isr4431-2.core & GE0/1/0 & c9300.g3.access & GE1/0/2 \\
-		\hline
-		c3850.g1.dist & GE1/0/2 & c3850.g1.access & GE1/0/1 \\
-		\hline
-		c3850.g1.dist & GE2/0/2 & c9300.g1.access & GE1/0/1 \\
-		\hline
-		c3850.g1.access & GE1/0/3 & c3650.g1.access & GE0/1 \\
-		\hline
-\end{longtable}
+\begin{figure}[H]
+	\centering
+	\includegraphics[angle=90,width=0.9\linewidth]{img/LabNetworkArchitecture-Interfaces.png}\\[1px]
+	\caption{Lab Architecture with physical Interfaces}
+	\label{fig:Lab Architecture with physical Interfaces}
+\end{figure}
 
 
