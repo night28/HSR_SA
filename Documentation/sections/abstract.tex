@@ -3,36 +3,33 @@ Der Abstract richtet sich an den Spezialisten auf dem entsprechenden Gebiet und
 beschreibt daher in erster Linie die (neuen, eigenen) Ergebnisse und Resultate der 
 Arbeit. Es umfasst nie mehr als eine Seite, typisch sogar nur etwa 200 Worte (etwa 
 20 Zeilen). Es sind keine Bilder zu verwenden.
-\subsection{Ausgangslage}
-
-\subsection{Ziele der Arbeit}
-Das grundsätzliche Ziel ist eine Evaluation des Cisco Software Defined Networking. Im ersten Schritt beinhaltet das die Inbetriebnahme und Konfiguration von den folgenden Komponenten:
-\begin{itemize}
-	\item Cisco DNA Center Appliance
-	\item Integration Infoblox (One Platform Solution für DNS, DHCP, IPAM)
-	\item Integration Cisco ISE (Access and Authentification Control)
-	\item Integration Campus Labor Netzwerk
-\end{itemize}
-Im zweiten Schritt sollen UseCases durchgespielt werden, die den folgenden Umfang abdecken:
-\begin{itemize}
-	\item Definierung von Benutzer- und Geräteprofile, um basierend auf Geschäftsanforderungen die Zugriffsrechte und Netzwerksegmentierung zu verwalten und so das Netzwerk sicher zu halten.
-	\item DNA Analytics and Assurance für eine proaktive Überwachung, Fehlerbehebung und Optimierung des Netzwerks.
-	\item IP Address Management Tool im DNA Center.
-	\item Wöchentliche Reports über Campus Netzwerk-Status via E-Mail oder Slack
-\end{itemize}
-
-\subsection{Ergebnisse}
-
 
 \subsection{Version 2}
 
-**** \\
 Ziel dieser Studienarbeit war die Evaluation der Software Defined Access Lösung von Cisco für die Führungsunterstützungsbasis der Schweizer Armee. Der erste Schwerpunkt lag dabei auf der Installation des Cisco Digital Network Architecture (DNA) Centers und der Konfiguration sowie Integration eines Campus Netzwerkes. Für das DNS-, DHCP- und IP-Adress-Management (IPAM) wird im Campus Netzwerk Infoblox eingesetzt. Für die Benutzerverwaltung sowie Zugriffskontrolle wird die Cisco Identity Services Engine (ISE) verwendet.
 
 Nach dem Einrichten des Campus Netzwerkes lag der zweite Schwerpunkt auf der Definierung von Benutzer- und Geräteprofilen, um den einzelnen Mitarbeitern der Führungsunterstützungsbasis der Schweizer Armee den Netzwerkzugriff sicherzustellen und die Zugriffsrechte der einzelnen Mitarbeiter oder eines Teams zu regeln. Zusätzlich hierzu sollte mit DNA Analytics und Assurance eine proaktive Überwachung, Fehlerbehebung und Optimierung des Netzwerkes sichergestellt werden. Mit diesen Informationen sollten wöchentliche Reports über den Campus Netzwerk Status in einem E-Mail oder in einer Slack Message versendet werden.\\
 \\
-Die Implementation des Campus Netzwerkes war alles andere als einfach. Das DNA Center sollte nach dem Definieren eines Seed-Devices durch die LAN Automation alle weiteren Geräte selbstständig über PnP konfigurieren. Diesen Prozess führe es aber nur teilweise vollständig aus, so dass die LAN Automation des Underlay Netzwerkes erst nach mehreren Anläufen komplett durchgeführt werden konnte. Durch diese Komplikationen wurde der ganze Provisionierungsprozesse verzögert. Die Definierung der Benutzer- und Geräteprofile wurde an die Klassifizierungsstufen der Schweizer Armee angelehnt.\\
+Die Implementation des Campus Netzwerkes war alles andere als einfach. Das DNA Center sollte nach dem Definieren eines Seed-Devices durch die LAN Automation alle weiteren Geräte selbstständig über PnP konfigurieren. Diesen Prozess führte es aber nur teilweise vollständig aus, so dass die LAN Automation des Underlay Netzwerkes erst nach mehreren Anläufen komplett durchgeführt werden konnte. Durch diese Komplikationen wurde der ganze Provisionierungsprozesse verzögert. Die Definierung der Benutzer- und Geräteprofile wurde an die Klassifizierungsstufen der Schweizer Armee angelehnt.\\
 \\
 Abschliessend kann gesagt werden, das für die Installation und Konfiguration des DNA Centers mehrere Tage wenn nicht Wochen eingerechnet werden müssen. Zudem muss im optimalen Fall ein Green Field vorliegen, da zur Zeit kein bestehendes Netzwerk ohne Unterbrüche migriert werden kann. Bei der Installation sollten die empfohlenen Softwareversionen genauestens eingehalten werden, da sonst die volle Funktionalität des DNA Centers nicht gewährleistet werden kann. Beim Kauf des DNA Centers ist es am einfachsten, gleich auch einen Experten von Cisco aufzubieten, um diese Appliance komplett in der gewünschten Umgebung in Betrieb zu nehmen. 
 
+%\subsection{Ausgangslage}
 
+%\subsection{Ziele der Arbeit}
+%Das grundsätzliche Ziel ist eine Evaluation des Cisco Software Defined Networking. Im ersten Schritt beinhaltet das die %Inbetriebnahme und Konfiguration von den folgenden Komponenten:
+%\begin{itemize}
+%	\item Cisco DNA Center Appliance
+%	\item Integration Infoblox (One Platform Solution für DNS, DHCP, IPAM)
+%	\item Integration Cisco ISE (Access and Authentification Control)
+%	\item Integration Campus Labor Netzwerk
+%\end{itemize}
+%Im zweiten Schritt sollen UseCases durchgespielt werden, die den folgenden Umfang abdecken:
+%\begin{itemize}
+%	\item Definierung von Benutzer- und Geräteprofile, um basierend auf Geschäftsanforderungen die Zugriffsrechte und Netzwerksegmentierung zu verwalten und so das Netzwerk sicher zu halten.
+%	\item DNA Analytics and Assurance für eine proaktive Überwachung, Fehlerbehebung und Optimierung des Netzwerks.
+%	\item IP Address Management Tool im DNA Center.
+%	\item Wöchentliche Reports über Campus Netzwerk-Status via E-Mail oder Slack
+%\end{itemize}
+
+%\subsection{Ergebnisse}
