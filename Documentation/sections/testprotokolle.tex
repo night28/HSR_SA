@@ -8,3 +8,13 @@
 \testpttb{UC02}{Kurzbeschreibung}{
 	\testptrow{1}{TheBeschreibung}{TheShould}{TheIs}{TheStatus}
 }
+
+
+
+\testpttb{UC11: Infoblox}{Durch die Integration des Infoblox DDI im DNA Center soll das IP-Adressen Management für neue Netzwerkkomponenten vereinfacht werden.}{
+	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard erscheint}{OK}
+	\testptrow{2}{Zu IP Adress Manager Einstellungen navigieren über \textit{Settings $\rightarrow$ System Settings $\rightarrow$ Settings $\rightarrow$ IP Adress Manager} }{IP Adress Manager Einstellungen anzeigen}{IP Adress Manager Einstellungen erscheinen}{OK}
+	\testptrow{3}{Infoblox Informationen hinterlegen $\rightarrow$ Server Name: Infoblox, Server Url: https://10.22.0.21, Username: admin, Password: xxx, Provider: INFOBLOX). Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben wurden angenommen und Verbindung zu Infoblox Server erfolgreich hergestellt.}{OK}
+	\testptrow{4}{IP Adress Pools anzeigen über \textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Adress Pools}.}{IP Adress Pools sollten angezeigt werden.}{Es werden vorher definierte IP Adress Pools angezeigt.}{OK}
+	
+}

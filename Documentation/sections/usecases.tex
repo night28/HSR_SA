@@ -32,7 +32,7 @@ Migrationskonzept bestehende CampusLAN Lösung zu einem Campus-Fabric Lösung mi
 Einsatz von SGT zusammen mit VXLAN (Netzdesign, Design-Rules, Transport innerhalb und aussehlab des Fabrics, Schnittstelle L2/L3 und Überführung des IP-Konnektivität an einem IP-Backbone zB MPLS VPN).
 
 \subsubsection{UC11: Infoblox}
-Integration Infoblox DDI mit dem DNA-Center für die Provisionierung von IP-Adresse für das Management von neuen Netzkomponenten in die Fabric (zB Access-Switches, usw).
+Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Center für die Provisionierung von IP-Adresse für das Management von neuen Netzkomponenten in die Fabric (zB Access-Switches, usw).
 
 \subsection{Use Cases Fully dressed}
 \subsubsection{UC01: Definierung von Benutzer und Geräteprofilen}
@@ -531,10 +531,12 @@ Integration Infoblox DDI mit dem DNA-Center für die Provisionierung von IP-Adre
 		\hline
 		Alternative Flows  & 
 		\begin{itemize}
-			\item[1a.]  
+			\item[1a.] Direkt nach Installation Infoblox Server bei erstem Konfigurations-Wizard hinzufügen
 			\begin{enumerate}
-				\item 
+				\item Login auf DNA Center
+				\item IP Adress Manager angeben (Server Name, Server URL, Username, Password, Provider)
 			\end{enumerate}
+			\item[1b.] Schritt in erstem Konfigurations-Wizard überspringen und Infoblox mit nachfolgenden Schritten hinzufügen.
 		\end{itemize}
 	\end{tabularx}
 	\caption{UC11 Fully Dressed}
