@@ -41,4 +41,18 @@ Da die Backup Funktionalität des DNA Centers sehr eingeschränkt ist und nur un
 	
 }
 \pagebreak
+
+\testpttb{UC10: Einsatz von SGT}{Erstellen einer neuen Scalable Group.}{
+	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashbaord erscheint}{OK}
+	\testptrow{2}{Zu den Einstellungen navigieren \textit{Policy  $\rightarrow$ Registry $\rightarrow$ Scalable Groups }}{Liste der \textit{Scalable Groups} wird angezeigt, inklusive der \textit{Add Group} Schaltfläche.}{Liste der \textit{Scalable Groups} wird angezeigt, inklusive der \textit{Add Group} Schaltfläche.}{OK}
+	\testptrow{2}{Hinzufügen einer neuer Gruppe mithilfe der Schaltfläche \textit{Add Group}}{Neuer Dialog erscheint zum Anlegen einer \textit{Scalable Group.}}{Weiterleitung zum Cisco ISE zur Ansicht \textit{Components $\rightarrow$ Security Groups.} (Eventuell muss man sich zuvor beim ISE zusätzlich einloggen.) Dort muss \textit{Add} ausgewählt werden. Es erscheint ein Dialog zum Hinzufügen einer \textit{Security Group.}}{NOT OK}
+	\testptrow{3}{Neue Gruppe anlegen mit einem Namen}{Im Dialog kann ein neuer Name für die \textit{Scalable Group} eingegeben werden. Der Dialog wird mit \textit{Speichern} geschlossen. }{Ein neuer Name, ein Symbol und eine Beschreibung kann hinterlegt werden. Zusätzlich muss \textit{Propagate to ACI} angewählt werden. Der Dialog wird mit \textit{Anlegen} geschlossen}{OK}
+	\testptrow{4}{Die Scalable Group ist erstellt.}{In der Liste der Scalable Groups wird die neu erstellte Gruppe angezeigt.}{Da man immernoch in der ISE Ansicht ist, muss zuerst zum alten Tab des DNA Centers gewechselt werden. Anschliessend muss die Seite neu geladen werden. Die neue erstellte Gruppe wird angezeigt.}{OK}
+}
+\subsubsection{Zusammenfassung UC10}
+Noch nicht alle Funktionen können komplett im DNA Center erledigt werden. Ein Teil der Funktionen erfolgt weiterhin über die GUI der anderen Komponenten. 
+
+\pagebreak
+
+
 \end{landscape}
