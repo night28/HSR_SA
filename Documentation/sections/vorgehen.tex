@@ -1,4 +1,4 @@
-\section{Vorgehen}
+\section{Vorgehen Versuch 1}
 Nachfolgend haben wir das Vorgehen von unserem ersten Versuch in einer Grafik übersichtlich dargestellt. Die Blitze deuten dabei auf ein Hindernis bei welchem mehr Aufwand benötigt wurde hin und das rote X als einen fehlgeschlagenen Versuch, welcher abgebrochen werden musste.
 \begin{figure}[H]
 	\centering
@@ -493,16 +493,10 @@ Nachdem alle Geräte der entsprechenden Fabric zugeteilt worden sind, kann die K
 \end{tabular}
 \captionof{table}{DNA Center Provision - Fabric - Darstellung}
 
-\subsection{Policies definieren}
-Damit die Fabric Konfiguriert werden kann, müssen folgende Bedienungen erfüllt sein: 
-
-\subsection{Cisco ISE Verknüpfen und Gruppen anlegen}
-TBA
-
-\subsection{Ping zwischen zwei Clients}
 
 \subsection{DNA Center Reset}
-Da nach einigen Versuchen weder ein funktionsfähiges Under- noch Overlay Netzwerk vorhanden war, hatten wir uns entschieden das DNA Center neu zu Konfigurieren.
+Da das Overlay Provisioning auch nach mehreren Versuchen nur teilweise funktioniert hatte, haben wir entschlossen, die Switches zusätzlich über das Out-of-Band Management zu verbinden, da diese in mehreren Videos von Cisco so erwähnt wird und im ersten Release zwingend nötig war. \\
+Dazu benötigt das DNA Center ein zusätzliches Interface im Out-of-Band Management Netz. Um dieses einzurichten, muss der initiale Wizard erneut gestartet werden. 
 
 \begin{lstlisting}[language=bash]
 $ maglev-config-wizard #DO NOT EXECUTE THIS COMMAND
@@ -525,10 +519,16 @@ Nach einem Neustart der Appliance kam die folgende Meldung und das System bootet
 	\label{fig:dna-center-reset-2}
 \end{figure}
 
-In der Anleitung wird dieser Befehl so nicht erwähnt. Bei einem früheren Versuch diesen Befehl auszuführen, um den NTP Server zu ändern, führte es jedoch nicht zu diesem Fehler. 
+Korrekt wäre der folgende Befehl gewesen:
 
-\paragraph{Neuinstallation}
-In folge war es notwendig die Cisco DNA Center Appliance neu zu installieren. 
+\begin{lstlisting}[language=bash]
+$ sudo maglev-config update
+\end{lstlisting}
+
+Allerdings hätte auch der erste Befehl nicht dazu führen sollen, dass das System nicht mehr startet.
+
+\paragraph{Neuinstallation}\\
+In der Folge war es nötig, dass DNA Center komplett neu zu installieren. Dazu ist ein entsprechendes ISO nötig, welches leider nicht mitgeliefert wird. Dieses kann bei Cisco via TAC Case angefordert werden. Mit dem ISO muss dann ein bootbarer USB Stick erstellt werden.
 
 \begin{figure}[H]
 	\centering
@@ -537,14 +537,13 @@ In folge war es notwendig die Cisco DNA Center Appliance neu zu installieren.
 	\label{fig:dna-center-iso-1}
 \end{figure}
 
-Das USB Drive wird direkt in die Appliance gesteckt und gebootet. Der weitere Installationsprozess sieht aus wie im Abschnitt \ref{DNACenterSetup_Installation} gezeigt. 
+Anschliessend kann der USB-Stick in die Appliance gesteckt und diese gestartet werden. Die initiale Installation ist in Abschnitt \ref{DNACenterSetup_Installation} gezeigt. 
 
 \alertwarningbox{
 	Nach der Neuinstallation sind alle Daten und die Konfiguration gelöscht. Eine Option die Konfiguration beizubehalten gibt es nicht.
 }
 
-\subsection{Zweiter Versuch}
-Im ersten Versuch haben wir die LAN Automation übersprungen. Das stellt jedoch einer der wichtigen Features des DNA Centers dar. Mit der Unterstützung von Patrick Mosimann sind wir alles Schritt für Schritt durchgegangen. 
+\section{Vorgehen Versuch 2}
 
 \subsection{DNA Center Netzwerk Design}
 Wie im ersten Teil
