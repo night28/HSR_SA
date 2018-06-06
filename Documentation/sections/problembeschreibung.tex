@@ -6,9 +6,21 @@
 	\item Wichtigste NFA/Qualitätsattribute abgedeckt und überprüfbar beschrieben
 \end{itemize}
 
-Um den heutigen Anforderungen an Campus Netzwerke im Bezug auf Sicherheit, Wartbarkeit und Skalierbarkeit gerecht zu werden, steht man mit der isolierten Konfiguration einzelner Komponenten schnell vor verschiedenen Problemen. In erster Linie ist es extrem Aufwändig alle Konfigurationen manuell zu erstellen. Selbst das Hinzufügen von einfachen Richtlinien oder zum Beispiel neuen Firmenabteilungen können zu gewaltigem Aufwand führen. Desweiteren verliert man schnell die Übersicht und ist gezwungen umfangreiche Dokumentationen zu erstellen.
+Um den heutigen Anforderungen an Campus Netzwerke im Bezug auf Sicherheit, Wartbarkeit und Skalierbarkeit gerecht zu werden, steht man mit der isolierten Konfiguration einzelner Komponenten schnell vor verschiedenen Problemen. In erster Linie ist es extrem Aufwändig alle Konfigurationen manuell zu erstellen. Selbst das Hinzufügen von einfachen Richtlinien oder zum Beispiel neuen Firmenabteilungen können zu gewaltigem Aufwand führen. Desweiteren verliert man schnell die Übersicht und ist gezwungen umfangreiche Dokumentationen zu erstellen. Häufig kommen selbstgeschriebene Script zum Beispiel mithilfe von NAPALM (Siehe: \cite{napalm}) zur automatisierten Konfiguration zum Einsatz. Für das Monitoring des Netzwerkes sind zusätzlich Tools wie icinga2  (Siehe: \cite{icinga2}) oder ähnlich nötig. 
 
-Deshalb sind Lösungen gefragt, um diese Verwaltung übersichtlich und zentral zu lösen. 
+~\\
+Typische Herausforderungen bei den klassischen Campus Netzwerken:
+\begin{itemize}
+	\item Zu wenig VLAN
+	\item VLAN über ein Layer 3 Netzwerk
+	\item Mobilität von Komponenten
+	\item Mobilität von Benutzer (Netzwerk Teilnehmer)
+	\item Durchsetzen von Sicherheitsregeln mithilfe von Firewalls
+	\item Direkte Abhängigkeit von Berechtigungen und IP Subnetzen
+	\item Mehrere Unabhängige Tools mit Informationsredundanz
+	\item Komplexe Fehlersuche über verschiedene Komponenten/Geräte hinweg.
+\end{itemize}
 
-
+~\\
+Genau hier setzt das Cisco DNA Center an. Es fasst alle diese Tools unter einem Dach zusammen und bietet eine übergreifende Plattform. 
 
