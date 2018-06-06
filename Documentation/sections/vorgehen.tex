@@ -446,6 +446,7 @@ Die Lizenzen bezieht das DNA Center vom konfigurierten CCO Account.
 \end{tabular}
 
 \subsection{Device Provisioning via DNA Center}
+\label{device-provisioning}
 Um den einzelnen Netzwerkgeräten einen Namen und die Basis Konfiguration zu geben, werden im DNA Center unter \textit{Provision $\rightarrow$ Devices} die zu provisionierenden Geräte ausgewählt. Danach wird \textit{Action $\rightarrow$ Provision Device} der Provision Vorgang gestartet.
 
 Dabei wird die komplette Konfiguration, die das DNA Center für ein Device vorsieht auf dem Gerät konfiguriert. Sind Templates für den entsprechende Devicetyp konfiguriert worden, werden diese ebenfalls angewendet.
@@ -460,6 +461,7 @@ Templates können im Template Editor erstellt und entsprechenden Gerätetypen zu
 
 
 \subsection{Fabric Konfigurieren}
+\label{fabric-configuration}
 Nach der manuellen Konfiguration des Underlays, dem hinzufügen der Geräte, dem Update und dem Provisionieren, konnten wir endlich die Fabric konfigurieren. 
 
 Erreichbar ist das unter \textit{Provision $\rightarrow$ Fabric}. Nachfolgend wird die Fabric des entsprechenden Standortes ausgewählt.
@@ -483,35 +485,26 @@ Nachdem alle Geräte der entsprechenden Fabric zugeteilt worden sind, kann die K
 
 \begin{tabular}{| l | l | l | l | l |}
 	\hline
-	\textbf{Darstellung} & \makecell{\textbf{Teil der}\\ \textbf{Fabric}} & \makecell{\textbf{Änderung}\\ \textbf{ausstehend}} & \textbf{Provisioniert} & \textbf{Bemerkung} \\
+	\textbf{Darstellung} & \makecell{\textbf{Teil einer}\\ \textbf{Fabric}} & \makecell{\textbf{Änderung}\\ \textbf{ausstehend}} & \textbf{Provisioniert} & \textbf{Bemerkung} \\
 	\hline
-	Grau & Ja & Nein & Nein & \\
-	Schwarz & Nein & Nein & Nein & \\
-	Grau mit blauem Rand & Ja & Ja & Nein & \\
-	Blau & Ja & Nein & Ja & \\
+	Dunkelgrau & Ja & Nein & Nein & fremde Fabric \\
+	Hellgrau & Nein & Nein & Nein &  \\
+	Grau mit blauem Rand & Ja & Ja & Nein & nicht deployed\\
+	Blau & Ja & Nein & Ja & aktuelle Fabric\\
 	Umrandung mit Pfeil & - & - & - & Gruppierte Geräte\\	
 	\hline
 \end{tabular}
 \captionof{table}{DNA Center Provision - Fabric - Darstellung}
 
-\subsection{Policies definieren}
-Damit die Fabric Konfiguriert werden kann, müssen folgende Bedienungen erfüllt sein: 
-
-\subsection{Cisco ISE Verknüpfen und Gruppen anlegen}
-TBA
-
-\subsection{Ping zwischen zwei Clients}
-Konnte nicht vollständig durchgeführt werden, weil dazwischen das DNA Center zurückgesetzt wurde. 
-
 \subsection{DNA Center Reset}
-Da das Overlay Provisioning auch nach mehreren Versuchen nur teilweise funktioniert hatte, haben wir entschlossen, die Switches zusätzlich über das Out-of-Band Management zu verbinden, da diese in mehreren Videos von Cisco so erwähnt wird und im ersten Release zwingend nötig war. \\
+Da das Overlay Provisioning auch nach mehreren Versuchen nur teilweise funktioniert hatte, haben wir entschlossen, die Switches zusätzlich über das Out-of-Band Management zu verbinden, da dies in mehreren Videos von Cisco so erwähnt wird und im ersten Release zwingend nötig war. \\
 Dazu benötigt das DNA Center ein zusätzliches Interface im Out-of-Band Management Netz. Um dieses einzurichten, muss der initiale Wizard erneut gestartet werden. 
 
 \begin{lstlisting}[language=bash]
 $ maglev-config-wizard #DO NOT EXECUTE THIS COMMAND
 \end{lstlisting}
 
-Als folge dieses Befehls, nachdem alle Parameter eingegeben wurden, kam die folgende Meldung:
+Als Folge dieses Befehls, nachdem alle Parameter eingegeben wurden, kam die folgende Meldung:
 
 \begin{figure}[H]
 	\centering
@@ -520,7 +513,7 @@ Als folge dieses Befehls, nachdem alle Parameter eingegeben wurden, kam die folg
 	\label{fig:dna-center-reset-1}
 \end{figure}
 
-Nach einem Neustart der Appliance kam die folgende Meldung und das System bootete nicht mehr. 
+Nach einem Neustart der Appliance erschien die folgende Meldung und das System bootete nicht mehr. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=1cm]{img/dna-center-reset-fail-2.png}
@@ -528,6 +521,7 @@ Nach einem Neustart der Appliance kam die folgende Meldung und das System bootet
 	\label{fig:dna-center-reset-2}
 \end{figure}
 
+Es stellte sich heraus, dass wir den falschen Wizard gestartet hatten.
 Korrekt wäre der folgende Befehl gewesen:
 
 \begin{lstlisting}[language=bash]
@@ -564,7 +558,7 @@ Anschliessend kann der USB-Stick in die Appliance gesteckt und diese gestartet w
 \subsection{Vorarbeiten}
 
 Damit im zweiten Versuch keine Probleme mit bestehenden Konfigurationen entstehen, haben wir den alle Konfigurationen in Infoblox gelöscht und ISE auf den Werkszustand zurückgesetzt. \\
-Des Weiteren wurde auf allen Netzwerkdevices die IOS-XE Version 16.6.3 installiert, da gemäss Patrick Mosimann von Cisco nur diese Version mit dem DNA Center kompatibel ist.
+Des Weiteren wurde auf allen Netzwerkdevices die IOS-XE Version 16.6.3 installiert, da gemäss Patrick Mosimann von Cisco nur diese Version mit dem aktuellen DNA Center kompatibel ist.
 
 \subsubsection{ISE reset}
 Um die Störungen durch alte Konfigurationen zu vermeiden, wurde das Cisco ISE Center ebenfalls zurückgesetzt. Dies kann einfach mittels eines Befehls durchgeführt werden.
@@ -586,104 +580,186 @@ ISE/admin# applicaiton reset-config ise
 Wie im ersten Versuch, haben wir das DNA Center nach der Installation auf den aktuellsten Stand geupdated. Dieser Vorgang wurde im Abschnitt \ref{DNACenter_Updates} gezeigt. Dies war mittlerweile die Version 1.1.6. Im ersten Versuch arbeiteten wir mit den Versionen 1.1.4 und 1.1.5.
 
 \subsection{DNA Center Netzwerk Design}
-Das Netzwerkdesign wurde analog unserem ersten Versuch in Abschnitt \ref{DNACenterNetwork_Design}
+Das Netzwerkdesign wurde analog unserem ersten Versuch in Abschnitt \ref{DNACenterNetwork_Design} erstellt.
 
 
 \subsection{ISE Integration}
-Bei der Integration des ISE wollten wir gleich vorgehen, wie im ersten Versuch. Es stellt sich aber heraus, dass im Release 1.1.6 in Kombination mit ISE 2.4 geprüft wird, ob das DNA Center über ein Zertifikat verfügt, das den Hostname oder die IP des DNA Centers im Common Name hat.
+Bei der Integration des ISE wollten wir gleich vorgehen, wie im ersten Versuch. Es stellt sich aber heraus, dass im Release 1.1.6 in Kombination mit ISE 2.4 geprüft wird, ob das DNA Center über ein Zertifikat verfügt, das den Hostname oder die IP des DNA Centers im Common Name hat. Aus diesem Grund haben wir das Zertifikat des DNA Centers durch eines ersetzt, dass diese Bedingung erfüllt.
 
-\subsection{Fabric Border - Seeddevice}
-Bevor die LAN Automation gestartet werden kann, müssen folgende Bedinungen erfüllt sein:
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=6cm]{img/secondtry/ise-prerequirements.png}
+	\caption{ISE Integration Prerequirements}
+	\label{fig:dna-ise-prerequirements}
+	\cite{cisco-dna-installation-guide}
+\end{figure}
+
+Das Zertifikat kann unter \textit{Settings $\rightarrow$ Settings $\rightarrow$ Certificate $\rightarrow$ Replace Certificate} ausgetauscht werden. Es ist möglich Zertifikate im PEM Format oder als PKCS Datei hochzuladen. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=8cm]{img/secondtry/dna-center-certificate-replacement.png}
+	\caption{DNA Center Certificate Replacement}
+	\label{fig:dna-certificate-replacement}
+\end{figure}
+
+Nachdem das Zertifikat durch ein self-signed Zertifikat ausgetauscht wurde, welches die Bedingung erfüllt, dass die IP oder der Hostname im Common Name sein muss, funktionierte die ISE Integration ohne weitere Probleme.
+
+\subsection{LAN Automation}
+
+Bevor die LAN Automation gestartet werden kann, müssen folgende Bedinungen für das Seed Device erfüllt sein:
 \begin{itemize}
 	\item Aktives SSH
 	\item IP Konnektivität
 \end{itemize}
 
 \subsubsection{Verbindung zwischen Legacy Router und Border Switch}
-Um eine Verbindung über den Legacy Router zu ermöglichen, musste ein VLAN angelegt werden.
+Damit die LAN Automation gestartet werden kann, muss zuerst ein Seed Device eingerichtet werden, dass vom DNA Center aus erreichbar ist. Dies kann mit untenstehenden Befehlen über ein temporäres VLAN erreicht werden. 
 
 \paragraph{Konfiguration auf Border Switch}
 \begin{lstlisting}[language=bash]
-# interace XY
-# switchport trunk native vlan 100
+# interface lo0
+#   ip address 10.22.30.1 255.255.255.255
+#
+# interface Te1/0/12
+#   switchport trunk native vlan 100
+#   switchport mode trunk
+#
 # interface vlan 100
-# ip adress 10.22.31.1 255.255.255.252
-# exit
-# ip route 10.22.0.0 255.255.255.0 10.22.31.0
+#   ip adress 10.22.31.1 255.255.255.252
+# 
+# ip route 10.22.0.0 255.255.255.0 10.22.31.2
 \end{lstlisting}
 
 \paragraph{Konfiguration auf Legacy Router}
 \begin{lstlisting}[language=bash]
 # interface GigabitEthernet0/0/1.100
-# encapsulation dot1Q 100
-# ip address 10.22.31.2 255.255.255.252
+#   encapsulation dot1Q 100
+#   ip address 10.22.31.2 255.255.255.252
+#
+# ip route 10.22.30.1 255.255.255.255 10.22.31.1
 \end{lstlisting}
 
-\subsection{Border BGP}
-\begin{lstlisting}[language=bash]
-router bgp 10
-bgp log-neighbor-changes
-neighbor 10.22.11.1 remote-as 30
-address-family ipv4
-redistribute connected
-neighbor 10.22.11.1 activate
-exit-address-family
-\end{lstlisting}
-
-\subsection{Trustpool}
-Zuvor ist das Zertifikat des DNA Centers ersetzt worden. Den gemäss \cite{cisco-dna-appliance-installation-guide-release-1-1} ist es für den ISE Version 2.4 erforderlich, dass die IP Adresse des DNA Centers im Zertifikat hinterlegt worden. Da die Version 2.4 sowieso nicht mit dem DNA Center Version 1.1.5 kompatibel ist, musste der ISE in der Version 2.3 neu installiert werden. Dies hat diese spezielle Anforderung an das Zertifikat nicht. Da das benutzerdefinierte Zertifikat die LAN Automation behinderte. Stellten wir das alte Zertifikat wieder her.
-
-Cisco konnte uns Zertifikat nicht geben -> gefunden auf Server
-Mit dem folgenden Befehl konnte das ursprüngliche Zertifikat lokal heruntergeladen.
-
-\begin{lstlisting}[language=bash]
-scp -r -P 2222 maglev@10.22.0.100:/etc/maglev/.pki .
-\end{lstlisting}
-
-In DNA Center unter \textit{System Settings $\rightarrow$ Settings $\rightarrow$ Certificate} wurde das gebergte Zertifikat eingespielt. 
+\subsubsection{Discovery}
+Da der oben konfigurierte Border Router als Seed Device genutzt werden soll um die restlichen Geräte zu finden und zu deployen, muss dieses im DNA Center bekannt gemacht werden. Am einfachsten geht dies über die Discovery Funktion. Diese kann mittels \textit{Discovery $\rightarrow$ New Discovery} eingerichtet werden. Die Discovery kann gemäss untenstehender Grafik konfiguriert werden.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=8cm]{img/secondtry/dna-center-replace-certificate.png}
-	\caption{Cisco DNA Center - Zertifikat ändern}
-	\label{fig:dna-zertificate-1}
+	\includegraphics[height=8cm]{img/secondtry/dna-discovery.png}
+	\caption{DNA Center Discovery}
+	\label{fig:dna-discovery}
 \end{figure}
 
+Sobald das Device gefunden wurde, erscheint dieses im Inventory. Damit dieses als Seed Device verwendet werden kann, ist zuerst ein Provisioning wie in \ref{device-provisioning} beschrieben nötig und das Device muss einer Fabric hinzugefügt werden \ref{fabric-configuration}. 
 
-\subsection{Netzwork Discovery - LAN Automation - Zweiter Versuch}
-\label{Netzwork Discovery - LAN Automation - Zweiter Versuch}
-Die Netzwerk Discovery braucht mehr Eingriffe als erwartet. Im ersten Schritt haben wir versucht alle Geräte auf der Seite Rapperswil einzuspielen. Dies hat nicht geklappt. Das PNP schlägt fehl. Deshalb sind wir wie folgt vorgegangen:
-\begin{enumerate}
-	\item Ein Netzwerkgerät im \textit{Initial Config Dialog} Zustand lassen. (Siehe: \ref{fig:cisco-switch-initial-config})
-	\item LAN Automation durchführen. (Siehe \ref{fig:dna-lan-automation-dialog})
-	\item Vorgang wiederholen, bis alle Geräte hinzugefügt sind. 
-\end{enumerate}
+Beim Provisioning ist aber aufgefallen, dass es Probleme mit der Verbindung zwischen dem Border Switch und dem ISE gibt. Patrick Mosimann hat uns dann erklärt, dass das DNA Center in den aktuell verfügbaren Versionen ausschliesslich mit ISE in der Version 2.3 kompatibel ist.\\
+Unglücklicherweise war in unserer Lab Umgebung die Version 2.4 installiert. Ein Downgrade ist leider nicht möglich, weshalb die virtuelle Maschine ausgetauscht werden musste und der ISE erneut ins DNA Center integriert werden musste. 
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=0.5cm]{img/secondtry/cisco-switch-initial-config.png}
-	\caption{Cisco Switch - Initial Config - Versucht DHCP und PNP zu machen, solange der Dialog aktiv ist.}
-	\label{fig:cisco-switch-initial-config}
-\end{figure}
+\subsection{LAN Automation PnP}
+
+Nun konnte die eigentliche LAN Automation gestartet werden. Dabei wird, wie in untenstehender Grafik gezeigt ein Seed Device ausgewählt und definiert, auf welchen Interfaces DHCP Requests der anderen Devices beantwortet werden. Zudem muss ein IP Pool angegeben werden, der für folgende Zwecke verwendet wird:
+\begin{itemize}
+	\item DHCP Pool während dem PnP Vorgang
+	\item Loopback Interfaces der Devices
+	\item Netze für Point to Point Links
+\end{itemize}
+
+Dabei ist zu beachten, dass die Unterteilung des IP Pools nicht optimal ist. Unabhänig von der Grösse des Pools werden beispielsweise nur 30 Adressen für den DHCP Pool reserviert, was in einer grossen Umgebung ein Problem darstellen könnte.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=7cm]{img/secondtry/dna-lan-automation-dialog.png}
-	\caption{Cisco Switch - DNA LAN Automation}
+	\caption{DNA Center - LAN Automation}
 	\label{fig:dna-lan-automation-dialog}
 \end{figure}
 
-\alertwarningbox{
-	Die LAN Automation funktionierte nur mit den Standard Zertifikaten. 
-}
+Wir haben dann die LAN Automation gestartet. Dies konfiguriert auf dem Seed Device einen DHCP Server. Werden nun die Konfiguration auf anderen Netzwerkgeräten gelöscht und diese neu gestartet, senden diese DHCP Request, die vom Seed Device beantwortet werden. Die Antworten verweisen auf das DNA Center als PnP Server.
+Die Geräte senden nur DHCP Requests, wenn Sie im Zustand sind, der auf untenstehendem Bild ersichtlich ist.
 
-\subsection{Broken ISIS - Gründe}
-TBA
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.5cm]{img/secondtry/cisco-switch-initial-config.png}
+	\caption{Cisco Switch - Initial Config - Versucht DHCP und PnP zu machen, solange der Dialog aktiv ist.}
+	\label{fig:cisco-switch-initial-config}
+\end{figure}
+
+Während des PnP Prozesses wird das Zertifikat, sowie die CA (Certificate Authority) des DNA Centers auf die Netzwerkgeräte kopiert. Dies ist nötig, damit die Verbindung auf HTTPS umgestellt werden kann. Nach diesem Schritt blieb der Setup Prozess jeweils mit folgender Meldung stehen:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=7cm]{img/secondtry/dna-pnp-cert-error.png}
+	\caption{LAN Automation - PnP Error}
+	\label{fig:dna-pnp-cert-error}
+\end{figure}
+
+Es stellte sich heraus, dass das Problem war, dass unser self-signed Zertifikat nicht von der DNA Center CA signiert war und die Netzwerkgeräte daher nicht validiern konnten ob dieses gültig ist. Leider konnte uns auch Patrick Mosimann von Cisco nicht sagen, wie wir dieses Zertifikat signieren können, das ursprüngliche Zertifikat wiederherstellen können oder das Problem anderweitig lösen können. Gemäss dem Installation Guide von Cisco \cite{cisco-dna-installation-guide} kann hier auch ein Zertifikat verwendet werden, dass von einer "Well-Known Certificate Authority" signiert ist. Aus diesem Grund haben wir das Zertifikat auch durch ein korrekt von Lets Encrypt signiertes Zertifikat ausgetauscht. Patrick konnte uns aber nicht sagen, ob diese Authority auf dem Gerät bekannt ist. Auch das korrekt signierte Zertifikat wurde nicht akzeptiert und der PnP Prozess konnte nicht weitergeführt werden. \\
+Aus diesem Grund haben wir uns via SSH auf die Appliance eingelogged und dort nach dem ursprünglichen Zertifikat oder der CA gesucht. Nach einer Weile wurden wir fündig und fanden das alte Zertifikat und die CA:\\
+
+\begin{lstlisting}[language=bash]
+# $ sudo ls -lah /etc/maglev/.pki/
+# [sudo] password for maglev: 
+# total 140K
+# drwxr-xr-x 2 root 4.0K May 21 06:20 .
+# drwxr-xr-x 4 root 4.0K May 21 06:20 ..
+# -rw-r--r-- 1 root 1.3K May 17 09:09 apiserver.crt
+# -rw------- 1 root 1.7K May 17 09:09 apiserver.key
+# -rw-r--r-- 1 root 1.2K May 17 09:09 apiserver-kubelet-client.crt
+# -rw------- 1 root 1.7K May 17 09:09 apiserver-kubelet-client.key
+# -r--r--r-- 1 root 1.1K May 17 08:49 ca.crt
+# -rw-r--r-- 1 root 1.7K May 17 08:49 ca.key
+# lrwxrwxrwx 1 root   23 May 17 08:49 ca-key.pem -> /etc/maglev/.pki/ca.crt
+# lrwxrwxrwx 1 root   23 May 17 09:09 ca.pem -> /etc/maglev/.pki/ca.crt
+# -r-------- 1 root 1.7K May 17 08:49 credentialmanager-key.pem
+# -r-------- 1 root  307 May 21 06:20 credentialmanager-openssl.cnf
+# -r--r--r-- 1 root 1.1K May 17 08:49 credentialmanager.pem
+# -r-------- 1 root 1.7K May 17 08:49 encryptionmanager-key.pem
+# -r-------- 1 root  307 May 21 06:20 encryptionmanager-openssl.cnf
+# -r--r--r-- 1 root 1.1K May 17 08:49 encryptionmanager.pem
+# -r-------- 1 root 1.7K May 17 08:49 encryption_seed-key.pem
+# -r--r--r-- 1 root  981 May 17 08:49 encryption_seed.pem
+# -rw-r--r-- 1 root 1.1K May 17 09:09 front-proxy-ca.crt
+# -rw------- 1 root 1.7K May 17 09:09 front-proxy-ca.key
+# -rw-r--r-- 1 root 1.1K May 17 09:09 front-proxy-client.crt
+# -rw------- 1 root 1.7K May 17 09:09 front-proxy-client.key
+# -r-------- 1 root 1.7K May 17 08:49 kong-key.pem
+# -r-------- 1 root  299 May 21 06:20 kong-openssl.cnf
+# -r--r--r-- 1 root 1.1K May 17 08:49 kong.pem
+# -r-------- 1 root 1.7K May 17 08:49 kube-admin-key.pem
+# -r--r--r-- 1 root  977 May 17 08:49 kube-admin.pem
+# -r-------- 1 root 1.7K May 17 08:49 kube-worker-1-key.pem
+# -r-------- 1 root  336 May 21 06:20 kube-worker-1-openssl.cnf
+# -r--r--r-- 1 root 1.1K May 17 08:49 kube-worker-1.pem
+# -r-------- 1 root 1.7K May 17 08:49 maglev-registry-key.pem
+# -r-------- 1 root  472 May 21 06:20 maglev-registry-openssl.cnf
+# -r--r--r-- 1 root 1.3K May 17 08:49 maglev-registry.pem
+# -r-------- 1 root   36 May 17 08:49 passphrase.txt
+# -rw-r--r-- 1 root 1.1K May 21 06:20 registry-ca.pem
+# -rw------- 1 root 1.7K May 17 09:09 sa.key
+# -rw------- 1 root  451 May 17 09:09 sa.pub
+\end{lstlisting}
+
+So konnten wir das alte Zertifikat wiederherstellen (sh. \ref{fig:dna-certificate-replacement} ). Dies war kein Problem, da mit ISE Version 2.3 der Hostname und die IP nicht im Common Name sein müssen. Es wäre aber auch möglich gewesen, mit der CA ein neues zu signieren, da die Passphrase für den Private Key der CA in einem Textfile abgelegt ist.\\
+
+Durch das erneute des Zertifikats wurde leider die Trust Verbindung zum ISE gebrochen, weshalb der ISE erneut ins DNA Center integriert werden musste. 
+
+Nun konnten wir die LAN Automation starten und der PnP Prozess auf den Netzwerkgeräten schien zu funktionieren. 
+
+Wir haben dann, wie von Patrick Mosimann vorgeschlagen, die ersten zwei Devices am Standort Rapperswil mit der LAN Automation konfiguriert, was einwandfrei funktioniert hat. Damit die Konfiguration auf die Geräte geschrieben wird, muss die LAN Automation beendet werden. Anschliessend wiederholten wir diesen Vorgang für die nächsten zwei Geräte. Dabei stellte sich heraus, dass die generierte Konfiguration unbrauchbar ist, da nur einzelne Point to Point Links konfiguriert wurden, aber nicht alle die nötig gewesen wären. \\
+Da es sich bei der LAN Automation um ein Basisfeature handelt, wollten wir die Underlay Konfiguration nicht manuell erstellen und versuchten die Ursache für diesen Fehler zu finden. Schlussendlich hat uns folgendes Vorgehen zum Erfolg geführt:
+\begin{itemize}
+	\item LAN Automation starten
+	\item Ein Gerät nach dem anderen via PnP aufsetzen
+		\subitem Wenn mehrere Geräte gleichzeitig konfiguriert werden, bricht PnP meistens ab
+	\item Erst wenn alle Devices via PnP aufgesetzt sind, die LAN Automation stoppen
+\end{itemize}
+So wurden alle Konfigurationen korrekt erstellt und der Underlay mit ISIS war korrekt konfiguriert. Ebenfalls waren nun alle Geräte im Inventory sichtbar.\\ 
+Dieses Vorgehen verhindert aber natürlich das Hinzufügen weiterer Geräte zu einem späteren Zeitpunkt, da damit zu rechnen ist, dass es wieder zu Problemen kommt, wenn für denselben Underlay erneut eine LAN Automation gestartet wird.
+
 
 \subsection{Provisioning}
 
-\subsubsection{Script Template}
-\label{Script Template}
+\subsubsection{Templates}
+\label{Script-Template}
 Damit der Hostname der Switches und Router via Provisioning gesetzt werden kann, muss ein Template angelegt werden.
 
 Über das Hauptmenü \textit{Tools $\rightarrow$ Template Editor} kann mit \textit{Add (Pluszeichen) $\rightarrow$ Create Project} ein neues Projekt anlegt werden. (Siehe: \ref{fig:dna-center-template-editor-add-project})
@@ -691,16 +767,16 @@ Damit der Hostname der Switches und Router via Provisioning gesetzt werden kann,
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=7cm]{img/secondtry/dna-center-template-editor-add-project.png}
-	\caption{Cisco DNA Center - Templateeditor - Add Project}
+	\caption{DNA Center - Templateeditor - Add Project}
 	\label{fig:dna-center-template-editor-add-project}
 \end{figure}
 
-Weiter kann mit \textit{Add (Pluszeichen) $\rightarrow$ Add Template} ein neues leeres File angelegt werden. (Siehe \ref{fig:dna-center-template-editor-add-template})
+Weiter kann mit \textit{Add (Pluszeichen) $\rightarrow$ Add Template} ein neues Template angelegt werden. (Siehe \ref{fig:dna-center-template-editor-add-template})
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=7cm]{img/secondtry/dna-center-template-editor-add-template.png}
-	\caption{Cisco DNA Center - Templateeditor - Add Template}
+	\caption{DNA Center - Templateeditor - Add Template}
 	\label{fig:dna-center-template-editor-add-template}
 \end{figure}
 
@@ -708,20 +784,22 @@ Wie in Abbilung \ref{fig:dna-center-template-editor-add-template} sind folgende 
 \begin{itemize}
 	\item Name des Templates
 	\item Zugehörige Projekt
-	\item Beschreinbung
+	\item Beschreibung
 	\item Tags
 	\item Für welche \textit{Device Types} das Template verwendet werden soll.
 \end{itemize}
 
+Anschliessend wurde das Template befüllt. Hier kann die Script Sprache "velocity" verwendet werden. Da wir aber nur den Hostnamen setzen wollten, reicht das CLI Kommando und eine entsprechende Variable.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=7cm]{img/secondtry/dna-center-template-editor-edit.png}
-	\caption{Cisco DNA Center - Templateeditor - Template um den Hostname bei der Provisionierung zu setzen.}
+	\caption{DNA Center - Templateeditor - Template um den Hostname bei der Provisionierung zu setzen.}
 	\label{fig:dna-center-template-editor-edit}
 \end{figure}
 
 \subsubsection{Network Profile anlegen}
-Unter \textit{Design $\rightarrow$ Network Profiles $\rightarrow$ Add Profile} kann ein neues Profil angelegt werden. Dieses Profil wird während des Provisionierungsvorgang verwendet. 
+Unter \textit{Design $\rightarrow$ Network Profiles $\rightarrow$ Add Profile} konnte ein neues Profil angelegt werden. Dieses Profil wird während des Provisionierungsvorgang verwendet. Das Profil stellt das Bindeglied zwischen Site, Device Type, und Template dar.
 
 \begin{figure}[H]
 	\centering
@@ -739,20 +817,19 @@ Weiter wird festgelegt für welche \textit{Sites} das Netzwerkprofil verwendet w
 	\label{fig:dna-center-network-profile-assign-sites}
 \end{figure}
 
-\subsubsection{Claimed Netzwerkgeräte Provisionierung}
+\subsubsection{Initial Provisioning}
 
-Die Provisionierung gestaltet sich im Normalfall sehr einfach. Im Modul \textit{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}
-
-Das zu provisionierende Gerät wird in der Liste ausgewählt. Über \textit{Action $\rightarrow$ Provision} wird die Provision gestartet. 
+Nun kann ein initales Provisioning der neuen Netzwerkgeräte durchgeführt werden. Dies ist im Modul \textit{Provision $\rightarrow$ Devices $\rightarrow$ Inventory} zu finden.
+Das zu provisionierende Gerät wird in der Liste ausgewählt. Über \textit{Action $\rightarrow$ Provision} wird das Provisioning gestartet. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=5cm]{img/secondtry/dna-center-provision-device.png}
-	\caption{Cisco DNA Center - Netzwerkgerät konfigurieren}
+	\caption{Cisco DNA Center - Device Provisioning}
 	\label{fig:dna-center-provision-device}
 \end{figure}
 
-Im ersten Schritt (Siehe: \ref{fig:dna-center-provision-step1}) wird die entsprechende \textit{Site} ausgewählt. 
+Es folgt ein Wizard, der durch das Provisioning führt. Im ersten Schritt (Siehe: \ref{fig:dna-center-provision-step1}) wird die entsprechende \textit{Site} ausgewählt. 
 
 \begin{figure}[H]
 	\centering
@@ -761,9 +838,9 @@ Im ersten Schritt (Siehe: \ref{fig:dna-center-provision-step1}) wird die entspre
 	\label{fig:dna-center-provision-step1}
 \end{figure}
 
-Im zweiten Schritt gibt es keine wählbaren Optionen. 
+Im zweiten Schritt gibt es keine wählbaren Optionen.
 
-Im dritten Schritt kann das in im Abschnitt \cite{Script Template} ausgewählt werden. Die offnen Variablen (im Falle \ref{fig:dna-center-provision-step3}) werden hier hinterlegt. 
+Im dritten Schritt kann das im Abschnitt \ref{Script-Template} definierte Template ausgefüllt werden. Die Variablen (im Falle \ref{fig:dna-center-provision-step3}), in unserem Fall der Hostname des Geräts mussten angegeben werden.
 
 \begin{figure}[H]
 	\centering
@@ -772,8 +849,7 @@ Im dritten Schritt kann das in im Abschnitt \cite{Script Template} ausgewählt w
 	\label{fig:dna-center-provision-step3}
 \end{figure}
 
-Im letzte Schritt erscheint eine Übersicht. Mit einem Klick auf \textit{Deploy} wird der Script provisioniert. Die dabei automatisch ausgeführten Befehle durch das DNA Center sind in Listing \ref{lst:commands-executed-during-provision} ersichtlich.
-
+Im letzte Schritt erscheint eine Übersicht. Mit einem Klick auf \textit{Deploy} wird das Device provisioniert. Die dabei automatisch ausgeführten Befehle durch das DNA Center sind in Listing \ref{lst:commands-executed-during-provision} ersichtlich.
 
 \begin{lstlisting}[caption={Befehle automatisch ausgeführt durch das DNA Center während der Provisionierung},label={lst:commands-executed-during-provision},language=bash]
 enable
@@ -819,25 +895,13 @@ line vty 0 97
 login authentication VTY_authen
 authorization exec VTY_author
 transport input all 
-enable
-enable
 banner motd #\"Welcome to our SA Lab!\"#
 hostname c9300-2.edge.g2.f2
-enable
-enable
-enable
-enable
-enable
-enable
-enable
+
 \end{lstlisting}
 
-\subsection{Fabric}
-
-\subsubsection{Device Role zuordnen}
-
-\subsubsection{Add to Fabric}
-Screenshots und vorgehen. 
+\subsubsection{Geräte zur Fabric hinzufügen}
+TODO
 
 \begin{lstlisting}[caption={Befehle automatisch ausgeführt durch das DNA Center während dem hinzufügen zur Fabric},label={lst:commands-executed-during-add-to-fabric},language=bash]
 !exec: enable
@@ -967,29 +1031,18 @@ ip sla schedule 3  life forever start-time now
 banner motd #\"Welcome to our SA Lab!\"#
 \end{lstlisting}
 
-\subsection{LAN Automation - Dritter Versuch}
-Da das DNA Center nur ein Teil der Links zwischen den Switches konfiguriert hat, entschieden wir uns diese nochmals neu durchzuführen. Ausser dem Seed Device haben wir alle Devices gelöscht. Danach starteten wir die LAN Automation nochmals (siehe Abschnitt \ref{Netzwork Discovery - LAN Automation - Zweiter Versuch}).
+\subsubsection{Border BGP}
+TODO
 
-\begin{enumerate}
-	\item LAN Automation starten
-	\item Switches und Router so lange neu Booten bis PNP erfolgreich ist.
-	\item LAN Automation stoppen
-\end{enumerate}
-
-\paragraph{Resultat}
-Alle Devices und Links wurden erfolgreich konfiguriert. Das "Schritt-für-Schritt" hinzufügen vom vorherigen Versuch funktioniert nicht. Möglicherweise ist das spätere automatische Hinzufügen von Netzwerkgeräten zu einem Underlay nicht möglich. 
-
-\subsection{Lizenzen auf Netzwerkgeräten nach Underlay Automation}
-Geräte haben nicht mer EVAL sondern plötzlich Permanent Lizenzen
-
-\subsection{Ping to Clients}
-
-\subsection{Host Onboarding}
-
+\subsubsection{IP Pools definieren}
+TODO 
 Infoblox vorgehen bei neuem Netzwerk!!!
+\subsubsection{Host Onboarding}
+TODO
+
 
 \subsubsection{Authentifizierungsmethoden}
-
+TODO
 \begin{tabular}{ | m{8cm} | m{8cm} | }
 	\hline
 	\textbf{Typ} & 	\textbf{Beschreibung} \\
