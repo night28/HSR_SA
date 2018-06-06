@@ -1,15 +1,37 @@
+\begin{landscape}
 \section {Testprotokolle}
 
 
 \testpttb{UC01}{Kurzbeschreibung}{
 \testptrow{1}{TheBeschreibung}{TheShould}{TheIs}{TheStatus}
 }
+\pagebreak
 
 \testpttb{UC02}{Kurzbeschreibung}{
 	\testptrow{1}{TheBeschreibung}{TheShould}{TheIs}{TheStatus}
 }
+\pagebreak
 
+\testpttb{UC03-1 Backup DNA Center}{Sämtliche Konfigurationen des DNA Centers sollen gebackuped werden, sodass diese im Notfall wiederhergestellt werden können.}{
+	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard erscheint}{OK}
+	\testptrow{2}{Zu den Backup Einstellungen navigieren \textit{Settings $\rightarrow$ System Settings $\rightarrow$ Backup and Restore} }{Backup Einstellungen anzeigen}{Backup Einstellungen erscheinen}{OK}
+	\testptrow{3a}{Backup Server hinzufügen via \textit{Add} $\rightarrow$ SSH IP Address: 217.26.58.9, SSH Port: 22, Server Path: /home/dnacenter/backup, Username: dnacenter, Password: xxx, Encryption Passphrase: xxx. Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden meist nicht angenommen, führt zu Absturz des DNA Centers}{NOT OK}
+	\testptrow{3b}{Backup Server hinzufügen via \textit{Add} $\rightarrow$ SSH IP Address: 217.26.58.9, SSH Port: 22, Server Path: /home/dnacenter/backup, Username: dnacenter, Password: xxx, Encryption Passphrase: xxx. Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden angenommen.}{OK}
+	\testptrow{4b}{Regelmässiges Backup einrichten via \textit{Schedule $\rightarrow$ Add} Schedule Later, Weekday: Wednesday, Time: 10:30 AM. Mittels Schedule die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden angenommen.}{OK}
+	\testptrow{5b}{Backup wird regelmässig zum definierten Zeitpunkt ausgeführt.}{Backup wird zum definierten Zeitpunkt ausgeführt}{Backup wird nicht ausgeführt}{NOT OK}
+}
 
+\testpttb{UC03-2 Restore DNA Center}{Sämtliche Konfigurationen des DNA Centers sollen aus einem zuvor erstellten Backup wiederhergestellt werden.}{
+	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard erscheint}{OK}
+	\testptrow{2}{Zu den Backup Einstellungen navigieren \textit{Settings $\rightarrow$ System Settings $\rightarrow$ Backup and Restore} }{Zuvor erstellte Backups werden angezeigt}{Backups werden angezeigt}{OK}
+	\testptrow{3}{Restore erstellen via \textit{Restore} neben dem gewünschten Backup}{DNA Center wird auf den Stand vom gewählten Backup zurückgesetzt}{DNA Center wurde auf den gewünschten Stand zurückgesetzt}{OK}
+}
+
+\subsubsection{Zusammenfassung UC03}
+Es kann ein Backup erstellt werden und auch ein Restore eines zuvor erstellten Backups ist möglich. Leider ist das Erfassen, Bearbeiten und Löschen eines Backupservers enorm unzuverlässig und hat mehrfach zu kompletten Abstürzen des DNA Centers geführt. \\
+Zudem funktioniert der Backup Schedule nicht. Backups werden nicht automatisch ausgeführt, sind also nur manuell möglich. Auch ein Restore einzelner Komponenten des DNA Centers ist nicht vorgesehen und es gibt kein komplettes Backup des DNA Centers. Einzelne Teile wie z.Bsp. Assurance werden nicht gebackuped. \\
+Da die Backup Funktionalität des DNA Centers sehr eingeschränkt ist und nur unzuverlässig funktioniert, wird der Use Case "Backup und Restore" nicht vollständig erfüllt.
+\pagebreak
 
 \testpttb{UC11: Infoblox}{Durch die Integration des Infoblox DDI im DNA Center soll das IP-Adressen Management für neue Netzwerkkomponenten vereinfacht werden.}{
 	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard erscheint}{OK}
@@ -18,3 +40,5 @@
 	\testptrow{4}{IP Adress Pools anzeigen über \textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Adress Pools}.}{IP Adress Pools sollten angezeigt werden.}{Es werden vorher definierte IP Adress Pools angezeigt.}{OK}
 	
 }
+\pagebreak
+\end{landscape}
