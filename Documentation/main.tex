@@ -97,13 +97,14 @@
 %rename Tabe zu Tabelle
 \addto\captionsenglish{\renewcommand{\tablename}{Tabelle}}
 
+
 % Befehle für die Tabellenerstellung der Testcases
 \newcommand{\testpttb}[3]{
 	\begin{landscape}
 		\subsection{#1}
 		#2
 		\rowcolors{2}{gray!25}{white}
-		\begin{longtable}{| l | l | l | l | l |}
+		\begin{longtable}{| m{0.5cm} | m{7.0cm} | m{7.0cm} | m{7.0cm} | m{1.3cm} |}
 			\hline
 			\textbf{Nr} & \textbf{Beschreibung} & \textbf{Erwartetes Ergebnis} & \textbf{Tatsächliches Ergebnis} & \textbf{status}
 			\\
