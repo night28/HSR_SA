@@ -102,6 +102,7 @@ Danach ist die initiale Konfiguration beendet und das DNA Center Dashboard wird 
 \end{figure}
 
 \subsection{DNA Center Updates}
+\label{DNACenter_Updates}
 Da sich das DNA Center während dem Setup Prozess nicht automatisch aktualisiert und die DNA Center Versionen in relativ kurzen Intervallen released werden, ist es ratsam, gleich zu Beginn die aktuellsten Updates zu installieren.
 
 Der Updateprozess birgt jedoch einige Hürden:
@@ -176,7 +177,7 @@ Oben wurde bei \textit{About} die richtige Version 1.1.4 angegeben. Nachfolgend 
 \end{figure}
 
 \subsection{DNA Center Netzwerk Design}
-
+\label{DNACenterNetwork_Design}
 \subsubsection{Network Hierarchy}
 
 Gemäss unserer Netzwerk Architektur wie in Kapitel \ref{fig:LabNetworkArchitecture} beschrieben, haben wir zwei Standorte. Rapperswil mit zwei Gebäuden und Jona mit einem Gebäude.
@@ -545,15 +546,12 @@ Anschliessend kann der USB-Stick in die Appliance gesteckt und diese gestartet w
 
 \section{Vorgehen Versuch 2}
 
-\subsection{DNA Center Netzwerk Design}
-Wie im ersten Teil
+\subsection{Vorarbeiten}
 
-\subsection{Downgrade aller Netzwerkkomponenten}
-Nach Absprache mit dem Experten von Cisco, mussten alle Switch und Router auf eine spezifische Version zurückgesetzt werden.
+Damit im zweiten Versuch keine Probleme mit bestehenden Konfigurationen entstehen, haben wir den alle Konfigurationen in Infoblox gelöscht und ISE auf den Werkszustand zurückgesetzt. \\
+Des Weiteren wurde auf allen Netzwerkdevices die IOS-XE Version 16.6.3 installiert, da gemäss Patrick Mosimann von Cisco nur diese Version mit dem DNA Center kompatibel ist.
 
-Neue Version: 16.6.3
-
-\subsection{ISE reset}
+\subsubsection{ISE reset}
 Um die Störungen durch alte Konfigurationen zu vermeiden, wurde das Cisco ISE Center ebenfalls zurückgesetzt. Dies kann einfach mittels eines Befehls durchgeführt werden.
 
 \begin{lstlisting}[language=bash]
@@ -567,11 +565,17 @@ ISE/admin# applicaiton reset-config ise
 	\label{fig:dna-ise-reset-1}
 \end{figure}
 
-\subsection{Credentials korrekt hinterlegen}
-TBA
+
+\subsection{DNA Center Update}
+
+Wie im ersten Versuch, haben wir das DNA Center nach der Installation auf den aktuellsten Stand geupdated. Dieser Vorgang wurde im Abschnitt \ref{DNACenter_Updates} gezeigt. Dies war mittlerweile die Version 1.1.6. Im ersten Versuch arbeiteten wir mit den Versionen 1.1.4 und 1.1.5.
+
+\subsection{DNA Center Netzwerk Design}
+Das Netzwerkdesign wurde analog unserem ersten Versuch in Abschnitt \ref{DNACenterNetwork_Design}
+
 
 \subsection{ISE Integration}
-TBA
+Bei der Integration des ISE wollten wir gleich vorgehen, wie im ersten Versuch. Es stellt sich aber heraus, dass im Release 1.1.6 in Kombination mit ISE 2.4 geprüft wird, ob das DNA Center über ein Zertifikat verfügt, das den Hostname oder die IP des DNA Centers im Common Name hat.
 
 \subsection{Fabric Border - Seeddevice}
 Bevor die LAN Automation gestartet werden kann, müssen folgende Bedinungen erfüllt sein:
@@ -614,6 +618,7 @@ exit-address-family
 \subsection{Trustpool}
 Zuvor ist das Zertifikat des DNA Centers ersetzt worden. Den gemäss \cite{cisco-dna-appliance-installation-guide-release-1-1} ist es für den ISE Version 2.4 erforderlich, dass die IP Adresse des DNA Centers im Zertifikat hinterlegt worden. Da die Version 2.4 sowieso nicht mit dem DNA Center Version 1.1.5 kompatibel ist, musste der ISE in der Version 2.3 neu installiert werden. Dies hat diese spezielle Anforderung an das Zertifikat nicht. Da das benutzerdefinierte Zertifikat die LAN Automation behinderte. Stellten wir das alte Zertifikat wieder her.
 
+Cisco konnte uns Zertifikat nicht geben -> gefunden auf Server
 Mit dem folgenden Befehl konnte das ursprüngliche Zertifikat lokal heruntergeladen.
 
 \begin{lstlisting}[language=bash]
