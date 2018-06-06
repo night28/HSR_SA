@@ -1,37 +1,23 @@
 \section{Abstract}
-Der Abstract richtet sich an den Spezialisten auf dem entsprechenden Gebiet und 
-beschreibt daher in erster Linie die (neuen, eigenen) Ergebnisse und Resultate der 
-Arbeit. Es umfasst nie mehr als eine Seite, typisch sogar nur etwa 200 Worte (etwa 
-20 Zeilen). Es sind keine Bilder zu verwenden.
 
-\subsection{Version 2}
+\subsection{Aufgabenstellung}
 
-Ziel dieser Studienarbeit war die Evaluation des Cisco Digital Network Architecture (DNA) Center, der Software Defined Access Lösung von Cisco, für die Führungsunterstützungsbasis der Schweizer Armee. Der erste Schwerpunkt lag dabei auf der Installation des DNA Centers und der Konfiguration sowie Integration eines Campus Netzwerkes. Für das DNS-, DHCP- und IP-Adress-Management (IPAM) wird im Campus Netzwerk Infoblox eingesetzt. Für die Benutzerverwaltung sowie Zugriffskontrolle wird die Cisco Identity Services Engine (ISE) verwendet.
+Ziel dieser Studienarbeit war die Evaluation des Cisco Digital Network Architecture (DNA) Center, der Software Defined Access Lösung von Cisco, für die Führungsunterstützungsbasis (FUB) der Schweizer Armee. Das DNA Center soll das Deployment und Management einer Campus Netzwerk Umgebung mit Hilfe von Technologien wie VXLAN und LISP automatisieren und vereinfachen.\\
+Für die FUB sollte die Lösung unter anderem folgende Anforderungen abdecken:
+\begin{itemize}
+	\item Definierung von Benutzer- und Geräteprofilen
+	\item Gastzugang
+	\item Reporting der Netzwerkaktivitäten
+	\item Benutzermobilität
+	\item Degradation, Backup, Restore
+	\item Anbindung an externe Systeme wie ISE und Infoblox
+\end{itemize}
 
-Nach dem Einrichten des Campus Netzwerkes lag der zweite Schwerpunkt auf der Definition von Benutzer- und Geräteprofilen, um den einzelnen Mitarbeitern der Schweizer Armee den Netzwerkzugriff zu ermöglichen und die Zugriffsrechte der einzelnen Mitarbeiter oder eines Teams zentral zu regeln. Des Weiteren sollte mit DNA Assurance eine proaktive Überwachung, Fehlerbehebung und Optimierung des Netzwerkes sichergestellt werden. Mit diesen Informationen sollten wöchentliche Reports über den Status des Netzwerks per E-Mail oder Slack Message versendet werden.\\
-\\
-Die Inbetriebnahme des Campus Netzwerkes gestaltete sich schwieriger als erwartet. Viele der Schritte sind nur teilweise automatisiert und es ist sehr viel manueller Aufwand nötig. Als Beispiel kann hier die LAN Automation aufgeführt werden. Mit Hilfe dieser sollten sich Netzwerkgeräte automatisiert via Plug and Play (PnP) in Betrieb nehmen und konfigurieren lassen. Dieser Prozess ist allerdings sehr fehleranfällig und funktioniert nur unzuverlässig, sodass die Inbetriebnahme des Underlay Netzwerkes erst nach mehreren Versuchen korrekt ausgeführt werden konnte. 
-Des Weiteren funktionieren viele Funktionen des DNA Centers nur mit spezifischen Versionen von ISE und IOS-XE. Dies führte zu weiteren Komplikationen, da dies vom Hersteller so nicht dokumentiert ist. 
-Durch diese Komplikationen wurde der ganze Provisionierungsprozess verzögert. 
-\\
-Abschliessend kann gesagt werden, das für die Installation und Konfiguration des DNA Centers mehrere Tage, wenn nicht Wochen eingerechnet werden müssen. Zudem muss im optimalen Fall ein Green Field vorliegen, da zur Zeit kein bestehendes Netzwerk ohne Unterbrüche migriert werden kann. Bei der Installation sollten die empfohlenen Softwareversionen genauestens eingehalten werden, da sonst die volle Funktionalität des DNA Centers nicht gewährleistet werden kann. Beim Kauf des DNA Centers ist es am einfachsten, gleich auch einen Experten von Cisco aufzubieten, um diese Appliance komplett in der gewünschten Umgebung in Betrieb zu nehmen. 
-
-%\subsection{Ausgangslage}
-
-%\subsection{Ziele der Arbeit}
-%Das grundsätzliche Ziel ist eine Evaluation des Cisco Software Defined Networking. Im ersten Schritt beinhaltet das die %Inbetriebnahme und Konfiguration von den folgenden Komponenten:
-%\begin{itemize}
-%	\item Cisco DNA Center Appliance
-%	\item Integration Infoblox (One Platform Solution für DNS, DHCP, IPAM)
-%	\item Integration Cisco ISE (Access and Authentification Control)
-%	\item Integration Campus Labor Netzwerk
-%\end{itemize}
-%Im zweiten Schritt sollen UseCases durchgespielt werden, die den folgenden Umfang abdecken:
-%\begin{itemize}
-%	\item Definierung von Benutzer- und Geräteprofile, um basierend auf Geschäftsanforderungen die Zugriffsrechte und Netzwerksegmentierung zu verwalten und so das Netzwerk sicher zu halten.
-%	\item DNA Analytics and Assurance für eine proaktive Überwachung, Fehlerbehebung und Optimierung des Netzwerks.
-%	\item IP Address Management Tool im DNA Center.
-%	\item Wöchentliche Reports über Campus Netzwerk-Status via E-Mail oder Slack
-%\end{itemize}
-
-%\subsection{Ergebnisse}
+\subsection{Vorgehen}
+Der erste Teil der Arbeit war die Installation und Konfiguration des DNA Centers, die Anbindung an externe Systeme und das Deployment einer Fabric in einer Testumgebung.\\
+Die Inbetriebnahme des Campus Netzwerkes gestaltete sich schwieriger als erwartet. Viele der Schritte sind nur teilweise automatisiert und es ist sehr viel manueller Aufwand nötig. Als Beispiel kann hier die LAN Automation aufgeführt werden. Mit Hilfe dieser sollten sich Netzwerkgeräte automatisiert mittels Plug and Play (PnP) in Betrieb nehmen und konfigurieren lassen. Dieser Prozess ist allerdings sehr fehleranfällig und funktioniert nur unzuverlässig, sodass die Inbetriebnahme des Underlay Netzwerkes erst nach mehreren Versuchen korrekt ausgeführt werden konnte. 
+Des Weiteren funktionieren viele Funktionen des DNA Centers nur mit spezifischen Versionen von ISE und IOS-XE. Dies führte zu weiteren Komplikationen, da dies vom Hersteller so nicht dokumentiert ist. \\
+In einem zweiten Schritt ging es darum, Benutzer- und Geräteprofile zu definieren, sowie deren Zugriffe zentral zu verwalten. Des Weiteren sollte mit DNA Assurance eine proaktive Überwachung, Fehlerbehebung und Optimierung des Netzwerkes sichergestellt werden. Mit diesen Informationen sollten wöchentliche Reports über den Status des Netzwerks per E-Mail oder Slack Message versendet werden.
+\subsection{Fazit}
+Abschliessend kann gesagt werden, das für die Installation und Konfiguration des DNA Centers mehrere Tage, wenn nicht Wochen eingerechnet werden müssen. Zudem muss im optimalen Fall ein Green Field vorliegen, da zur Zeit kein bestehendes Netzwerk ohne Unterbrüche migriert werden kann. Bei der Installation sollten die empfohlenen Softwareversionen genauestens eingehalten werden, da sonst die volle Funktionalität des DNA Centers nicht gewährleistet werden kann. \\
+Unserer Meinung nach hat das DNA Center sehr grosses Potenzial, ist in der aktuellen Version aber noch nicht bereit für den produktiven Einsatz. Sollte dies dennoch angestrebt werden, macht es sicherlich Sinn, die Lösung mit Hilfe des Herstellers zu implementieren.
