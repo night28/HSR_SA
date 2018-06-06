@@ -42,6 +42,37 @@ Da die Backup Funktionalität des DNA Centers sehr eingeschränkt ist und nur un
 }
 \pagebreak
 
+
+\subsection{UC04: Reporting}
+Andere Use Cases haben eine höhere Priorisierung erhalten. Aus Zeitmangel konnte dieser Use Case nicht behandelt werden. 
+
+\pagebreak
+
+\subsection{UC05: Hardware Ersatz}
+\textit{Offene Frage an Ivan Caduff via Slack}
+
+\pagebreak
+
+\subsection{UC06: Benutzermobilität}
+Um diesen Use Case zu testen braucht es eine funktionierende Fabric, zwei Gebäude oder besser zwei Standorte und 802.1X Authentifizierung. Da dies leider nicht der Fall ist, konnte dieser Use Case nicht getestet werden. 
+
+\pagebreak
+
+\subsection{UC07: Degradation}
+In der Main Success Story dieses Use Cases steht "1. Netzwerk funktioniert einwandfrei.". Da dies zu diesem Zeitpunkt noch nicht der Fall ist, konnte dieser Use Case nicht getestet werden. 
+
+\pagebreak
+
+\subsection{UC08: Integration von nicht Fabric Komponenten}
+Andere Use Cases haben eine höhere Priorisierung erhalten. Aus Zeitmangel konnte dieser Use Case nicht behandelt werden. Insbesondere, weil nebst einer funktionierenden Fabric auch ein Mapping zwischen den SGT im Legacy Netzwerk konfiguriert hätte werden müssen. 
+
+
+\subsection{UC10: Gastzugang}
+Gemäss \textit{Sitzungsprotokoll der Sitzung mit Cisco vom 23.05.2018} im Anhang ist "(...)Gast-Netz(...)Nur möglich mit separatem Border exklusiv für Gast Netz $\rightarrow$ Internet(...)". Der Use Case konnte nicht getestet werden, da kein uns kein zusätzlicher Border zu Verfügung stand und andere Use Cases eine höhere Wichtigkeit hatten. 
+
+
+\pagebreak
+
 \testpttb{UC10: Einsatz von SGT}{Erstellen einer neuen Scalable Group.}{
 	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashbaord erscheint}{OK}
 	\testptrow{2}{Zu den Einstellungen navigieren \textit{Policy  $\rightarrow$ Registry $\rightarrow$ Scalable Groups }}{Liste der \textit{Scalable Groups} wird angezeigt, inklusive der \textit{Add Group} Schaltfläche.}{Liste der \textit{Scalable Groups} wird angezeigt, inklusive der \textit{Add Group} Schaltfläche.}{OK}

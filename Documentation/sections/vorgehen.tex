@@ -102,12 +102,12 @@ Danach ist die initiale Konfiguration beendet und das DNA Center Dashboard wird 
 \end{figure}
 
 \subsection{DNA Center Updates}
-Da sich das DNA Center während dem Setup Prozess nicht automatisch aktualisiert und die DNA Center in relativ kurzen Intervallen released werden, ist es ratsam, gleich zu Beginn die aktuellsten Updates zu installieren.
+Da sich das DNA Center während dem Setup Prozess nicht automatisch aktualisiert und die DNA Center Versionen in relativ kurzen Intervallen released werden, ist es ratsam, gleich zu Beginn die aktuellsten Updates zu installieren.
 
 Der Updateprozess birgt jedoch einige Hürden:
 \begin{itemize}
-	\item System Updates müssen vor den Package Updates installiert werden.
-	\item Werden die Package Updates vor dem System Update ausgeführt, können diese blockieren. 
+	\item System Updates müssen vor den Package Updates heruntergeladen und installiert werden.
+	\subitem Werden die Package Updates vor dem System Update ausgeführt, können diese blockieren. 
 	\item Die Package Updates müssen in der richten Reihenfolge installiert werden.
 	\item Die oben genannte Reihenfolge ist nicht direkt ersichtlich.
 	\item Der Updatevorgang dauert mehrere Stunden.
@@ -125,7 +125,8 @@ Die Update Ansicht ist unter \textit{Einstellungen (Zahnrad-Symbol) $\rightarrow
 \end{figure}
 
 \subsubsection{Fehlgeschlagene Updates reparieren}
-Abgestürzte Packete können mit den folgenden Befehlen wieder repariert werden (am Beispiel von main-system-package:1.0.4.779):
+Falls Updates in der falschen Reihenfolge installiert wurden oder aus anderen Gründen blockiert sind, können bereits heruntergeladene oder installierte Updates mit folgenden Befehlen entfernt und bereinigt werden.
+(am Beispiel von main-system-package:1.0.4.779):
 
 \begin{lstlisting}[language=bash]
 $ maglev package status | awk  '$3 ~ /[0-9]+/ {print $1":"$3}' | 
@@ -135,7 +136,7 @@ $ maglev system_update_package install main-system-package:1.0.4.779
 \end{lstlisting}
 
 \subsubsection{Update Reihenfolge}
-Nach einem Update wurde die Reihenfolge von System und Package Update angepasst. Vermutlich um den Administrator dazu zu bringen zuerst die System Updates zu installieren. 
+Nach einem Update wurde die Reihenfolge von System und Package Updates angepasst. Vermutlich um den Administrator dazu zu bringen zuerst die System Updates zu installieren. 
 
 \begin{figure}[H]
 	\centering
@@ -144,9 +145,9 @@ Nach einem Update wurde die Reihenfolge von System und Package Update angepasst.
 	\label{fig:dna-center-gui-update-2}
 \end{figure}
 
-\subsubsection{Schwierigkeit: Cisco CCO Login für Updates notwendig}
+\subsubsection{Schwierigkeit: CCO Credentials für Updates notwendig}
 
-Application Packages und System Updates können nur installiert werden, wenn die Cisco CCO Credentials hinterlegt sind.
+Application Packages und System Updates können nur installiert werden, wenn die CCO Credentials hinterlegt sind.
 
 \begin{figure}[H]
 	\centering
@@ -174,56 +175,12 @@ Oben wurde bei \textit{About} die richtige Version 1.1.4 angegeben. Nachfolgend 
 	\label{fig:dna-center-system-upgrade}
 \end{figure}
 
-\subsection{Cisco PNP mit DNA Center}
-DNA Center hat Plug and Play als App und nutzt diese um voll automatisch einen Switch/Router zu konfigurieren. 
-\subsubsection{DHCP Konfiguration}
-Bei unserem ersten Versuch ein Seed-Device festzulegen, wurde vom DNA-C kein DHCP Server konfiguriert, weshalb wir dies manuell auf Infoblox eingerichtet haben.
- 
-\begin{itemize}
-	\item DNA Center akzeptiert Cisco PNP Anfragen via http
-	\item Cisco Switches/Router versuchen beim ersten Boot ohne eine Konfiguration DHCP und Cisco PNP auszuführen
-\end{itemize}
-
-Die Cisco PNP Discovery kann über die DHCP Optione 43 und 60 konfiguriert werden (siehe \cite{cisco-pnp-dhcp}). In unserem Fall haben wir diese Optionen wie nachfolgend auf der Grafik erischtlich auf dem Infoblox Server konfiguriert.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=10cm]{img/Infoblox_PNP.png}
-	\caption{Infoblox Cisco PNP DHCP Option Konfiguration}
-	\label{fig:cisco-pnp}
-\end{figure}
-
-\subsection{ISIS Konfiguration}
-Da die automatische Erstellung des Underlay Netzwerkes mit der LAN-Automation Funktion nicht funktionierte, mussten wir dieses selber Konfigurieren. 
-
-\subsection{Automatischer "Claim" von Netzwerkgeräten}
-
-\subsubsection{DNA Center Provision - Unclaimed Devices}
-
-Nachdem die DHCP Option erfolgreich konfiguriert ist, werden die Geräte vom DNA-C gefunden und erscheinen Geräte im Device Inventory.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=8cm]{img/DNA_Center_All_Fabric2_Unclaimed.PNG}
-	\caption{DNA Center Provision - Alle Geräte erfolgreich in der "Unclaimed List"}
-	\label{fig:dna-center-provision-unclaimed}
-\end{figure}
-
-Bevor es jedoch so weit kam, wurden verschiedene Fehlermeldungen angezeigt. Diese konnten jeweils behoben werden indem das betroffene Gerät auf Werkeinstellung zurückgesetzt und neu gestartet wurde. Dieser Vorgang wurde so lange wiederholt bis keine Fehlermeldungen mehr angezeigt wurden. 
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=4cm]{img/DNA_Center_Unclaimed_Errors_1.PNG}
-	\caption{DNA Center Provision - Fehlermeldungen in der "Unclaimed List"}
-	\label{fig:dna-center-provision-unclaimed-2}
-\end{figure}
-
 \subsection{DNA Center Netzwerk Design}
 
 \subsubsection{Network Hierarchy}
 
 Gemäss unserer Netzwerk Architektur wie in Kapitel \ref{fig:LabNetworkArchitecture} beschrieben, haben wir zwei Standorte. Rapperswil mit zwei Gebäuden und Jona mit einem Gebäude.
-In DNA Center können diese sehr einfach im Abschnitt \textit{Design $\rightarrow$ Network Hierarchy} hinzugefügt werden. Seltsamer Weise ist in den Angaben die Adresse nur optional, dafür aber die Koordinaten der Breiten- und Längengrade Pflicht.
+In DNA Center können diese sehr einfach im Abschnitt \textit{Design $\rightarrow$ Network Hierarchy} hinzugefügt werden. 
 
 \begin{figure}[H]
 	\centering
@@ -253,8 +210,67 @@ In DNA Center können diese sehr einfach im Abschnitt \textit{Design $\rightarro
 	\label{fig:dna-center-design-overview}
 \end{figure}
 
+\subsection{LAN Automation}
+Das DNA Center nutzt Plug and Play um automatisch Netzwerkgeräte in Betrieb zu nehmen und initial zu konfigurieren.
+ 
+\subsubsection{DHCP Konfiguration}
+Bei unserem ersten Versuch ein Seed-Device festzulegen, wurde vom DNA Center kein DHCP Server konfiguriert, weshalb wir diesen manuell auf Infoblox eingerichtet haben.\\
+
+
+Cisco PnP kann über die DHCP Optionen 43 und 60 konfiguriert werden (siehe \cite{cisco-pnp-dhcp}). In unserem Fall haben wir diese Optionen wie nachfolgend auf der Grafik erischtlich auf dem Infoblox Server konfiguriert. Diese sind nötig, damit das Netzwerkgerät den PnP Server findet.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=10cm]{img/Infoblox_PNP.png}
+	\caption{Infoblox Cisco PNP DHCP Option Konfiguration}
+	\label{fig:cisco-pnp}
+\end{figure}
+
+Mit diesen Einstellungen hat PnP funktioniert. Allerdings nur sehr unzuverlässig und es kam oft zu Problemen, weshalb dies für viele Geräte mehrmals wiederholt werden musste. Hier ist zu empfehlen, nie mehr als ein Gerät gleichzeitig in Betrieb zu nehmen, damit es möglichst wenig Probleme gibt.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=4cm]{img/DNA_Center_Unclaimed_Errors_1.PNG}
+	\caption{DNA Center Provision - Fehlermeldungen in der "Unclaimed List"}
+	\label{fig:dna-center-provision-unclaimed-2}
+\end{figure}
+\subsection{Underlay Konfiguration}
+
+Das ISIS Routing im Underlay sollte vom DNA Center automatisch konfiguriert werden können. Da die entsprechende Funktion LAN Automation in unserem Versuch aber nicht funktionierte, wurde der Underlay manuell konfiguriert. Dazu wurden auf den Geräten IP Addressen auf den Loopback Interfaces und den P2P Links konfiguriert und entsprechende Router eingerichtet. Am Border wurde BGP verwendet, damit die Devices auch aus dem Legacy Netz erreichbar sind.\\
+Dabei ist uns aufgefallen, dass die Geräte nur über eine IP-Base Lizenz verfügen. Für die Verwendung von BGP und VRF-lite ist aber die IP-Services Lizenz nötig. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{img/IPBaseServices.png}
+	\caption{IP Base and Services}
+	\label{fig:IP Base and Services Licences}
+\end{figure}
+
+Mit folgenden Befehlen war es möglich, eine IP-Services Test Lizenz zu aktivieren und somit die benötigten Features zu nutzen.
+
+\begin{lstlisting}[language=bash]
+sh license right-to-use activate ipservices all accepptEULA
+reload
+show license right-to-use
+\end{lstlisting}
+
+\subsection{"Claim" von Netzwerkgeräten}
+
+\subsubsection{DNA Center Provision - Unclaimed Devices}
+
+Nachdem die Geräte via PnP eine initiale Konfiguration erhalten haben und die Konnektivität via ISIS und BGP sichergestellt war, wurden diese im Device Inventory als Unclaimed Devices angezeigt.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=8cm]{img/DNA_Center_All_Fabric2_Unclaimed.PNG}
+	\caption{DNA Center Provision - Alle Geräte erfolgreich in der "Unclaimed List"}
+	\label{fig:dna-center-provision-unclaimed}
+\end{figure} 
+
+
 \subsection{Netzwerkgeräte zu Inventory hinzufügen}
 
+Der nächste Schritt wäre nun, die Devices zu "Claimen". Dies bedeutet, dass die Geräte einem Standort zugewiesen werden und somit erste Konfigurationen erhalten können. Der Claim Prozess hat leider gar nie funktioniert. Das DNA Center reagierte einfach nicht auf die Eingabe.
 
 \subsubsection{Manuell Geräte im DNA Center hinzufügen}
 Da alle Versuche die Geräte automatisch hinzuzufügen gescheitert sind, entschieden wir uns den Vorgang manuell durchzuführen. 
@@ -277,7 +293,8 @@ Anschliessend wählt man \textit{Add} (siehe \ref{fig:dna-center-inventory-add})
 	\label{fig:dna-center-inventory-add}
 \end{figure}
 
-Anschliessend müssen folgende Informationen eingegeben werden:
+Danach müssen folgende Informationen eingegeben werden:
+
 \begin{itemize}
 	\item Device Type
 	\item Device IP \ Name
@@ -286,7 +303,7 @@ Anschliessend müssen folgende Informationen eingegeben werden:
 	\item NETCONF
 \end{itemize}
 
-Wir entschieden uns CLI via SSH zu nehmen. Von NETCONF und CLI muss nur eine von beiden Optionen gewählt werden. 
+Wir entschieden uns hier CLI via SSH zu wählen.
 
 \begin{figure}[H]
 	\centering
@@ -306,7 +323,7 @@ Danach erscheint das Gerät im Inventory. (siehe \ref{fig:dna-center-inventory-i
 
 
 \subsection{Image Repository}
-Im DNA Center können Netzwerkgeräte automatisch aktualisiert werden. Sobald ein Gerät im Inventory erfolgreich hinzugefügt worden ist, sucht das DNA Center nach Updates. Allerdings nur, wenn ein CCO Account konfiguriert ist. Die Verfügbaren Images sind unter \textit{Desing $\rightarrow$ Global $\rightarrow$ Image Repository} zu finden.
+Im DNA Center können Netzwerkgeräte automatisch aktualisiert werden. Sobald ein Gerät im Inventory erfolgreich hinzugefügt worden ist, sucht das DNA Center automatisch nach Updates. Allerdings nur, wenn ein CCO Account konfiguriert ist. Die verfügbaren Images sind unter \textit{Desing $\rightarrow$ Global $\rightarrow$ Image Repository} zu finden.
 
 \begin{figure}[H]
 	\centering
@@ -315,15 +332,15 @@ Im DNA Center können Netzwerkgeräte automatisch aktualisiert werden. Sobald ei
 	\label{fig:dna-center-design-image-repository}
 \end{figure}
 
-In diesem Image Repository können neue Images heruntergeladen und die gewünschte Version kann mit dem Golden Tag versehen werden. 
+In diesem Image Repository kann das gewünschte Image mit einem "Golden Tag" versehen werden, worauf dieses heruntergeladen wird. 
 
 \subsection{Automatisches Softwareupdate von Netzwerkgeräten}
-Die Softwareupdates von Netzwerkgeräten können im DNA-C unter \textit{Provision $\rightarrow$ devices $\rightarrow$ Inventory} durchgeführt werden. Ebenfalls wird hier automatisch angezeigt, welche Softwareversion zur Zeit auf dem Gerät installiert und ob diese aktuell oder outdated ist.
+Die Softwareupdates von Netzwerkgeräten können im DNA Center unter \textit{Provision $\rightarrow$ Devices $\rightarrow$ Inventory} durchgeführt werden. Ebenfalls wird hier angezeigt, welche Softwareversion zur Zeit auf dem Gerät installiert ist und ob diese aktuell ist.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=8cm]{img/updates/Selection_070.png}
-	\caption{DNA Center Provision - Nach dem manuellen Hinzufügen, muss das OS aktualisiert werden.}
+	\caption{DNA Center Provision - Die OS Versionen sind outdated.}
 	\label{fig:dna-center-provision-updates}
 \end{figure}
 
@@ -341,7 +358,7 @@ Das automatische Softwareupdate hat bei keinem von unseren Switches oder Routern
 \end{tabular}
 \captionof{table}{Softwareupdate - Übersicht Methoden und ausgeführten Versuche}
 
-Beim Versuch die Softwareupdates im DNA-C über HTTP oder SFTP durchzuführen, wurden folgende Fehlermeldungen im DNA-C angezeigt.
+Beim Versuch die Softwareupdates im DNA Center über HTTP oder SFTP durchzuführen, wurden folgende Fehlermeldungen angezeigt.
 
 \begin{figure}[H]
 	\centering
@@ -350,9 +367,9 @@ Beim Versuch die Softwareupdates im DNA-C über HTTP oder SFTP durchzuführen, w
 	\label{fig:dna-center-provision-updates-1}
 \end{figure}
 
-Die Upgrade Prozesse wurden schon beim Herunterladen der einzelnen Images nach unterschiedlicher Dauer immer abgebrochen.
+Die Upgrade Prozesse wurden schon beim Kopieren der einzelnen Images nach unterschiedlicher Dauer immer abgebrochen.
 
-\subsection{Manuelles Softwareupdate via separaten TFTP Server}
+\subsection{Manuelles Softwareupdate}
 Da wie oben beschrieben das automatische Update nicht funktionierte, wurde in einem nächsten Schritt versucht, die Updates manuell auf die Netzwerkgeräte zu installieren. 
 
 \begin{figure}[H]
@@ -361,15 +378,7 @@ Da wie oben beschrieben das automatische Update nicht funktionierte, wurde in ei
 	\caption{Firmwareupdate Switch via CLI HTTPs}
 	\label{fig:dna-center-provision-updates-2}
 \end{figure}
-Das Herunterladen via HTTPS wurde nach einer gewissen Dauer abgebrochen.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=5cm]{img/updates/Selection_108.png}
-	\caption{Firmwareupdate Switch via CLI SCP}
-	\label{fig:dna-center-provision-updates-3}
-\end{figure}
-Das Herunterladen via SCP wurde ebenfalls nach einer gewissen Dauer abgebrochen.
+Das Kopieren via HTTPS und SCP war sehr unzuverlässig und wurde nach einer gewissen Dauer abgebrochen.
 
 \begin{figure}[H]
 	\centering
@@ -377,10 +386,10 @@ Das Herunterladen via SCP wurde ebenfalls nach einer gewissen Dauer abgebrochen.
 	\caption{Firmwareupdate Switch via CLI TFTP}
 	\label{fig:dna-center-provision-updates-4}
 \end{figure}
-Der letzte Versuch das Firmwareupdate via TFTP zu installieren war endlich erfolgreich!
+Mittels TFTP Server konnten die Devices schlussendlich erfolgreich aktualisiert werden.
 
 \subsection{Lizenzen}
-Die Lizenzen bezieht das DNA Center automatisch von den Cisco Server. 
+Die Lizenzen bezieht das DNA Center vom konfigurierten CCO Account. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=3cm]{img/LicenceManager_001.png}
@@ -428,15 +437,17 @@ Die Lizenzen bezieht das DNA Center automatisch von den Cisco Server.
 	\textbf{Geräteserie} & 	\textbf{Lizenzzuweisung möglich} \\
 	\hline
 	Cisco Catalyst 9300 Series Switches & Ja \\
+	\hline
 	Cisco Catalyst 3850 Series Ethernet Stackable Switch & Ja \\
+	\hline
 	Cisco 4400 Series Integrated Services Routers & Nein \\
 	\hline
 \end{tabular}
 
 \subsection{Device Provisioning via DNA Center}
-Um den einzelnen Netzwerkgeräten einen Namen und die Basis Konfiguration zu geben, wird im DNA Center unter \textit{Provision $\rightarrow$ Devices} die zu provisionierenden Geräte ausgewählt. Danach wird \textit{Action $\rightarrow$ Provision Device} der Provision Vorgang gestartet.
+Um den einzelnen Netzwerkgeräten einen Namen und die Basis Konfiguration zu geben, werden im DNA Center unter \textit{Provision $\rightarrow$ Devices} die zu provisionierenden Geräte ausgewählt. Danach wird \textit{Action $\rightarrow$ Provision Device} der Provision Vorgang gestartet.
 
-Dabei wird die komplette Konfiguration, die das DNA Center für ein Device vorsieht auf dem Gerät konfiguriert. Sind Templates für das entsprechende Device konfiguriert worden, werden diese ebenfalls angewendet.
+Dabei wird die komplette Konfiguration, die das DNA Center für ein Device vorsieht auf dem Gerät konfiguriert. Sind Templates für den entsprechende Devicetyp konfiguriert worden, werden diese ebenfalls angewendet.
 Templates können im Template Editor erstellt und entsprechenden Gerätetypen zugewiesen werden.
 
 \begin{figure}[H]
@@ -446,24 +457,6 @@ Templates können im Template Editor erstellt und entsprechenden Gerätetypen zu
 	\label{fig:Template Editor}
 \end{figure}
 
-
-\subsection{BGP und VRF-Lite}
-Automatisierte Weiterleitung externer Verbindungen werden durch Virtual Routing and Forwarding Lite (VRF-Lite) und Border Gateway Protocol Ethernet VPN (BGP-EVPN) unterstützt. Dabei ist uns aufgefallen das die Cisco Catalyst 3850 Series Switche nur eine Lizenz für IP Base installiert haben und BGP sowie VRF-Lite nur in der IP Services Lizenz unterstützt wird. Die genauen Unterschiedene der verschiedenen IOS Software Features sind in untenstehender Grafik ersichtlich\cite{cisco-3850-faq}:
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=16cm]{img/IPBaseServices.png}
-	\caption{IP Base and Services}
-	\label{fig:IP Base and Services}
-\end{figure}
-
-Über die CLI konnten konnten wir eine IP Services Evaluation Lizenz für 90 Tage aktivieren.
-
-\begin{lstlisting}[language=bash]
-sh license right-to-use activate ipservices all accepptEULA
-reload
-show license right-to-use
-\end{lstlisting}
 
 \subsection{Fabric Konfigurieren}
 Nach der manuellen Konfiguration des Underlays, dem hinzufügen der Geräte, dem Update und dem Provisionieren, konnten wir endlich die Fabric konfigurieren. 
