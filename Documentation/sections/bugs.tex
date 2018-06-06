@@ -35,7 +35,9 @@ Im folgenden werden Bugs aufgeführt, die während unserer Arbeit aufgetreten si
 % Dringlichkeit
 {Hoch}
 % Beschreibung
-{Nach der Eingabe der Backup Server Einstellungen und den klick auf \textit{Apply} geschieht nichts. Nach einer Weile werden immer mehr Docker Container gestoppt, bis das DNA Center nicht mehr gebraucht werden kann. Ein Neustart ist erforderlich}
+{Nach der Eingabe der Backup Server Einstellungen und den klick auf \textit{Apply} geschieht nichts. Nach einer Weile werden immer mehr Docker Container gestoppt, bis das DNA Center nicht mehr gebraucht werden kann. Ein Neustart ist erforderlich.
+\textbf{Nachtrag:} Nach mehreren Versuchen hat es geklappt. Über die genaue Ursache kann keine Aussage gemacht werden. Wir vermuten der Bug wurde in Updates gefixt. 
+}
 % Konsequenzen
 {Beim Ausfall der Appliance können die Einstellungen nicht wiederhergestellt werden}
 % Workaround
@@ -191,9 +193,72 @@ Siehe Beschreibung
 
 
 
+\bugreport
+% Titel
+{PNP}
+% Komponente
+{Provision $\rightarrow$ LAN Automation}
+% Dringlichkeit
+{Mittel}
+% Beschreibung
+{Während der LAN Automation machen die Switch und Router PNP auf das DNA Center. Dies klappt teilweise nicht und der Switch muss zurückgesetzt und neu gestartet werden.}
+% Konsequenzen
+{Die LAN Automation braucht viel manuelle Eingriffe und ist sehr aufwändig.}
+% Workaround
+{Siehe Beschreibung}
+%Reproduzieren
+{
+	Siehe Beschreibung
+}
+% Reporter
+{Sandro Kaspar}
+% Feedback Cisco
+{}
 
 
+\bugreport
+% Titel
+{LAN Automation IP Vergab}
+% Komponente
+{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}
+% Dringlichkeit
+{Mittel}
+% Beschreibung
+{Wir haben die LAN Automation ein zweites Mal mit einem grösseren IP Pool gestartet. Bei einzelnen Geräten wird aber im DNA Center weiterhin die alte IP angezeigt nachdem diese PNP versucht haben.}
+% Konsequenzen
+{Die IP Adresse ist ungültig und die Geräte nicht erreichbar.}
+% Workaround
+{Geräte löschen und Vorgang wiederholen bis die IP Adresse stimmt.}
+%Reproduzieren
+{
+	Siehe Beschreibung
+}
+% Reporter
+{Sandro Kaspar}
+% Feedback Cisco
+{}
 
+\bugreport
+% Titel
+{Manuelle Eingriffe Infoblox}
+% Komponente
+{Design $\rightarrow$ Network Settings $\rightarrow$ IP Address Pool}
+% Dringlichkeit
+{Niedrig}
+% Beschreibung
+{Wenn etwas an den IP Pools geändert wird (Hinzufügen oder Bearbeiten) werden diese Änderungen nicht aktiv.}
+% Konsequenzen
+{Beim Adressbereich muss der Infoblox als DHCP Server hinterlegt werden und die Services auf dem Infoblox müssen neu gestartet werden.}
+% Workaround
+{Siehe Konsequenzen}
+%Reproduzieren
+{
+	Siehe Beschreibung
+}
+% Reporter
+{Sandro Kaspar}
+% Feedback Cisco
+{}
 
 
 
