@@ -972,6 +972,22 @@ Geräte haben nicht mer EVAL sondern plötzlich Permanent Lizenzen
 
 \subsection{Ping to Clients}
 
+\subsection{Host Onboarding}
 
+Infoblox vorgehen bei neuem Netzwerk!!!
 
+\subsubsection{Authentifizierungsmethoden}
+
+\begin{tabular}{ | m{8cm} | m{8cm} | }
+	\hline
+	\textbf{Typ} & 	\textbf{Beschreibung} \\
+	\hline
+	Closed Authentication & Based on 802.1X. Authentication MUST succeed prior to network access. Requires networks with complete 802.1x support. \\
+	Open Authentication & Based on 802.1x. Temporary access is granted (e.g. PXE, DHCP) prior to authentication. Optimal for networks with limited 802.1x support. \\
+	Easy Connect & Based on LDAP combined with MAC Address Bypass (MAB). Optimal for networks using Active Directory (AD) authentication. \\
+	No Authentication & Optimal for networks that do not support authentication or require static configuration. \\
+	\hline
+
+\end{tabular}
+\caption[Erklärung der Host Onboardning Authentifizierungsmethoden]{Erklärung der Host Onboardning Authentifizierungsmethoden.\cite{ivan-caduff-slack}}
 
