@@ -905,7 +905,7 @@ Im nächsten Schritt mussten die neuen Devices zu einer Fabric hinzugefügt werd
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=4cm]{img/secondtry/dna-border-configuration.png}
+	\includegraphics[height=8cm]{img/secondtry/dna-border-configuration.png}
 	\caption{DNA Center - Border Konfiguration}
 	\label{fig:dna-center-border-configuration}
 \end{figure}
@@ -1115,8 +1115,58 @@ neighbor 10.22.11.29 activate
 Je nach Anzahl VNs wird diese Konfiguration natürlich wesentlich grösser. Es ist zu beachten, dass jedes Mal wenn ein VN erstellt wird, die Konfiguration auf dem Legacy Router angepasst werden muss, sofern Kommunikation zwischen dem VN und der Aussenwelt möglich sein soll.
 
 \subsubsection{IP Pools für Clients definieren}
-TODO 
-Infoblox vorgehen bei neuem Netzwerk!!!
+
+Damit sich Clients am Netzwerk anmelden können, mussten IP Pools für die verschiedenen VNs definiert werden. Diese können unter \textit{Design $\rightarrow$ Network Settings  $\rightarrow$ Global $\rightarrow$ IP Address Pools $\rightarrow$ Add IP Pool} hinzugefügt werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=7cm]{img/secondtry/dna-add-ip-pool.png}
+	\caption{DNA Center - Add IP Pool}
+	\label{fig:dna-center-add-ip-pool}
+\end{figure}
+
+Der IP Pool wurde dann vom DNA Center in Infoblox erstellt. Leider wurde dabei kein DHCP Server für den Pool auf Infoblox erstellt. Dies musste also manuell gemacht werden.
+
+In Infoblox sind folgende Schritte nötig, damit der DHCP Server den neuen Pool bedient. \textit{Data Management $\rightarrow$ IPAM  $\rightarrow$ 10.22.0.100/23 $\rightarrow$ Edit $\rightarrow$ Member Assignment}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=4cm]{img/secondtry/infoblox-add-dhcp-1.png}
+	\caption{Infoblox - Member Assignment}
+	\label{fig:infoblox-member-assignment}
+\end{figure}
+
+Wie in der obenstehenden Grafik zu sehen ist, musste ein Member für den neuen Pool assigned werden. In unserer Lab Umbegung gibt es nur einen Infoblox Server, weshalb dieser ausgewählt werden muss.
+Anschliessend muss eine DHCP Range erstellt werden, aus der die Clients Adressen erhalten können. Das Vorgehen dazu ist 
+In Infoblox sind folgende Schritte nötig, damit der DHCP Server den neuen Pool bedient. \textit{Data Management $\rightarrow$ DHCP  $\rightarrow$ Networks $\rightarrow$ 10.22.100.0/23 $\rightarrow$ Add (Plus Symbol)}
+Es startet ein Wizard, mit dem die Range definiert werden kann. Dabei müssen die Start- und Endadresse der IP Range angegeben werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/secondtry/infoblox-add-dhcp-2.png}
+	\caption{Infoblox - Add IP Range}
+	\label{fig:infoblox-add-ip-range}
+\end{figure}
+
+Im zweiten Schritt des Wizards muss definiert werden, welcher Member die Range bedient. Da zuvor nur einer zugewiesen wurde, konnte einfach dieser ausgewählt werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=3.5cm]{img/secondtry/infoblox-add-dhcp-3.png}
+	\caption{Infoblox - Assign Grid Memger}
+	\label{fig:infoblox-assign-grid-member}
+\end{figure}
+
+Zum Schluss muss diese Konfiguration gespeichert werden. Damit diese auch aktiviert wird, muss der DHCP Service auf dem Infoblox neu gestartet werden. Infoblox weist jeweils darauf hin, wenn Änderungen einen Neustart der Services benötigen.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.4cm]{img/secondtry/infoblox-restart-services.png}
+	\caption{Infoblox - Restart Services}
+	\label{fig:infoblox-restart-services}
+\end{figure}
+
+
 \subsubsection{Host Onboarding}
 TODO
 
