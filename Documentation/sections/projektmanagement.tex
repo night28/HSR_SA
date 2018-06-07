@@ -215,10 +215,11 @@ Da bei uns bereits zwei eher schwerwiegende Risiken eingetreten waren, wurde ent
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=5cm]{img/ZeitlichePlanung_v4.png}
+	\includegraphics[width=16cm]{img/ZeitlichePlanung_v4.png}
 	\caption{Erweiterte Anpassung der Projektplanung}
 	\label{fig:Erweiterte Anpassungen der Projektplanung}
 \end{figure} 
+
 
 Folgende Meilensteine sind nun aufgrund der Lieferverzögerung für das Projekt definiert:
 \begin{table}[H]
@@ -230,18 +231,21 @@ Folgende Meilensteine sind nun aufgrund der Lieferverzögerung für das Projekt 
 		\hline	
 		M0 & 27.02.2018 & Kickoff Meeting \\
 		M1 & 10.04.2018 & Projektplanung abgeschlossen \\
-		M2 & 17.04.2018 & Inbetriebnahme Hardware abgeschlossen \\
-		M3 & 24.04.2018 & Definierung von Benutzer- und Geräteprofilen \\
-		M4 & 08.05.2018 & Integration von bestehenden IPAM in DNA Center \\
-		M5 & 22.05.2018 & Reporting \& Monitoring \\
-		M6 & 28.05.2018 & Freigabe des Abstracts \\
-		M7 & 01.06.2018 & Abgabe Projekt \\
+		M2 & 24.04.2018 & Inbetriebnahme Hardware abgeschlossen \\
+		   & 16.05.2018 & Zwischenpräsentation \\
+		M3 & 01.06.2018 & Fabric Konfiguration \\
+		M4 & 10.06.2018 & Definierung von Benutzer- und Geräteprofilen \\
+		M5 & 12.06.2018 & Reporting \& Monitoring \\
+		M6 & 13.06.2018 & Freigabe des Abstracts \\
+		M7 & 13.06.2018 & Abgabe Projekt \\
+		   & 15.06.2018 & Endpräsentation \\
 	\end{tabularx}
 	\caption{Erweiterte Anpassung der Meilensteine}
 	\label{tab:Erweiterte Anpassung der Meilensteine}
 \end{table}
 
-
+Auf der Grafik ist ersichtlich, dass die komplette Konfiguration des DNA Centers nach der Zwischenpräsentation stattfindet. Geplant war die Fabric Konfiguration schon in der zehnten Woche, jedoch funktionierte zu diesem Zeit die LAN Automation nur mässig und die Geräte wurden manuell zum DNA Center hinzugefügt, so dass eine Fabric konfiguriert werden konnte. Kurz vor der Zwischenpräsentation war die Definierung der Benutzer- und Geräteprofilen wichtig, da an der Präsentation unter anderem die Konnektivität zwischen zwei Clients vorgeführt werden sollte. Dies war jedoch wegen mehreren aufgetretenen Fehlern und Problemen nicht möglich. Der Versuch das DNA Center nochmals von vorne zu mit einem Out of Band Management zu Konfigurieren scheiterte leider. Der Maglev Configuration Wizard brach am Schluss der Konfigurationen mit einem Fehler ab und brachte das ganze DNA Center in einen "not bootable" Zustand. \\
+Dies war ein guter Zeitpunkt um die komplette Installation des DNA Center nochmal sauber von vorne zu beginnen. Durch die vielen aufgetretenen Probleme wurde uns wie schon oben erwähnt für einen Tag ein Cisco Experte zur Seite gestellt, mit welchen wir die Konfiguration des Underlay Netzwerkes bis zum Definieren eines ersten Seed-Devices durchführen konnten.
 
 
 
