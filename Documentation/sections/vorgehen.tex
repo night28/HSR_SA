@@ -804,7 +804,7 @@ Unter \textit{Design $\rightarrow$ Network Profiles $\rightarrow$ Add Profile} k
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=4cm]{img/secondtry/dna-center-network-profile-new.png}
-	\caption{Cisco DNA Center - Network Profile - New Profile}
+	\caption{DNA Center - Network Profile - New Profile}
 	\label{fig:dna-center-network-profile-new}
 \end{figure}
 
@@ -825,7 +825,7 @@ Das zu provisionierende Gerät wird in der Liste ausgewählt. Über \textit{Acti
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=5cm]{img/secondtry/dna-center-provision-device.png}
-	\caption{Cisco DNA Center - Device Provisioning}
+	\caption{DNA Center - Device Provisioning}
 	\label{fig:dna-center-provision-device}
 \end{figure}
 
@@ -834,7 +834,7 @@ Es folgt ein Wizard, der durch das Provisioning führt. Im ersten Schritt (Siehe
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=3cm]{img/secondtry/dna-center-provision-step1.png}
-	\caption{Cisco DNA Center - Provision Step 1}
+	\caption{DNA Center - Provision Step 1}
 	\label{fig:dna-center-provision-step1}
 \end{figure}
 
@@ -845,11 +845,11 @@ Im dritten Schritt kann das im Abschnitt \ref{Script-Template} definierte Templa
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=4cm]{img/secondtry/dna-center-provision-step3.png}
-	\caption{Cisco DNA Center - Provision Step 3}
+	\caption{DNA Center - Provision Step 3}
 	\label{fig:dna-center-provision-step3}
 \end{figure}
 
-Im letzte Schritt erscheint eine Übersicht. Mit einem Klick auf \textit{Deploy} wird das Device provisioniert. Die dabei automatisch ausgeführten Befehle durch das DNA Center sind in Listing \ref{lst:commands-executed-during-provision} ersichtlich.
+Im letzte Schritt erscheint eine Übersicht. Mit einem Klick auf \textit{Deploy} wird das Device provisioniert. Die dabei automatisch ausgeführten Befehle durch das DNA Center sind untenstehend \ref{lst:commands-executed-during-provision} ersichtlich.
 
 \begin{lstlisting}[caption={Befehle automatisch ausgeführt durch das DNA Center während der Provisionierung},label={lst:commands-executed-during-provision},language=bash]
 enable
@@ -901,7 +901,27 @@ hostname c9300-2.edge.g2.f2
 \end{lstlisting}
 
 \subsubsection{Geräte zur Fabric hinzufügen}
-TODO
+Im nächsten Schritt mussten die neuen Devices zu einer Fabric hinzugefügt werden. Dies wird unter \textit{Provision $\rightarrow$ Fabric $\rightarrow$ Rapperswil} gemacht. Das Vorgehen ist in Abschnitt \ref{fabric-configuration} beschrieben. Bei allen Nodes, ausser den Border und Control Plane Nodes, musste lediglich die Rolle definiert werden. Für den Border und Control Plane Node war etwas mehr Konfiguration nötig. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=4cm]{img/secondtry/dna-border-configuration.png}
+	\caption{DNA Center - Border Konfiguration}
+	\label{fig:dna-center-border-configuration}
+\end{figure}
+
+Wie in obiger Grafik ersichtlich ist, müssen folgende Informationen für den Border angegeben werden:
+\begin{itemize}
+	\item Routing Protokoll (derzeit nur BGP möglich)
+	\subitem AS-Number
+	\item IP Pool für den Border
+	\item Externes Interface
+	\subitem Remote AS-Number
+	\subitem Virtual Networks
+\end{itemize}
+
+Sobald die Rollen aller Devices definiert sind und der Border konfiguriert wurde, kann die Konfiguration mittels \textit{Save} Button auf die Geräte verteilt werden.
+Was dabei genau auf dem Gerät gemacht wird, ist nachfolgend \ref{lst:commands-executed-during-add-to-fabric} am Beispiel eines Edge Devices ersichtlich.
 
 \begin{lstlisting}[caption={Befehle automatisch ausgeführt durch das DNA Center während dem hinzufügen zur Fabric},label={lst:commands-executed-during-add-to-fabric},language=bash]
 !exec: enable
@@ -1031,10 +1051,70 @@ ip sla schedule 3  life forever start-time now
 banner motd #\"Welcome to our SA Lab!\"#
 \end{lstlisting}
 
-\subsubsection{Border BGP}
-TODO
+\subsubsection{Border BGP Konfiguration}
 
-\subsubsection{IP Pools definieren}
+Auf den Border Nodes wurde nun die BGP Konfiguration erstellt, damit die Fabric mit der Aussenwelt kommunizieren kann. Die Konfiguration der Gegenseite kann das DNA Center leider nicht übernehmen. Diese muss daher manuell erstellt werden.
+
+Hier ein Beispiel einer Konfiguration, die vom DNA Center erstellt wurde:
+
+\begin{lstlisting}[language=bash]
+c3850-1.border.g1.f2#sh run | sec router bgp
+router bgp 30
+bgp router-id interface Loopback0
+bgp log-neighbor-changes
+neighbor 10.22.11.2 remote-as 10
+neighbor 10.22.11.2 update-source Vlan3001
+!
+address-family ipv4
+network 10.22.30.1 mask 255.255.255.255
+redistribute connected
+redistribute lisp metric 10
+redistribute isis level-1-2
+neighbor 10.22.11.2 activate
+neighbor 10.22.11.2 weight 65535
+exit-address-family
+!
+address-family ipv4 vrf Mitarbeiter
+bgp aggregate-timer 0
+network 10.22.100.1 mask 255.255.255.255
+aggregate-address 10.22.100.0 255.255.254.0 summary-only
+redistribute lisp metric 10
+neighbor 10.22.11.30 remote-as 10
+neighbor 10.22.11.30 update-source Vlan3008
+neighbor 10.22.11.30 activate
+neighbor 10.22.11.30 weight 65535
+exit-address-family
+\end{lstlisting}
+
+Nun musste auf dem Legacy Router die passende Konfiguration erstellt werden. Diese kann wie folgt aussehen:
+
+\begin{lstlisting}[language=bash]
+isr4431.legacy#sh run int Gi0/0/1.3008
+Building configuration...
+
+Current configuration : 109 bytes
+!
+interface GigabitEthernet0/0/1.3008
+encapsulation dot1Q 3008
+ip address 10.22.11.30 255.255.255.252
+end
+isr4431.legacy#sh run | sec router bgp
+router bgp 10
+bgp log-neighbor-changes
+neighbor 10.22.11.1 remote-as 30
+neighbor 10.22.11.29 remote-as 30
+!
+address-family ipv4
+network 0.0.0.0
+redistribute connected
+redistribute static
+neighbor 10.22.11.1 activate
+neighbor 10.22.11.29 activate
+\end{lstlisting}
+
+Je nach Anzahl VNs wird diese Konfiguration natürlich wesentlich grösser. Es ist zu beachten, dass jedes Mal wenn ein VN erstellt wird, die Konfiguration auf dem Legacy Router angepasst werden muss, sofern Kommunikation zwischen dem VN und der Aussenwelt möglich sein soll.
+
+\subsubsection{IP Pools für Clients definieren}
 TODO 
 Infoblox vorgehen bei neuem Netzwerk!!!
 \subsubsection{Host Onboarding}
