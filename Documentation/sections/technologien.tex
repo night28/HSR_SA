@@ -7,7 +7,7 @@ So können Organisationen sicherstellen, dass für jeden Benutzer oder jedes Ger
 \\
 SDA wird aus mehreren Komponenten zusammengesetzt. Dazu gehört das DNA-Center, welches die grundsätzliche Funktion des Netzwerks sicherstellt, sowie Identity Service Engine (ISE), welches die Benutzeridentitäten und Profile verwaltet. \cite{sda-definition}
 
-\subsubsection{Campus Fabric}
+\subsubsection{Campus Fabric} \label{CampusFabric}
 Um eine konsistente Benutzererfahrung zu erreichen, braucht man eine Switching-Infrastruktur mit der sich der Zugang zu bestimmten IP-Subnetzen ortsunabhängig realisieren lässt. \cite{campusfabric-introduction} \\
 
 \begin{figure}[H]
@@ -197,7 +197,7 @@ Im Einzug mit dem Campus Fabric wurden für bestehende LISP Namenskonzepte neue 
 	\item "Intermediate Node" $\approx$ "Non-LISP IP Forwarder"
 \end{itemize}
 
-\paragraph{Fabric Control-Plane Node} basiert auf einem LISP Map Server / Resolver. Führt die LISP-Host-Tracking-Datenbank aus, um Overlay-Erreichbarkeitsinformationen bereitzustellen.
+\paragraph{Fabric Control-Plane Node} basiert auf einem LISP Map Server / Resolver. Führt die LISP-Host-Tracking-Datenbank aus, um Overlay-Erreichbarkeitsinformationen bereitzustellen. 
 \begin{itemize}
 	\item Eine einfache Host-Datenbank, die die Endpunkt-ID zu Edge-Knoten-Bindungen zusammen mit anderen Attributen verfolgt
 	\item Host-Datenbank unterstützt mehrere Endpoint-ID-Lookup-Schlüssel (IPv4 / 32, IPv6 / 128 oder MAC)
