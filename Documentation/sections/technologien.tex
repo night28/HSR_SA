@@ -302,32 +302,8 @@ Ausgangslage: Wenn ein IP Paket über SD-A von PC1 172.16.1.1/24 nach PC2 10.0.2
 	\caption{SDA Mechanismus}
 	\label{fig:SDA Mechanismus}
 \end{figure}
-\begin{itemize}
-	\item ARP Lookup für Default GW
-	\item Antwort von Edge Node 1 (GW ist anycast Adresse und wird von jedem Edge Node beantwortet)
-	\item Paket an GW
-	\item RLOC Lookup im lokalen Map Cache
-	\item Falls kein Eintrag im Lokalen Cache:
-	\begin{itemize}
-		\item RLOC Lookup an Map Resolver senden
-		\item Map Resolver antwortet mit RLOC falls vorhanden
-		\begin{itemize}
-			\item Falls RLOC nicht bekannt, wird Border Node verwendet 
-		\end{itemize} 
-	\end{itemize}
-	\item VXLAN Encapsulation (SGT 5, VNI1234)
-	\item UDP und Outer IP Header hinzufügen (Underlay Network)
-	\item Senden an RLOC IP (Destination Edge Node)
-	\item Paket durch Intermediate Nodes routen
-	\item Edge Node 2 erhält Paket
-	\item Outer IP und UDP Header entfernen (Underlay Network)
-	\item Policy für SGT 5 beim Map Resolver anfragen
-	\item Policy auf Paket anwenden:
-	\begin{itemize}
-		\item Je nach Policy ok oder Paket droppen
-	\end{itemize}
-	\item VXLAN Decapsulation
-	\item Paket an PC2 weiterleiten
-\end{itemize}
+
+Als erstes wird vom PC1 ein ARP Lookup an den Default GW gesendet. Dieser erhält eine Antwort vom Edge Node 1 (GW ist Anycast Adresse und wird von jedem Edge Node beantwortet). Nachfolgend sendet der PC1 sein Paket an den GW. Der Edge Node 1 führt ein RLOC Lookup im lokalen Map Cache aus. Falls kein Eintrag im lokalen Cache vorhanden ist, sendet er ein RLOC Lookup an den Map Resolver. Von diesem Map Resolver erhält der Edge Node 1 den RLOC von PC2 falls vorhanden. Ist dieser nicht bekannt, wird der Border Node verwendet. Nun erfolgt die VXLAN Encapsulation (SGT 5, VNI1234) und es wird der UDP und Outer IP Header hinzugefügt (Underlay Network). Das Paket wird nun an die RLOC IP (Destination Edge Node) weitergesendet. Sollten Intermediate Nodes vorhanden sein, wird das Paket durch diese geroutet, bis der Edge Node 2 das Paket erhält. Nun werden der UDP und Outer IP Header wieder entfernt (Underlay Netowork) und es geschieht die VXLAN Decapsulation. Nun wird die Policy für SGT 5 beim ISE angefragt. Dieser gibt die dazugehörigen Policies zurück und wendet diese auf das Paket an. Je nach Policy wird das Paket weitergesendet oder verworfen. In diesem Fall wird die Policy angewendet und an das Ziel, den PC2 weitergeleitet.
+
 
 
