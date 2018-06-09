@@ -33,35 +33,27 @@ Zudem funktioniert der Backup Schedule nicht. Backups werden nicht automatisch a
 Da die Backup Funktionalität des DNA Centers sehr eingeschränkt ist und nur unzuverlässig funktioniert, wird der Use Case "Backup und Restore" nicht vollständig erfüllt.
 \pagebreak
 
-\testpttb{UC11: Infoblox}{Durch die Integration des Infoblox DDI im DNA Center soll das IP-Adressen Management für neue Netzwerkkomponenten vereinfacht werden.}{
-	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard erscheint}{OK}
-	\testptrow{2}{Zu IP Adress Manager Einstellungen navigieren über \textit{Settings $\rightarrow$ System Settings $\rightarrow$ Settings $\rightarrow$ IP Adress Manager} }{IP Adress Manager Einstellungen anzeigen}{IP Adress Manager Einstellungen erscheinen}{OK}
-	\testptrow{3}{Infoblox Informationen hinterlegen $\rightarrow$ Server Name: Infoblox, Server Url: https://10.22.0.21, Username: admin, Password: xxx, Provider: INFOBLOX). Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben wurden angenommen und Verbindung zu Infoblox Server erfolgreich hergestellt.}{OK}
-	\testptrow{4}{IP Adress Pools anzeigen über \textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Adress Pools}.}{IP Adress Pools sollten angezeigt werden.}{Es werden vorher definierte IP Adress Pools angezeigt.}{OK}
-	
-}
-\pagebreak
+
 
 
 \subsection{UC04: Reporting}
 Andere Use Cases haben eine höhere Priorisierung erhalten. Aus Zeitmangel konnte dieser Use Case nicht behandelt werden. 
 
-\pagebreak
 
 \subsection{UC05: Hardware Ersatz}
 \textit{Offene Frage an Ivan Caduff via Slack}
 
-\pagebreak
+
 
 \subsection{UC06: Benutzermobilität}
 Um diesen Use Case zu testen braucht es eine funktionierende Fabric, zwei Gebäude oder besser zwei Standorte und 802.1X Authentifizierung. Da dies leider nicht der Fall ist, konnte dieser Use Case nicht getestet werden. 
 
-\pagebreak
+
 
 \subsection{UC07: Degradation}
 In der Main Success Story dieses Use Cases steht "1. Netzwerk funktioniert einwandfrei.". Da dies zu diesem Zeitpunkt noch nicht der Fall ist, konnte dieser Use Case nicht getestet werden. 
 
-\pagebreak
+
 
 \subsection{UC08: Integration von nicht Fabric Komponenten}
 Andere Use Cases haben eine höhere Priorisierung erhalten. Aus Zeitmangel konnte dieser Use Case nicht behandelt werden. Insbesondere, weil nebst einer funktionierenden Fabric auch ein Mapping zwischen den SGT im Legacy Netzwerk konfiguriert hätte werden müssen. 
@@ -82,6 +74,23 @@ Gemäss \textit{Sitzungsprotokoll der Sitzung mit Cisco vom 23.05.2018} im Anhan
 }
 \subsubsection{Zusammenfassung UC10}
 Noch nicht alle Funktionen können komplett im DNA Center erledigt werden. Ein Teil der Funktionen erfolgt weiterhin über die GUI der anderen Komponenten. 
+
+\pagebreak
+
+\testpttb{UC11-1: Infoblox verknüpfen}{Durch die Integration des Infoblox DDI im DNA Center soll das IP-Adressen Management für neue Netzwerkkomponenten vereinfacht werden.}{
+	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard erscheint}{OK}
+	\testptrow{2}{Zu IP Adress Manager Einstellungen navigieren über \textit{Settings $\rightarrow$ System Settings $\rightarrow$ Settings $\rightarrow$ IP Adress Manager} }{IP Adress Manager Einstellungen anzeigen}{IP Adress Manager Einstellungen erscheinen}{OK}
+	\testptrow{3}{Infoblox Informationen hinterlegen $\rightarrow$ Server Name: Infoblox, Server Url: https://10.22.0.21, Username: admin, Password: xxx, Provider: INFOBLOX). Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben wurden angenommen und Verbindung zu Infoblox Server erfolgreich hergestellt.}{OK}
+}
+
+\testpttb{UC11-2: IP Adress Pool erstellen}{IP Adress Pools auf dem Infoblox erstellen und mit DNA Center synchronisieren}{
+	\testptrow{1}{IP Adress Pools anzeigen über \textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Adress Pools}.}{IP Adress Pools sollten angezeigt werden.}{Es werden vorhandene IP Adress Pools angezeigt.}{OK}
+	\testptrow{2}{Mit einem Klick auf \textit{Add IP Pool} kann ein neuer IP Pool hinzugefügt werden. Hierfür werden folgende Angaben benötigt: IP Pool Name, CIDR Prefix, IP Subnetz, Gateway IP Adresse, DHCP Server (optional), DNS Server (optional)}{Fenster um IP Adress Pool hinzuzufügen erscheint}{Fenster um IP Adress Pool hinzuzufügen ist erschienen}{OK}
+	\testptrow{3}{Mit einem Klick auf Save wird der IP Adress Pool hinzugefügt und mit dem Infoblox Server synchronisiert}{Übersicht über vorhandene IP Adress Pools wird angezeigt}{Übersicht über vorhandene IP Adress Pools wird angezeigt mit vorher hinzugefügtem IP Adress Pool}{OK}
+}
+
+\subsubsection{Zusammenfassung UC11}
+Der Infoblox konnte im DNA Center relativ einfach hinterlegt werden. Das erstellen eines IP Adress Pools auf dem DNA Center funktioniert gut und wird auch schnell mit dem Infoblox synchronisiert. Wird jedoch ein IP Adress Pool auf dem Infoblox erstellt, so ist es eher mühsam diesen neuen IP Adress Pool auf dem DNA Center anzuzeigen. Diese Synchronisation erfolgt nicht sauber. Es ist auf dem DNA Center zwar eine Import Funktion vorhanden, welche die IP Adress Pools vom Infoblox importieren sollte, aber nur mässig gut funktioniert. Jedes Netz welches importiert werden soll, muss einzeln erstellt und genaustens angegeben werden. Aus diesem Grunde sollte generell alles was im DNA Center erstellt werden kann, auf diesem erstellt werden und nicht manuell auf dem Infoblox.
 
 \pagebreak
 
