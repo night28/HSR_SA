@@ -33,11 +33,17 @@ Zudem funktioniert der Backup Schedule nicht. Backups werden nicht automatisch a
 Da die Backup Funktionalität des DNA Centers sehr eingeschränkt ist und nur unzuverlässig funktioniert, wird der Use Case "Backup und Restore" nicht vollständig erfüllt.
 \pagebreak
 
+\testpttb{UC04 Reporting}{Mit Hilfe der DNA Center API können regelmässige Reports über den Zustand der Netzwerkumgebung per E-Mail oder Slack versendet werden. Damit dieser Use Case ausgeführt werden kann, muss ein Mailserver und ein Benutzer zur Verfügung stehen, der E-Mails versenden kann. Des weiteren ist ein System benötigt, welches das Script ausführt. Auf diesem muss python installiert sein.}{
+	\testptrow{1}{Reporting Script aus GIT Repository auschecken (auf dem System, das die Reports versenden soll)}{Code ist ausgecheckt}{Code ist ausgecheckt}{OK}
+	\testptrow{2}{config.py mit Texteditor öffnen und anpassen}{Reporting Config ist komplett}{Reporting Config ist komplett}{OK}
+	\testptrow{3}{Cronjob einrichten, der das Script in regelmässigen Abständen ausführt}{Script wird regelmässig ausgeführt}{Script wird regelmässig ausgeführt}{OK}
+	\testptrow{4a}{Cronjob wird ausgeführt und versendet Report per E-Mail}{Report wird per E-Mail versendet.}{Report wird per E-Mail versendet}{OK}
+	\testptrow{4b}{Cronjob wird ausgeführt und versendet Report per Slack}{Report wird per Slack versendet.}{Nicht implementiert}{NOT OK}
+}
 
-
-
-\subsection{UC04: Reporting}
-Andere Use Cases haben eine höhere Priorisierung erhalten. Aus Zeitmangel konnte dieser Use Case nicht behandelt werden. 
+\subsubsection{Zusammenfassung UC04}
+Mit dieser Lösung ist ein sehr rudimentäres Reporting implementiert worden. Es wird lediglich eine Liste aller Netzwerkgeräte, sowie eine Liste aller Hosts mit den wichtigsten Informationen und dem Zustand der Geräte ausgegeben. Wünschenswert wären natürlich wesentlich mehr Informationen, insbesondere aus dem Bereich Assurance. Leider unterstützt die API des aktuellen Release 1.1.6 diese Funktionien nicht. Im Release 1.2 ist einiges mehr vorhanden, aber nach wie vor als Early Field Trial (EFT) gekennzeichnet. 
+Eine sinnvolle Reporting Funktion ist daher mit den aktuell verfügbaren APIs des DNA Centers nicht realisierbar.
 
 
 \subsection{UC05: Hardware Ersatz}
