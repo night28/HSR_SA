@@ -1235,32 +1235,87 @@ Hier kann die Kommunikation zwischen den Scalable Groups geregelt werden. Mit Hi
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=10cm]{img/secondtry/dna-center-add-policy.png}
-	\caption{ISE - Add Policy}
-	\label{fig:ise-add-policy}
+	\includegraphics[width=11cm]{img/secondtry/dna-center-add-policy.png}
+	\caption{DNA Center - Add Policy}
+	\label{fig:dna-center-add-policy}
 \end{figure}
 
 So konnten alle Policies erstellt werden, die nötig waren, um die Kommunikation innerhalb der Fabric zu regeln.
 
 \subsection{Host Onboarding}
-TODO
+
+Im Bereich Host Onboarding wird geregelt, was geschieht, wenn sich ein Client mit dem Netzwerk verbindet. Dies kann global pro Fabric, aber auch pro Port geregelt werden.
 
 
 \subsubsection{Authentifizierungsmethoden}
-TODO
-\begin{tabular}{ | m{8cm} | m{8cm} | }
+
+\begin{tabular}{ | m{4cm} | m{12cm} | }
 	\hline
 	\textbf{Typ} & 	\textbf{Beschreibung} \\
 	\hline
-	Closed Authentication & Based on 802.1X. Authentication MUST succeed prior to network access. Requires networks with complete 802.1x support. \\
-	Open Authentication & Based on 802.1x. Temporary access is granted (e.g. PXE, DHCP) prior to authentication. Optimal for networks with limited 802.1x support. \\
-	Easy Connect & Based on LDAP combined with MAC Address Bypass (MAB). Optimal for networks using Active Directory (AD) authentication. \\
-	No Authentication & Optimal for networks that do not support authentication or require static configuration. \\
+	Closed Authentication & Basiert auf 802.1x. Kein Netzwerkzugriff möglich, bevor sich der Client mittels 802.1x authentifiziert. \\
 	\hline
-
+	Open Authentication & Basiert auf 802.1x. Temporärer Zugriff (PXE, DHCP) ist erlaubt bevor sich der Client mittels 802.1x authentifiziert. \\
+	\hline
+	Easy Connect & Basiert auf LDAP kombiniert mit MAC Address Bypass (MAB).\\
+	\hline
+	No Authentication & Statische Portkonfiguration. Dies ist geeignet für Geräte, die 802.1x nicht unterstützen. \\
+	\hline
 \end{tabular}
-\caption[Erklärung der Host Onboarding Authentifizierungsmethoden]{Erklärung der Host Onboardning Authentifizierungsmethoden.\cite{ivan-caduff-slack}}
+\caption[Erklärung der Host Onboarding Authentifizierungsmethoden]{Erklärung der Host Onboarding Authentifizierungsmethoden.\cite{ivan-caduff-slack}}
 
+In der LAB Umgebung haben wir eine Kombination aus "No Authentication" und "Open Authentication gewählt. An Ports, die für das Gebäudemanagement vorgesehen sind, ist "No Authentication" konfiguriert und das VN "Gebaeudemgmt" ist statisch konfiguriert. Dies aus dem Grund, da solche Geräte 802.1x wahrscheinlich nicht unterstützen. 
+Alle anderen Ports sind mit "Open Authentication" konfiguriert. Ein Client der sich mit dem Netzwerk verbindet, kann also nur DHCP und PXE nutzen, bis er sich erfolgreich authentifiziert hat und anschliessend ins entsprechende VN verschoben wird.
+
+Die Portkonfiguration kann im DNA Center unter \textit{Provision $\rightarrow$ Fabric $\rightarrow$ Host Onboarding} vorgenommen werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{img/secondtry/dna-center-host-onboarding.png}
+	\caption{DNA Center - Host Onboarding}
+	\label{fig:dna-center-host-onboarding}
+\end{figure}
+
+Auf dem Netzwerk Device sieht die Port Konfiguration dann wie folgt aus:
+
+\paragraph{No Authentication}
+
+\begin{lstlisting}[language=bash]
+interface GigabitEthernet1/0/1
+  switchport access vlan 1021
+  switchport mode access
+  device-tracking attach-policy IPDT_MAX_10
+  load-interval 30
+  cts manual 
+  policy static sgt 19
+  no propagate sgt
+  spanning-tree portfast
+end
+\end{lstlisting}
+\paragraph{Open Authentication}
+\begin{lstlisting}[language=bash]
+interface GigabitEthernet1/0/5
+  switchport access vlan 1022
+  switchport mode access
+  device-tracking attach-policy IPDT_MAX_10
+  load-interval 30
+  authentication control-direction in
+  authentication event server dead action authorize vlan 3999
+  authentication event server dead action authorize voice
+  authentication host-mode multi-auth
+  authentication open
+  authentication order dot1x mab
+  authentication priority dot1x mab
+  authentication port-control auto
+  authentication periodic
+  authentication timer reauthenticate server
+  authentication timer inactivity server dynamic
+  mab
+  dot1x pae authenticator
+  dot1x timeout tx-period 10
+  spanning-tree portfast
+end
+\end{lstlisting}
 
 \subsection{Reporting einrichten}
 
