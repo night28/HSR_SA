@@ -655,7 +655,7 @@ Sobald das Device gefunden wurde, erscheint dieses im Inventory. Damit dieses al
 Beim Provisioning ist aber aufgefallen, dass es Probleme mit der Verbindung zwischen dem Border Switch und dem ISE gibt. Patrick Mosimann hat uns dann erklärt, dass das DNA Center in den aktuell verfügbaren Versionen ausschliesslich mit ISE in der Version 2.3 kompatibel ist.\\
 Unglücklicherweise war in unserer Lab Umgebung die Version 2.4 installiert. Ein Downgrade ist leider nicht möglich, weshalb die virtuelle Maschine ausgetauscht werden musste und der ISE erneut ins DNA Center integriert werden musste. 
 
-\subsection{LAN Automation PnP}
+\subsubsection{LAN Automation PnP}
 
 Nun konnte die eigentliche LAN Automation gestartet werden. Dabei wird, wie in untenstehender Grafik gezeigt ein Seed Device ausgewählt und definiert, auf welchen Interfaces DHCP Requests der anderen Devices beantwortet werden. Zudem muss ein IP Pool angegeben werden, der für folgende Zwecke verwendet wird:
 \begin{itemize}
@@ -815,6 +815,26 @@ Weiter wird festgelegt für welche \textit{Sites} das Netzwerkprofil verwendet w
 	\includegraphics[height=5cm]{img/secondtry/dna-center-network-profile-assign-sites.png}
 	\caption{Cisco DNA Center - Network Profile - Assign Sites}
 	\label{fig:dna-center-network-profile-assign-sites}
+\end{figure}
+
+\subsubsection{Virtual Networks anlegen}
+
+Damit die Virtual Networks später in einer Fabric verwendet werden können, mussten diese zuerst angelegt werden. Wir haben die folgenden VNs angelegt:
+\begin{itemize}
+	\item Mitarbeiter
+	\item Gebäudemgmt
+	\item Guest
+\end{itemize}
+
+Diese wurden im DNA Center unter \textit{Policy $\rightarrow$ Virtual Network $\rightarrow$ Add (Plus Symbol)} angelegt.
+
+Es musste ein Name, sowie die Scalable Groups, die im VN verfügbar sind angegeben werden. Dies kann aber auch später gemacht werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/secondtry/dna-center-add-vn.png}
+	\caption{Cisco DNA Center - Add Virtual Network}
+	\label{fig:dna-center-add-vn}
 \end{figure}
 
 \subsubsection{Initial Provisioning}
@@ -1051,7 +1071,7 @@ ip sla schedule 3  life forever start-time now
 banner motd #\"Welcome to our SA Lab!\"#
 \end{lstlisting}
 
-\subsubsection{Border BGP Konfiguration}
+\subsection{Border BGP Konfiguration}
 
 Auf den Border Nodes wurde nun die BGP Konfiguration erstellt, damit die Fabric mit der Aussenwelt kommunizieren kann. Die Konfiguration der Gegenseite kann das DNA Center leider nicht übernehmen. Diese muss daher manuell erstellt werden.
 
@@ -1114,7 +1134,7 @@ neighbor 10.22.11.29 activate
 
 Je nach Anzahl VNs wird diese Konfiguration natürlich wesentlich grösser. Es ist zu beachten, dass jedes Mal wenn ein VN erstellt wird, die Konfiguration auf dem Legacy Router angepasst werden muss, sofern Kommunikation zwischen dem VN und der Aussenwelt möglich sein soll.
 
-\subsubsection{IP Pools für Clients definieren}
+\subsection{IP Pools für Clients definieren}
 
 Damit sich Clients am Netzwerk anmelden können, mussten IP Pools für die verschiedenen VNs definiert werden. Diese können unter \textit{Design $\rightarrow$ Network Settings  $\rightarrow$ Global $\rightarrow$ IP Address Pools $\rightarrow$ Add IP Pool} hinzugefügt werden.
 
@@ -1157,7 +1177,7 @@ Im zweiten Schritt des Wizards muss definiert werden, welcher Member die Range b
 	\label{fig:infoblox-assign-grid-member}
 \end{figure}
 
-Zum Schluss muss diese Konfiguration gespeichert werden. Damit diese auch aktiviert wird, muss der DHCP Service auf dem Infoblox neu gestartet werden. Infoblox weist jeweils darauf hin, wenn Änderungen einen Neustart der Services benötigen, das DNA Center leider nicht.
+Zum Schluss muss diese Konfiguration gespeichert werden. Damit diese auch aktiviert wird, muss der DHCP Service auf dem Infoblox Server neu gestartet werden. Infoblox weist jeweils darauf hin, wenn Änderungen einen Neustart der Services benötigen, das DNA Center leider nicht.
 
 \begin{figure}[H]
 	\centering
@@ -1166,8 +1186,63 @@ Zum Schluss muss diese Konfiguration gespeichert werden. Damit diese auch aktivi
 	\label{fig:infoblox-restart-services}
 \end{figure}
 
+\subsection{Benutzerprofile und Policies}
 
-\subsubsection{Host Onboarding}
+\subsubsection{SGTs erstellen}
+
+Damit Benutzern Policies zugewiesen werden können, müssen zu Beginn Scalable Groups erstellt werden, denen die Benutzer später zugewiesen werden können. Zwischen den Scalable Groups werden die Zugriffe dann mittels Policies geregelt.
+Scalable Groups müssen im ISE erstellt werden und können nicht direkt im DNA Center angelegt werden. Das DNA Center verweist aber under  \textit{Policy $\rightarrow$ Registry $\rightarrow$ Scalable Groups $\rightarrow$ Add Groups} auf die korrekte Seite im ISE und sieht alle bereits vorhandenen Groups. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{img/secondtry/ise-scalable-groups.png}
+	\caption{ISE - Scalable Groups}
+	\label{fig:ise-scalable-groups}
+\end{figure}
+
+Mit dem \textit{Add} Button können weitere Gruppen hinzugefügt werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{img/secondtry/ise-add-scalable-group.png}
+	\caption{ISE - Add Scalable Group}
+	\label{fig:ise-add-scalable-group}
+\end{figure}
+
+\subsubsection{Contracts erstellen}
+
+Um schlussendlich Policies zwischen den Scalable Groups erstellen zu können, waren sogenannte Contracts nötig. Dies sind im Prinzip Access Control Lists (ACLs), die dann mittels Policy zwischen zwei Gruppen angewandt werden kann. Zu Beginn waren zwei Contacts vorhanden:
+\begin{itemize}
+	\item permit
+	\item deny
+\end{itemize}
+Diese entsprechen einer ACL die alles erlaubt oder verbietet. Zusätzlich können weitere Contracts erstellt werden, die einzelne Protokolle erlauben.
+
+Untenstehend ein Contract, der lediglich SSH erlaubt.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{img/secondtry/dna-center-add-contract.png}
+	\caption{DNA Center - Add Contract}
+	\label{fig:dna-center-add-contract}
+\end{figure}
+
+\subsubsection{Policies erstellen}
+
+Die zuvor erstellten Contracts konnten nun genutzt werden, um Policies zwischen den Scalable Groups zu erstellen. Die Policies sind im DNA Center unter \textit{Policy $\rightarrow$ Policy Administration $\rightarrow$ Group-Based Access Control} zu finden.
+
+Hier kann die Kommunikation zwischen den Scalable Groups geregelt werden. Mit Hilfe des \textit{Add Policy} Buttons können zusätzliche Policies erstellt werden. Die folgende Policy verbietet Traffic aus der Scalable Group "INTERN" zu den Gruppen "VERTRAULICH" und "GEHEIM".
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{img/secondtry/dna-center-add-policy.png}
+	\caption{ISE - Add Policy}
+	\label{fig:ise-add-policy}
+\end{figure}
+
+So konnten alle Policies erstellt werden, die nötig waren, um die Kommunikation innerhalb der Fabric zu regeln.
+
+\subsection{Host Onboarding}
 TODO
 
 
@@ -1187,7 +1262,7 @@ TODO
 \caption[Erklärung der Host Onboarding Authentifizierungsmethoden]{Erklärung der Host Onboardning Authentifizierungsmethoden.\cite{ivan-caduff-slack}}
 
 
-\subsubsection{Reporting einrichten}
+\subsection{Reporting einrichten}
 
 Die Reporting Funktionalität besteht aus einigen python Scripts. Im ersten Schritt mussten diese auf ein System kopiert werden, welches die regelmässigen Reports versenden kann. Am einfachsten mittels GIT Checkout.
 Anschliessend muss die Datei "config.py" angepasst werden. Folgende Informationen müssen angegeben werden:
