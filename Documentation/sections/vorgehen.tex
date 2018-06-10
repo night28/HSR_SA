@@ -1157,7 +1157,7 @@ Im zweiten Schritt des Wizards muss definiert werden, welcher Member die Range b
 	\label{fig:infoblox-assign-grid-member}
 \end{figure}
 
-Zum Schluss muss diese Konfiguration gespeichert werden. Damit diese auch aktiviert wird, muss der DHCP Service auf dem Infoblox neu gestartet werden. Infoblox weist jeweils darauf hin, wenn Änderungen einen Neustart der Services benötigen.
+Zum Schluss muss diese Konfiguration gespeichert werden. Damit diese auch aktiviert wird, muss der DHCP Service auf dem Infoblox neu gestartet werden. Infoblox weist jeweils darauf hin, wenn Änderungen einen Neustart der Services benötigen, das DNA Center leider nicht.
 
 \begin{figure}[H]
 	\centering
@@ -1184,5 +1184,57 @@ TODO
 	\hline
 
 \end{tabular}
-\caption[Erklärung der Host Onboardning Authentifizierungsmethoden]{Erklärung der Host Onboardning Authentifizierungsmethoden.\cite{ivan-caduff-slack}}
+\caption[Erklärung der Host Onboarding Authentifizierungsmethoden]{Erklärung der Host Onboardning Authentifizierungsmethoden.\cite{ivan-caduff-slack}}
 
+
+\subsubsection{Reporting einrichten}
+
+Die Reporting Funktionalität besteht aus einigen python Scripts. Im ersten Schritt mussten diese auf ein System kopiert werden, welches die regelmässigen Reports versenden kann. Am einfachsten mittels GIT Checkout.
+Anschliessend muss die Datei "config.py" angepasst werden. Folgende Informationen müssen angegeben werden:
+\begin{itemize}
+	\item DNA Center IP Adresse
+	\item DNA Center Port
+	\item DNA Center Benutzername
+	\item DNA Center Password
+	\item Mailserver Hostname
+	\item Mailserver Port
+	\item E-Mail Benutzer
+	\item E-Mail Passwort
+	\item Empfänger der Reports
+\end{itemize}
+
+
+In unserer Lab Umgebung sah die Konfiguration dann folgendermassen aus:
+
+\begin{lstlisting}[language=bash]
+# DNA Center Settings
+
+DNAC_IP = "10.22.0.100"
+DNAC_PORT = 443
+USERNAME = "admin"
+PASSWORD = "********"
+VERSION = "v1"
+
+# Mail Server Settings
+MAIL_SERVER = "asmtp.mail.******.ch"
+MAIL_PORT = 587
+MAIL_USER = "dnacenter@XYZ.ch"
+MAIL_PASSWORD = "********"
+MAIL_RECIPIENTS = ['********@gmail.com', '******@hsr.ch']
+\end{lstlisting}
+
+Sobald die Konfiguration angepasst ist, kann das Script "gen\_config.py" entweder manuell ausgeführt werden oder regelmässig via Cronjob gestartet werden. Dieser sah bei uns für einen täglichen Versand so aus:
+
+\begin{lstlisting}[language=bash]
+30 0 * * * /usr/bin/python2 /opt/dnacenter_reporting/gen_report.py \
+     > /dev/null 2>&1
+\end{lstlisting}
+
+Der erstellte Report ist in untenstehender Grafik ersichtlich:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=17cm]{img/secondtry/report.png}
+	\caption{DNA Center - Report}
+	\label{fig:Report}
+\end{figure}
