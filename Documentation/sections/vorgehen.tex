@@ -1276,10 +1276,10 @@ Die Portkonfiguration kann im DNA Center unter \textit{Provision $\rightarrow$ F
 	\label{fig:dna-center-host-onboarding}
 \end{figure}
 
-Auf dem Netzwerk Device sieht die Port Konfiguration dann wie folgt aus:
+Auf dem Netzwerk Device sah die Port Konfiguration dann wie folgt aus:
 
 \paragraph{No Authentication}
-
+~\\
 \begin{lstlisting}[language=bash]
 interface GigabitEthernet1/0/1
   switchport access vlan 1021
@@ -1293,6 +1293,7 @@ interface GigabitEthernet1/0/1
 end
 \end{lstlisting}
 \paragraph{Open Authentication}
+~\\
 \begin{lstlisting}[language=bash]
 interface GigabitEthernet1/0/5
   switchport access vlan 1022
@@ -1316,6 +1317,15 @@ interface GigabitEthernet1/0/5
   spanning-tree portfast
 end
 \end{lstlisting}
+
+\subsection{Policies ausserhalb der Fabric}
+TODO
+\subsubsection{SGT Mapping}
+TODO
+\subsubsection{SXP}
+TODO
+\subsubsection{Policies}
+TODO
 
 \subsection{Reporting einrichten}
 
