@@ -1,24 +1,17 @@
-\section{Problembeschreibung (Stand der Technik)}
+\section{Problembeschreibung}
 
-\begin{itemize}	
-	\item Motivation für die Arbeit, z.B. aus den Schwächen der heutigen Praktiken bzw. Lösungen
-	\item Funktionale Anforderungen beschrieben (z.B. als Use Cases (short) mit Aktoren oder in Form von User Stories mit Personas)
-	\item Wichtigste NFA/Qualitätsattribute abgedeckt und überprüfbar beschrieben
-\end{itemize}
-
-Um den heutigen Anforderungen an Campus Netzwerke im Bezug auf Sicherheit, Wartbarkeit und Skalierbarkeit gerecht zu werden, steht man mit der isolierten Konfiguration einzelner Komponenten schnell vor verschiedenen Problemen. In erster Linie ist es extrem Aufwändig alle Konfigurationen manuell zu erstellen. Selbst das Hinzufügen von einfachen Richtlinien oder zum Beispiel neuen Firmenabteilungen können zu gewaltigem Aufwand führen. Des weiteren verliert man schnell die Übersicht und ist gezwungen umfangreiche Dokumentationen zu erstellen. Häufig kommen selbstgeschriebene Scripts zum Beispiel mithilfe von NAPALM (Siehe: \cite{napalm}) zur automatisierten Konfiguration zum Einsatz. Für das Monitoring des Netzwerkes sind zusätzlich Tools wie icinga2  (Siehe: \cite{icinga2}) oder ähnliches nötig. 
+Will man den heutigen Anforderungen an Campus Netzwerke in Bezug auf Sicherheit, Wartbarkeit und Skalierbarkeit gerecht zu werden, steht man mit der isolierten Konfiguration einzelner Komponenten schnell vor verschiedenen Problemen. In erster Linie ist es extrem aufwändig alle Konfigurationen manuell zu erstellen. Selbst das Hinzufügen von einfachen Richtlinien oder zum Beispiel neuen Firmenabteilungen kann zu gewaltigem Aufwand führen. Des Weiteren verliert man schnell die Übersicht und ist gezwungen umfangreiche Dokumentationen zu erstellen. Häufig kommen selbstgeschriebene Scripts, zum Beispiel mithilfe von NAPALM (Siehe: \cite{napalm}) zur automatisierten Konfiguration zum Einsatz. Für das Monitoring des Netzwerkes sind zusätzlich Tools wie icinga2  (Siehe: \cite{icinga2}) oder ähnliches nötig. 
 
 ~\\
 Typische Herausforderungen bei den klassischen Campus Netzwerken:
 \begin{itemize}
-	\item Zu wenig VLAN
-	\item VLAN über ein Layer 3 Netzwerk
-	\item Mobilität von Komponenten
-	\item Mobilität von Benutzer (Netzwerk Teilnehmer)
+	\item Zu wenig VLANs
+	\item Mobilität von Endgeräten
+	\item Mobilität von Benutzern
 	\item Durchsetzen von Sicherheitsregeln mithilfe von Firewalls
 	\item Direkte Abhängigkeit von Berechtigungen und IP Subnetzen
-	\item Mehrere Unabhängige Tools mit Informationsredundanz
-	\item Komplexe Fehlersuche über verschiedene Komponenten/Geräte hinweg.
+	\item Mehrere unabhängige Tools mit Informationsredundanz
+	\item Komplexe Fehlersuche über verschiedene Komponenten/Geräte hinweg
 \end{itemize}
 
 ~\\
