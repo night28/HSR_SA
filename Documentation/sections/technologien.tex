@@ -32,7 +32,7 @@ Um dieses Ziel für die Underlay Deployments zu erreichen, welche nicht manuell 
 \paragraph{Fabric Data Plane and Control Plane}
 SDA konfiguriert das Overlay Netzwerk mit einer Fabric Data Plane mithilfe der VXLAN Technologie. VXLAN kapselt und durchtunnelt komplette L2 Frames über das Underlay Netzwerk, wobei jedes Overlay Netzwerk durch eine Virtual Extensible LAN Network Identifier (VNI) identifiziert wird. Der VXLAN Header enthält auch die Security Group Tags (SGTs), die für die Mikrosegmentierung erforderlich sind.
 
-Das Mapping und Auflösen von Endpunkten, die VXLAN-Tunnelendpunkten (VTEPs) zugeordnet sind, erfordert ein Control Plane Protokoll, und SD Access verwendet LISP für diese Aufgabe. LISP bietet den Vorteil, dass das Routing nicht nur auf der IP-Adresse als Endpunktkennung (EID) für ein Gerät basiert, sondern auch eine zusätzliche IP-Adresse als Routing Locator (RLOC) zur Verfügung stellt, um den Netzwerkstandort dieses Geräts darzustellen. Die EID- und RLOC-Kombination bietet alle erforderlichen Informationen für die Weiterleitung von Datenverkehr, selbst wenn ein Endpunkt eine unveränderte IP-Adresse verwendet, wenn er an einem anderen Netzwerkstandort angezeigt wird. Gleichzeitig ermöglicht die Entkopplung der Endpunktidentität von ihrem Standort, dass Adressen in demselben IP-Teilnetzwerk hinter mehreren L3 Gateways verfügbar sind, gegenüber der Eins-zu-eins-Kopplung von IP-Teilnetzwerk mit Netzwerk Gateway in herkömmlichen Netzwerken Beispiel für zwei Subnetze, die Teil des Overlay Netzwerks sind. Die Subnetze erstrecken sich über physisch getrennte L3 Geräte. Die RLOC-Schnittstelle ist die einzige routbare Adresse, die zum Herstellen der Verbindung zwischen Endpunkten desselben oder eines anderen Subnetzes erforderlich ist. Weitere detailliertere Informationen zu LISP und VXLAN folgen in den nächsten Kapiteln. \cite{sda-designguide} \\
+Das Mapping und Auflösen von Endpunkten, die VXLAN-Tunnelendpunkten (VTEPs) zugeordnet sind, erfordert ein Control Plane Protokoll, und SD Access verwendet LISP für diese Aufgabe. LISP bietet den Vorteil, dass das Routing nicht nur auf der IP-Adresse als Endpunktkennung (EID) für ein Gerät basiert, sondern auch eine zusätzliche IP-Adresse als Routing Locator (RLOC) zur Verfügung stellt, um den Netzwerkstandort dieses Geräts darzustellen. Die EID- und RLOC-Kombination bietet alle erforderlichen Informationen für die Weiterleitung von Datenverkehr, selbst wenn ein Endpunkt eine unveränderte IP-Adresse verwendet, wenn er an einem anderen Netzwerkstandort angezeigt wird. Gleichzeitig ermöglicht die Entkopplung der Endpunktidentität von ihrem Standort, dass Adressen in demselben IP-Teilnetzwerk hinter mehreren L3 Gateways (GW) verfügbar sind, gegenüber der Eins-zu-eins-Kopplung von IP-Teilnetzwerk mit Netzwerk GW in herkömmlichen Netzwerken Beispiel für zwei Subnetze, die Teil des Overlay Netzwerks sind. Die Subnetze erstrecken sich über physisch getrennte L3 Geräte. Die RLOC-Schnittstelle ist die einzige routbare Adresse, die zum Herstellen der Verbindung zwischen Endpunkten desselben oder eines anderen Subnetzes erforderlich ist. Weitere detailliertere Informationen zu LISP und VXLAN folgen in den nächsten Kapiteln. \cite{sda-designguide} \\
 
 
 In der nachfolgenden Abbildung ist der Aufbau eines Campus Fabric mit allen Komponenten etwas detaillierter aufgezeigt.
@@ -47,9 +47,9 @@ In der nachfolgenden Abbildung ist der Aufbau eines Campus Fabric mit allen Komp
 Dieses Campus Fabric besteht aus folgenden Elementen: \cite{webinar-sda-troubleshooting}
 \begin{itemize}	
 	\item User/Group Repository: Ein externes ID-Speichergerät (z. B. ISE oder AD) kann verwendet werden, um eine dynamische Zuordnung von Benutzer/Gerät zu Gruppen bereitzustellen
-	\item Control Plane Nodes: Ein Map System, das die Beziehung eines Endpoints zu einem Gateway (Edge oder Border) verwaltet
-	\item Border Nodes: Das L3 Gateway Gerät (Core), das externe L3-Netzwerke mit dem Fabric verbindet
-	\item Edge Nodes: Das L3 Gateway Gerät (Access oder Distribution), welches Endpoints mit Fabric verbindet
+	\item Control Plane Nodes: Ein Map System, das die Beziehung eines Endpoints zu einem GW (Edge oder Border) verwaltet
+	\item Border Nodes: Das L3 GW Gerät (Core), das externe L3-Netzwerke mit dem Fabric verbindet
+	\item Edge Nodes: Das L3 GW Gerät (Access oder Distribution), welches Endpoints mit Fabric verbindet
 	\item Intermediate Nodes: Normale L3 (IP) Forwarder im Underlay Netzwerk
 \end{itemize}
 
@@ -62,10 +62,10 @@ Der SDA Fabric Control Plane basiert auf der LISP Map Server (MS) und LISP Map R
 \end{itemize}
 
 \paragraph{Fabric Border Nodes}
-Die Fabric Border Nodes dienen als Gateway zwischen der SDA Fabric Domäne und dem Netzwerk ausserhalb der Fabric. Der Fabric Border Node ist für die Netzwerkvirtualisierung und die SGT Propagierung vom Fabric zum Rest des Netzwerks verantwortlich. Die Fabric Border Nodes können entweder als Gateway für bestimmte Netzwerkadressen, zum Beispiel ein Netzwerk für gemeinsam genutzte Dienste, oder in einer Standard Border Rolle, die für das Internet oder einen gemeinsamen Austrittspunkt aus einer Fabric nützlich ist. Border Nodes implementieren die folgenden Funktionen: \cite{sda-designguide}
+Die Fabric Border Nodes dienen als GW zwischen der SDA Fabric Domäne und dem Netzwerk ausserhalb der Fabric. Der Fabric Border Node ist für die Netzwerkvirtualisierung und die SGT Propagierung vom Fabric zum Rest des Netzwerks verantwortlich. Die Fabric Border Nodes können entweder als GW für bestimmte Netzwerkadressen, zum Beispiel ein Netzwerk für gemeinsam genutzte Dienste, oder in einer Standard Border Rolle, die für das Internet oder einen gemeinsamen Austrittspunkt aus einer Fabric nützlich ist. Border Nodes implementieren die folgenden Funktionen: \cite{sda-designguide}
 \begin{itemize}	
 	\item Advertisement von EID Subnetzen: SDA konfiguriert das Border Gateway Protocol (BGP) als bevorzugtes Routing Protokoll zum Anbieten der EID Präfixe ausserhalb der Fabric und der für EID Subnetze von ausserhalb der Fabric bestimmte Verkehr durchläuft die Border Nodes. Diese EID Präfixe werden nur in den Routingtabellen am Border angezeigt. Im gesamten Fabric werden die EID Informationen über den Fabric Control Plane abgerufen.
-	\item Fabric Domain Exit Point: Der Standard Fabric Border ist der Gateway für den letzten Exit Point für die Fabric Edge Nodes. Dies wird mithilfe der LISP Proxy Tunnel Funktionalität implementiert.
+	\item Fabric Domain Exit Point: Der Standard Fabric Border ist der GW für den letzten Exit Point für die Fabric Edge Nodes. Dies wird mithilfe der LISP Proxy Tunnel Funktionalität implementiert.
 	\item Mapping von LISP Instanzen zu VRF: Der Fabric Border kann die Netzwerkvirtualisierung von innerhalb des Fabrics nach ausserhalb des Fabrics erweitern, indem externe VRF Instanzen verwendet werden, um die Virtualisierung beizubehalten.
 	\item Policy Mapping: Der Fabric Border Node bildet auch SGT Informationen aus dem Fabric ab, die beim Verlassen des Fabric entsprechend gepflegt werden. Tags aus dem VXLAN Header werden Cisco Meta Data (CMD) zugeordnet, wenn Inline-Tagging-Funktionen verwendet werden, oder alternativ werden die Tags über das SGT Austauschprotokoll (SXP) transportiert, sodass eine nahtlose Integration in die Cisco TrustSec Lösung möglich ist.
 \end{itemize}
@@ -76,7 +76,7 @@ Die SDA Fabric Edge Nodes entsprechen einem Access Layer Switch in einem herköm
 \begin{itemize}	
 	\item Endpunktregistrierung: Nachdem ein Endpunkt von der Fabric Edge erkannt wurde, wird er einer lokalen HTDB hinzugefügt. Das Edge Gerät gibt auch eine LISP Map Register Nachricht aus, um den Control Plane Node über den erkannten Endpunkt zu informieren, damit dieser die Informationen in die HTDB einfügen kann.
 	\item Zuordnung von Benutzer zu virtuellem Netzwerk: Endpunkte werden in virtuellen Netzwerken platziert, indem der Endpunkt einem VLAN zugewiesen wird, das einer LISP Instanz zugeordnet ist. Die Zuordnung von Endpunkten zu VLANs kann statisch oder dynamisch mit 802.1X erfolgen. Eine SGT wird ebenfalls zugewiesen, und eine SGT kann verwendet werden, um Segmentierung und Richtliniendurchsetzung an der Fabric Edge bereitzustellen.
-	\item Anycast L3 Gateway: Ein gemeinsamer Gateway (IP- und MAC-Adressen) kann an jedem Knoten verwendet werden, der sich ein gemeinsames EID Subnetz teilt, um eine optimale Weiterleitung und Mobilität zwischen verschiedenen RLOCs zu gewährleisten.
+	\item Anycast L3 GW: Ein gemeinsamer GW (IP- und MAC-Adressen) kann an jedem Knoten verwendet werden, der sich ein gemeinsames EID Subnetz teilt, um eine optimale Weiterleitung und Mobilität zwischen verschiedenen RLOCs zu gewährleisten.
 	\item LISP Forwarding und VXLAN Encapsulation/De-Encapsulation: Anstelle einer typischen routingbasierten Entscheidung fragen die Fabric Edge Nodes den MS an, um den der Ziel IP zugeordneten RLOC zu ermitteln und den Verkehr mit VXLAN Headern zu kapseln. Schlägt die Abfrage fehl, so wird der Traffic an einen Default Fabric Border gesendet, auf dem die globale Routing Tabelle für das Weiterleiten verwendet wird. Die von MS empfangene Antwort wird im LISP Map Cache gespeichert. 
 \end{itemize} 
 
@@ -149,118 +149,125 @@ LISP ist das Produkt einer Arbeitsgruppe in der Internet Engineering Taskforce (
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=3.5cm]{img/lisp.png}
-	\caption{LISP Aufbau}
+	\caption{LISP Aufbau \cite{campusfabric-introduction}}
 	\label{fig:LISP Aufbau}
 \end{figure}
 
-Dies soll nun durch LISP geändert werden, in dem es die Identität eines Gerätes, auch Endpoint Identifier (EID) genannt, von seinem Aufenthaltsort, auch Routing Locator (RLOC) genannt, in zwei separate Adressräume unterteilt. Das bedeutet, dass die Router in einer LISP-Architektur nur Routing-Informationen von RLOCs speichern müssen. Um Pfadinformationen eines Hosts abzurufen, kann der Router diese beim LISP-Mapping-Server abfragen, was analog wie das DNS-Mapping funktioniert. \\
+Dies soll nun durch LISP geändert werden, in dem es die Identität eines Gerätes, von seinem Aufenthaltsort, in zwei separate Adressräume unterteilt. Das bedeutet, dass die Router in einer LISP Architektur nur Routing Informationen von RLOCs speichern müssen. Um Pfadinformationen eines Hosts abzurufen, kann der Router diese beim LISP MS Abfragen, was analog wie das DNS-Mapping funktioniert. \\
 
-LISP verwendet für SDA/Fabric eine VXLAN-Kapselung. Um die VXLAN-Kapselung für LISP zu aktivieren, muss auf dem Router der LISP Konfigurationsmodus, den Befehl für die VXLAN-Enkapsulierung verwendet werden. Dieser Befehl muss auf allen LISP-Edge-Geräten im Enterprise-Fabric konfiguriert werden: Ingress Tunnel Router (ITR), Egress Tunnel Router (ETR), Proxy Ingress Tunnel Router (PITR), Proxy Egress Tunnel Router (PETR). Wenn dieser Befehl nicht auf einem der LISP-Edge-Geräte konfiguriert wird, führt dies zu einem Verlust der Kontrolle und des Datenverkehrs.  \cite{rfc-6830}
+LISP verwendet für die SDA Fabric eine VXLAN Kapselung. Um die VXLAN Kapselung für LISP zu aktivieren, muss auf dem Router der LISP Konfigurationsmodus, der Befehl für die VXLAN Enkapsulierung verwendet werden. Dieser Befehl muss auf allen LISP Edge Geräten im Enterprise Fabric konfiguriert werden: Ingress Tunnel Router (ITR), Egress Tunnel Router (ETR), Proxy Ingress Tunnel Router (PITR), Proxy Egress Tunnel Router (PETR). Wenn dieser Befehl nicht auf einem der LISP Edge Geräte konfiguriert wird, führt dies zu einem Verlust der Kontrolle und des Datenverkehrs.  \cite{rfc-6830}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/lisp-infrastructure.jpg}
+	\caption{LISP Infrastruktur \cite{lisp-overview}}
+	\label{fig:LISP Infrastruktur}
+\end{figure}
 
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
 	\begin{tabularx}{\textwidth}{p{6.6cm} | X}
 		\rowcolor{gray!50}
-		\textbf{LISP Device} & \textbf{Function} \\
+		\textbf{LISP Gerät} & \textbf{Funktion} \\
 		\hline	
-		ALT (Alternative Logical Topology) & Collects EID data from Map Servers (MS) and advertise aggregate EID prefix. In a deployment of multiple Map Servers, it keeps all synchronized. \\
+		Alternative Logical Topology (ALT) & Sammelt EID Daten von MS und wirbt mit einem aggregierten EID Präfix. Bei einem Einsatz von mehreren MS werden alle synchronisiert. \\
 		
-		ETR (Egress Tunnel Router) and PETR (Proxy ETR) & Connects a LISP capable core network. Registers EID prefices with Map Server (MS). Decapsulates LISP packets, received from LISP core. Responds to Map-request messages with a Map-Reply by giving appropriate EID prefix. Typically, this is a CPE (customer premise equipment) router. PETR works on behalf on non-LISP domain and provides LISP-non-LISP connectivity. \\ 
+		Egress Tunnel Router(ETR) und Proxy ETR(PETR) & Verbindet ein LISP-fähiges Kernnetzwerk. Registriert EID Präfixe bei MS. Entkapselt LISP Pakete, die vom LISP Kern empfangen werden. Reagiert auf Map Request Meldungen mit einem Map Reply durch Angabe eines entsprechenden EID Präfixes. Typischerweise ist dies ein Customer Premise Equipment (CPE)-Router. PETR arbeitet im Auftrag von Nicht-LISP-Domains und bietet LISP-Nicht-LISP-Konnektivität. \\ 
 		
-		ITR (Ingress Tunnel Router) and PITR (Proxy Ingress Tunnel Router) & Responsible for forwarding local traffic to external destinations. Resolves RLOC for a given destination by sending Map-request to Map Resolver. Encapsulates (vxlan) traffic with LISP header. Typically, this is a Access Layer Switch. PITR works on behalf on non-LISP domain and provides LISP-non-LISP connectivity. \\
+		Ingress Tunnel Router(ITR) und Proxy Ingress Tunnel Router(PITR) & Verantwortlich für die Weiterleitung des lokalen Verkehrs an externe Ziele. Löst RLOC für ein bestimmtes Ziel auf, indem es einen Map Request an den MR sendet. Kapselt (VXLAN) Datenverkehr mit LISP Header. Typischerweise ist dies ein Access Layer Switch. PITR arbeitet im Auftrag von Nicht-LISP-Domains und bietet LISP-Nicht-LISP-Konnektivität. \\
 		
-		XTR (X Tunnel Router) & When both ITR and ETR functions are handled by one router, it is called XTR. This is typical in practice. \\
+		x Tunnel Router(xTR) & Wenn sowohl ITR als auch ETR Funktionen von einem Router verarbeitet werden, heißt das xTR. Das ist typisch für die Praxis. \\
 		
-		MR (Map Resolver) & Responds to Map-requests from ITR. Map-requests will be replied with a Negative Map-Reply or forwarded to appropriate ETR or ALT. \\
+		Map Resolver(MR) & Reagiert auf Map Requests vom ITR. Map Requests werden mit einer negativen Map Antwort beantwortet oder an die entsprechende ETR oder ALT weitergeleitet. \\
 		
-		MS (Map Server) & Registers EID space upon receiving Map-register messages from ETR. Updates ALT and MR with EID and RLOC data. \\
+		Map Server(MS) & Registriert EID Speicherplatz beim Empfang von Map Registernachrichten vom ETR. Aktualisiert ALT und MR mit EID und RLOC Daten. \\
 		
-		MSMR (Map Server Map Reloader) & When a device acts as both Map Server and Map Resolver, it is called MSMR. This is typical in practice. \\
+		Map Server Map Resolver(MSMR) & Wenn ein Gerät sowohl als MS als auch als MR fungiert, wird es MSMR genannt. Das ist typisch für die Praxis. \\
 		
-		EID (Endpoint ID) & Endpoint Identifier. IP addresses hidden from core network routing table. RLOC acts next-hop to reach EID space. \\
+		Endpoint ID(EID) & IP-Adressen, die in der Routingtabelle des Kernnetzwerks versteckt sind. RLOC agiert im nächsten Schritt, um den EID Raum zu erreichen. \\
 		
-		RLOC (Routing Locator) & Routing Locator. Exists in global routing tables. Authoritative to reach EID space. \\
+		Routing Locator(RLOC) & Existiert in globalen Routing-Tabellen. Verbindlich, um den EID Raum zu erreichen. \\
 		
 	\end{tabularx}
-	\caption{LISP Elements}
-	\label{tab:LISP Elements}
+	\caption{LISP Elemente \cite{lisp-overview}}
+	\label{tab:LISP Elemente}
 \end{table}
 
 \subsubsection{Campus Fabric und LISP}
 Im Einzug mit dem Campus Fabric wurden für bestehende LISP Namenskonzepte neue Begriffsdefinitionen zugewiesen:
 \begin{itemize}
-	\item "Control-Plane Node" $\approx$ "LISP Map-Server"
-	\item "Edge Node" $\approx$ "LISP Tunner Router" (xTR)
-	\item "Border Node" $\approx$ "LISP Proxy Tunnel Router" (PxTR)
-	\item "Intermediate Node" $\approx$ "Non-LISP IP Forwarder"
+	\item Control Plane Node $\approx$ LISP MS
+	\item Edge Node $\approx$ LISP xTR
+	\item Border Node $\approx$ LISP PxTR
+	\item Intermediate Node $\approx$ Nicht-LISP IP Forwarder
 \end{itemize}
 
-\paragraph{Fabric Control-Plane Node} basiert auf einem LISP Map Server / Resolver. Führt die LISP-Host-Tracking-Datenbank aus, um Overlay-Erreichbarkeitsinformationen bereitzustellen. 
+\paragraph{Fabric Control Plane Node} basiert auf einem LISP MS / MR. Führt die LISP HTDB aus, um Overlay Erreichbarkeitsinformationen bereitzustellen. 
 \begin{itemize}
-	\item Eine einfache Host-Datenbank, die die Endpunkt-ID zu Edge-Knoten-Bindungen zusammen mit anderen Attributen verfolgt
-	\item Host-Datenbank unterstützt mehrere Endpoint-ID-Lookup-Schlüssel (IPv4 / 32, IPv6 / 128 oder MAC)
-	\item Empfängt Präfix-Registrierungen von Edge Nodes mit lokalen Endpunkten
-	\item Beheben von Suchanforderungen von Remote-Edge-Knoten, um lokale Endpunkte zu finden
+	\item Eine einfache Host Datenbank, die die Endpunkt-ID zu Edge-Knoten-Bindungen zusammen mit anderen Attributen verfolgt
+	\item Host-Datenbank unterstützt mehrere EID Lookup Schlüssel (IPv4 / 32, IPv6 / 128 oder MAC)
+	\item Empfängt Präfix Registrierungen von Edge Nodes mit lokalen Endpunkten
+	\item Beheben von Suchanforderungen von Remote Edge Knoten, um lokale Endpunkte zu finden
 \end{itemize}
 
-\paragraph{Fabric Edge Node} basiert auf einem LISP Tunnel Router (xTR). Bietet Konnektivität für Benutzer und Geräte, die mit dem Fabric verbunden sind.
+\paragraph{Fabric Edge Node} basiert auf einem LISP xTR. Bietet Konnektivität für Benutzer und Geräte, die mit dem Fabric verbunden sind.
 \begin{itemize}
 	\item Verantwortlich für das Identifizieren und Authentifizieren von Endpunkten
-	\item Registrieren von Endpunkt-ID mit dem Control-Plane Node(s)
-	\item Bietet Anycast L3 Gateway für verbundene Endpunkte
-	\item Host-Datenverkehr von und zu Endpunkten, die mit dem Fabric verbunden sind, verkapseln/entkapseln
+	\item Registrieren von EID mit dem Control Plane Node(s)
+	\item Bietet Anycast L3 GW für verbundene Endpunkte
+	\item Host Datenverkehr von und zu Endpunkten, die mit dem Fabric verbunden sind, verkapseln/entkapseln
 \end{itemize}
 
-\paragraph{Fabric Border Node} basiert auf einem LISP Proxy Tunnel Router (PxTR). Der gesamte Verkehr, der das Fabric betritt oder verlässt, durchläuft diesen Knotentyp.
+\paragraph{Fabric Border Node} basiert auf einem LISP PxTR. Der gesamte Verkehr, der das Fabric betritt oder verlässt, durchläuft diesen Knotentyp.
 \begin{itemize}
-	\item Verbindet traditionelle L3-Netzwerke und / oder verschiedene Fabric-Domänen mit der lokalen Domäne
-	\item Wo zwei Domains Endpoint Erreichbarkeit und Richtlinieninformationen austauschen
+	\item Verbindet traditionelle L3 Netzwerke und / oder verschiedene Fabric Domänen mit der lokalen Domäne
+	\item Wo zwei Domänen Endpunkte Erreichbarkeit und Richtlinieninformationen austauschen
 	\item Verantwortlich für die Übersetzung von Kontexten (VRF und SGT) von einer Domäne in eine andere
-	\item Stellt einen Domänenexitpunkt für alle Edge-Knoten bereit
+	\item Stellt einen Domänenexitpunkt für alle Edge Knoten bereit
 \end{itemize}
 
 \subsection{Virtual Extensible LAN (VXLAN)}
-VXLAN ist ein Encapsulation-Protokoll, um ein Overlay-Netzwerk auf einer existierenden L3 Infrasturktur laufen zu lassen. VXLAN wurde ursprünglich von Cisco Systems, VMware und Arista Network entwickelt und ist einer der IETF festgelegten Standards (RFC 7348). \cite{rfc-7348} \\
+VXLAN ist ein Encapsulation Protokoll, um ein Overlay Netzwerk auf einer existierenden L3 Infrastruktur laufen zu lassen. VXLAN wurde ursprünglich von Cisco Systems, VMware und Arista Network entwickelt und ist einer der IETF festgelegten Standards (RFC 7348). \cite{rfc-7348} \\
 \\
-Technisch gesehen erzeugt ein VXLAN logische L2 Netzwerke, die dann in standardmässige L3 Pakete eingepackt werden. VXLAN dient dazu um in sehr grossen Netzwerkumgebung die Probleme zu lösen, die durch beschränkte Anzahl von VLANS betroffen sind. Mit VXLAN sind insgesamt 16’777’215 (24 Bit) L2 Umgebungen möglich, die ihrerseits wieder jeweils 4096 VLANs beinhalten können. 
+Technisch gesehen erzeugt ein VXLAN logische L2 Netzwerke, die dann in standardmässige L3 Pakete eingepackt werden. VXLAN dient dazu um in sehr grossen Netzwerkumgebung die Probleme zu lösen, die durch beschränkte Anzahl von VLANs betroffen sind. Mit VXLAN sind insgesamt 16’777’215 (24 Bit) L2 Umgebungen möglich, die ihrerseits wieder jeweils 4096 VLANs beinhalten können. 
 
 \subsubsection{VXLAN Encapsulation}
-Die Data Plane basiert auf VXLAN, im Gegensatz zur Control Plane, welche auf LISP basiert. Die VXLAN-Kapselung ist IP/UDP-basiert, was bedeutet, dass sie von jedem IP-basierten Netzwerk (Legacy- oder nicht-Cisco-Netzwerk) weitergeleitet werden kann und effektiv den Overlay-Aspekt des SD-Access-Fabric erzeugt. Die VXLAN-Kapselung wird (statt der LISP-Kapselung) aus zwei Hauptgründen verwendet. VXLAN umfasst den Source L2 (Ethernet) -Header (LISP nicht) und bietet auch spezielle Felder für zusätzliche Informationen, wie die ID des virtuellen Netzwerks (VN) und die ID der Gruppe (Segment). \cite{sda-whitepaper}\\
+Die Data Plane basiert auf VXLAN, im Gegensatz zur Control Plane, welche auf LISP basiert. Die VXLAN Kapselung ist IP/UDP-basiert, was bedeutet, dass sie von jedem IP-basierten Netzwerk (Legacy- oder nicht-Cisco-Netzwerk) weitergeleitet werden kann und effektiv den Overlay Aspekt der SDA Fabric erzeugt. Die VXLAN Kapselung wird (statt der LISP Kapselung) aus zwei Hauptgründen verwendet. VXLAN umfasst den Source L2 (Ethernet) -Header (LISP nicht) und bietet auch spezielle Felder für zusätzliche Informationen, wie die ID des virtuellen Netzwerks (VN) und die ID der Gruppe (Segment). \cite{sda-whitepaper}\\
 
-Diese Technologie bietet mehrere Vorteile für SD-Access, z. B. Unterstützung für virtuelle L2 und L3 Topologien (Overlays) und die Möglichkeit, über jedes IP-basierte Netzwerk mit integrierter Netzwerksegmentierung (VRF/VN) und gruppenbasierter Richtlinie zu arbeiten. \\ 
+Diese Technologie bietet mehrere Vorteile für SDA, zum Beispiel die Unterstützung für virtuelle L2 und L3 Topologien (Overlays) und die Möglichkeit, über jedes IP-basierte Netzwerk mit integrierter Netzwerksegmentierung (VRF/VN) und gruppenbasierter Richtlinie zu arbeiten. \\ 
 
-In SD-Access wurden einige Verbesserungen der ursprünglichen VXLAN-Spezifikationen hinzugefügt, insbesondere die Verwendung von Sicherheitsgruppen-Tags (SGTs). Dieses neue VXLAN-Format ist derzeit ein IETF-Entwurf, der als Gruppenrichtlinienoption (oder VXLAN-GPO) bekannt ist.
+In SDA wurden einige Verbesserungen der ursprünglichen VXLAN Spezifikationen hinzu- gefügt, insbesondere die Verwendung von SGTs. Dieses neue VXLAN Format ist derzeit ein IETF Entwurf, der als Gruppenrichtlinienoption (oder VXLAN-GPO) bekannt ist.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=4.5cm]{img/vxlan-encapsulation.jpg}
-	\caption{VXLAN Encapsulation}
-	\label{fig:VXLAN Encapsulation}
+	\caption{Fabric Data Plane basierend auf VXLAN \cite{sda-whitepaper}}
+	\label{fig:Fabric Data Plane basierend auf VXLAN}
 \end{figure}
 
-Die Fabric Data-Plane bietet folgendes:
+Die Fabric Data Plane bietet folgendes:
 \begin{itemize}
 	\item Underlay Adressanzeige und -zuordnung
 	\item Automatischer Tunnelaufbau (Virtuelle Tunnelendpunkte)
-	\item Frame-Kapselung zwischen Routing-Locators
+	\item Frame-Kapselung zwischen RLOCs
 \end{itemize}
 
-Unterstützung für das LISP- oder VXLAN-Header-Format
+Unterstützung für das LISP- oder VXLAN-Header Format
 \begin{itemize}
 	\item Fast gleich, mit verschiedenen Feldern und Nutzlast
 	\item LISP-Header trägt IP-Payload (IP in IP)
 	\item VXLAN-Header trägt MAC-Payload (MAC in IP)
 \end{itemize}
 
-Ausgelöst durch LISP-Control-Plane-Ereignisse
+Ausgelöst durch LISP Control Plane Ereignisse
 \begin{itemize}
-	\item ARP oder NDP Learning auf L3 Gateways
-	\item Map-Reply oder Cache auf Routing Locators
+	\item ARP oder NDP Learning auf L3 GW
+	\item Map Reply oder Cache auf RLOCs
 \end{itemize}
 
 \subsubsection{Fabric Data Plane}
-RFC 7348 definiert die Verwendung von Virtual Extensible LAN (VXLAN) als eine Möglichkeit, ein L2 Netzwerk über einem L3 Netzwerk zu überlagern. Mit VXLAN tunneln Sie den ursprünglichen L2 Frame mit UDP/IP über das L3 Netzwerk. Die Tunnelschnittstelle an jedem Knoten wird VXLAN-Tunnelendpunkt (VTEP) genannt. VTEPs beruhen auf dem Lernen der Data Plane oder Control Plane, um den entfernten Endpunkt für das VTEP-Mapping für die Verkapselung des Datenverkehrs zu bestimmen. Jedes Overlay-Netzwerk wird als VXLAN-Segment bezeichnet und mithilfe einer 24-Bit-VXLAN-Netzwerk-ID identifiziert, die bis zu 16 Millionen VXLAN-Segmente unterstützt.
+RFC 7348 definiert die Verwendung von VXLAN als eine Möglichkeit, ein L2 Netzwerk über einem L3 Netzwerk zu überlagern. Mit VXLAN wird ein ursprünglichen L2 Frame mit UDP/IP über das L3 Netzwerk getunnelt. Die Tunnelschnittstelle an jedem Knoten wird VTEP genannt. VTEPs beruhen auf dem Lernen der Data Plane oder Control Plane, um den entfernten Endpunkt für das VTEP-Mapping für die Verkapselung des Datenverkehrs zu bestimmen. Jedes Overlay Netzwerk wird als VXLAN Segment bezeichnet und mithilfe einer 24-Bit VXLAN Netzwerk-ID identifiziert, die bis zu 16 Millionen VXLAN Segmente unterstützt. \cite{rfc-7348}
 
 \begin{figure}[H]
 	\centering
@@ -269,31 +276,30 @@ RFC 7348 definiert die Verwendung von Virtual Extensible LAN (VXLAN) als eine M�
 	\label{fig:RFC7348 VXLAN Header}
 \end{figure}
 
-Das SDA Fabric verwendet die VXLAN Data Plane, um das vollständige ursprünglichen L2 Frame bereitzustellen und verwendet zusätzlich LISP als Control Plane, um die Endpunkt zu VTEP Zuordnungen aufzulösen. Das SDA Fabric ersetzt 16 der reservierten Bits im VXLAN-Header, um bis zu 64'000 SGTs zu transportieren. Dabei wird ein modifiziertes VXLAN-GPO-Format verwendet.
+Das SDA Fabric verwendet die VXLAN Data Plane, um das vollständige ursprünglichen L2 Frame bereitzustellen und verwendet zusätzlich LISP als Control Plane, um die Endpunkt zu VTEP Zuordnungen aufzulösen. Das SDA Fabric ersetzt 16 der reservierten Bits im VXLAN Header, um bis zu 64'000 SGTs zu transportieren. Dabei wird ein modifiziertes VXLAN-GPO-Format verwendet.
 
-Der VNI wird einer virtuellen Routing- und Weiterleitungsinstanz für L3 Overlays zugeordnet, während ein L2 VNI einer VLAN-Broadcastdomäne zugeordnet wird. Beide bieten den Mechanismus zur Isolierung von Data und Control Plane für jedes einzelne virtuelle Netzwerk. Die SGT trägt Gruppenmitgliedschaftsinformationen von Benutzern und stellt eine Data Plane Segmentierung innerhalb des virtualisierten Netzwerks bereit. \cite{sda-designguide}
+Der VNI wird einer virtuellen Routing- und Weiterleitungsinstanz für L3 Overlays zugeordnet, während ein L2 VNI einer VLAN Broadcastdomäne zugeordnet wird. Beide bieten den Mechanismus zur Isolierung von Data und Control Plane für jedes einzelne virtuelle Netzwerk. Die SGT trägt Gruppenmitgliedschaftsinformationen von Benutzern und stellt eine Data Plane Segmentierung innerhalb des virtualisierten Netzwerks bereit. \cite{sda-designguide}
 
 \subsection{Slack}
-Slack ist ein webbasierter Instant-Messaging-Dienst des US-amerikanischen Unternehmens Slack Technologies zur Kommunikation innerhalb von Arbeitsgruppen. Slack erlaubt, Nachrichten auszutauschen, mit Einzelpersonen oder in einer Gruppe zu chatten sowie gemeinsam Dokumente zu bearbeiten. Andere Online-Dienste wie Dropbox, Google Drive oder GitHub lassen sich in Slack integrieren.
+Slack ist ein webbasierter Instant-Messaging-Dienst zur Kommunikation innerhalb von Arbeitsgruppen. Slack erlaubt, Nachrichten auszutauschen, mit Einzelpersonen oder in einer Gruppe zu chatten sowie gemeinsam Dokumente zu bearbeiten. Andere Online Dienste wie Dropbox, Google Drive oder GitHub lassen sich in Slack integrieren.
 
 \subsection{Infoblox}
-Infoblox ist einer der führenden Hersteller für DNS-, DHCP-, TFTP und IP-Adress-Management Appliance (IPAM). Die Integration von Infoblox ermöglicht dem DNA Center die IPAM-Funktionen von Infoblox zu nutzen. Dafür werden beispielsweise die IP-Adresspools zwischen dem DNA Center und Infoblox synchronisiert. Mit dieser Integration können IP-Adresszuweisungen automatisiert werden, was eine richtlinienbasierte Bereitstellung in einer einzigen Operation ermöglicht und so die betriebliche Effizienz verbessert. \\
-Infoblox ermöglicht die automatische Überprüfung der Netzwerkinfrastrukturen, die Konfiguration sowie Anpassung an die jeweiligen Compliance-Vorgaben. Mittels DNS-, DHCP-, TFTP und IP-Adress-Management Appliance (IPAM) werden wichtige Kontrollfunktionen für Endgeräte und Anwendungen bereitgestellt. Dank der DNS-Management-Software-Appliance kann stets der Überblick über Ihre IP-Adressbereiche behalten und die Verteilung der DNS- und DHCP-Daten überprüft und automatisiert werden. Reportings älterer sowie aktueller Daten können dank einer zuverlässigen Netzwerkdatenbank sowie Grid-Technologie erstellt werden.\cite{infoblox} \\
+Infoblox ist einer der führenden Hersteller für DNS, DHCP, Trivial File Transfer Protocol (TFTP) und IPAM. Die Integration von Infoblox ermöglicht dem DNA Center die IPAM Funktionen von Infoblox zu nutzen. Dafür werden beispielsweise die IP-Adresspools zwischen dem DNA Center und Infoblox synchronisiert. Mit dieser Integration können IP-Adresszuweisungen automatisiert werden, was eine richtlinienbasierte Bereitstellung in einer einzigen Operation ermöglicht und so die betriebliche Effizienz verbessert. \\
+Infoblox ermöglicht die automatische Überprüfung der Netzwerkinfrastrukturen, die Konfiguration sowie Anpassung an die jeweiligen Compliance-Vorgaben. Mittels DNS, DHCP, TFTP und IPAM werden wichtige Kontrollfunktionen für Endgeräte und Anwendungen bereitgestellt. Dank der DNS Management Software Appliance kann stets der Überblick über die IP-Adressbereiche behalten und die Verteilung der DNS- und DHCP-Daten überprüft und automatisiert werden. Reportings älterer sowie aktueller Daten können dank einer zuverlässigen Netzwerkdatenbank sowie Grid-Technologie erstellt werden.\cite{infoblox} \\
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\linewidth]{img/infoblox-ise.png}\\[1px]
-	\caption{Zusammenspiel Infoblox und ISE}
+	\caption{Zusammenspiel Infoblox und ISE \cite{infoblox-communityblog}}
 	\label{fig:Zusammenspiel Infoblox und ISE}
 \end{figure}
 
-Die gemeinsame Lösung von Infoblox ActiveTrust und Cisco Identity Services Engine (ISE) verbessert die Genauigkeit und Aktualität von Sicherheitsmaßnahmen, erhöht die Sichtbarkeit und erleichtert den Austausch von Informationen zwischen Netzwerk- und Sicherheitsteams. Cisco teilt den Gerätekontext mit Infoblox, während der Infoblox-Netzwerkkontext in pxGrid veröffentlicht wird, sodass Netzwerkadministratoren die Reaktionszeit für die Sicherheit automatisieren und verkürzen können.\cite{infoblox-communityblog}
+Die gemeinsame Lösung von Infoblox ActiveTrust und Cisco ISE verbessert die Genauigkeit und Aktualität von Sicherheitsmaßnahmen, erhöht die Sichtbarkeit und erleichtert den Austausch von Informationen zwischen Netzwerk- und Sicherheitsteams. Cisco teilt den Gerätekontext mit Infoblox, während der Infoblox Netzwerkkontext in pxGrid veröffentlicht wird, sodass Netzwerkadministratoren die Reaktionszeit für die Sicherheit automatisieren und verkürzen können.\cite{infoblox-communityblog}
 
 
 
 \subsection{SDA Mechanismus Beispiel}
-
-Ausgangslage: Wenn ein IP Paket über SD-A von PC1 172.16.1.1/24 nach PC2 10.0.2.34/24 geschickt wird, was passiert mit dem Paket?
+Zum besseren Verständnis des ganzen Ablaufes einer Kommunikation zwischen zwei Clients, wird von folgender Ausgangslage ausgegangen: Wenn ein IP Paket über SD-A von PC1 172.16.1.1/24 nach PC2 10.0.2.34/24 geschickt wird, was passiert mit dem Paket?
 
 \begin{figure}[H]
 	\centering
@@ -302,7 +308,7 @@ Ausgangslage: Wenn ein IP Paket über SD-A von PC1 172.16.1.1/24 nach PC2 10.0.2
 	\label{fig:SDA Mechanismus}
 \end{figure}
 
-Als erstes wird vom PC1 ein ARP Lookup an den Default GW gesendet. Dieser erhält eine Antwort vom Edge Node 1 (GW ist Anycast Adresse und wird von jedem Edge Node beantwortet). Nachfolgend sendet der PC1 sein Paket an den GW. Der Edge Node 1 führt ein RLOC Lookup im lokalen Map Cache aus. Falls kein Eintrag im lokalen Cache vorhanden ist, sendet er ein RLOC Lookup an den Map Resolver. Von diesem Map Resolver erhält der Edge Node 1 den RLOC von PC2 falls vorhanden. Ist dieser nicht bekannt, wird der Border Node verwendet. Nun erfolgt die VXLAN Encapsulation (SGT 5, VNI1234) und es wird der UDP und Outer IP Header hinzugefügt (Underlay Network). Das Paket wird nun an die RLOC IP (Destination Edge Node) weitergesendet. Sollten Intermediate Nodes vorhanden sein, wird das Paket durch diese geroutet, bis der Edge Node 2 das Paket erhält. Nun werden der UDP und Outer IP Header wieder entfernt (Underlay Netowork) und es geschieht die VXLAN Decapsulation. Nun wird die Policy für SGT 5 beim ISE angefragt. Dieser gibt die dazugehörigen Policies zurück und wendet diese auf das Paket an. Je nach Policy wird das Paket weitergesendet oder verworfen. In diesem Fall wird die Policy angewendet und an das Ziel, den PC2 weitergeleitet.
+Als erstes wird vom PC1 ein Address Resolution Protocol (ARP) Lookup an den default GW gesendet. Dieser erhält eine Antwort vom Edge Node 1 (GW ist Anycast Adresse und wird von jedem Edge Node beantwortet). Nachfolgend sendet der PC1 sein Paket an den GW. Der Edge Node 1 führt ein RLOC Lookup im lokalen Map Cache aus. Falls kein Eintrag im lokalen Cache vorhanden ist, sendet er ein RLOC Lookup an den MR. Von diesem MR erhält der Edge Node 1 den RLOC von PC2 falls vorhanden. Ist dieser nicht bekannt, wird der Border Node verwendet. Nun erfolgt die VXLAN Encapsulation (SGT 5, VNI1234) und es wird der UDP und Outer IP Header hinzugefügt (Underlay Network). Das Paket wird nun an die RLOC IP (Destination Edge Node) weitergesendet. Sollten Intermediate Nodes vorhanden sein, wird das Paket durch diese geroutet, bis der Edge Node 2 das Paket erhält. Nun werden der UDP und Outer IP Header wieder entfernt (Underlay Netowork) und es geschieht die VXLAN Decapsulation. Nun wird die Policy für SGT 5 beim ISE angefragt. Dieser gibt die dazugehörigen Policies zurück und wendet diese auf das Paket an. Je nach Policy wird das Paket weitergesendet oder verworfen. In diesem Fall wird die Policy angewendet und an das Ziel, den PC2 weitergeleitet.
 
 
 
