@@ -2,20 +2,18 @@
 \section {Testprotokolle}
 
 
-\testpttb{UC01}{Kurzbeschreibung}{
+\testpttb{UC01: Definierung von Benutzer und Geräteprofilen}{}{
 \testptrow{1}{TheBeschreibung}{TheShould}{TheIs}{TheStatus}
 }
 \pagebreak
 
-\testpttb{UC02}{Kurzbeschreibung}{
-	\testptrow{1}{TheBeschreibung}{TheShould}{TheIs}{TheStatus}
-}
-\pagebreak
+\subsection{UC02: Gastzugang}
+Gemäss \textit{Sitzungsprotokoll der Sitzung mit Cisco vom 23.05.2018} im Anhang ist "(...)Gast-Netz(...)Nur möglich mit separatem Border exklusiv für Gast Netz $\rightarrow$ Internet(...)". Der Use Case konnte nicht getestet werden, da kein uns kein zusätzlicher Border zu Verfügung stand und andere Use Cases eine höhere Wichtigkeit hatten. 
 
 \testpttb{UC03-1 Backup DNA Center}{Sämtliche Konfigurationen des DNA Centers sollen gebackuped werden, sodass diese im Notfall wiederhergestellt werden können.}{
 	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard erscheint}{OK}
 	\testptrow{2}{Zu den Backup Einstellungen navigieren \textit{Settings $\rightarrow$ System Settings $\rightarrow$ Backup and Restore} }{Backup Einstellungen anzeigen}{Backup Einstellungen erscheinen}{OK}
-	\testptrow{3a}{Backup Server hinzufügen via \textit{Add} $\rightarrow$ SSH IP Address: 217.26.58.9, SSH Port: 22, Server Path: /home/dnacenter/backup, Username: dnacenter, Password: xxx, Encryption Passphrase: xxx. Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden meist nicht angenommen, führt zu Absturz des DNA Centers}{NOT OK}
+	\testptrow{3a}{Backup Server hinzufügen via \textit{Add} $\rightarrow$ SSH IP Address: 217.26.58.9, SSH Port: 22, Server Path: /home/dnacenter/backup, Username: dnacenter, Password: xxx, Encryption Passphrase: xxx. Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden meist nicht angenommen und führen zu Absturz des DNA Centers}{NOT OK}
 	\testptrow{3b}{Backup Server hinzufügen via \textit{Add} $\rightarrow$ SSH IP Address: 217.26.58.9, SSH Port: 22, Server Path: /home/dnacenter/backup, Username: dnacenter, Password: xxx, Encryption Passphrase: xxx. Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden angenommen.}{OK}
 	\testptrow{4b}{Regelmässiges Backup einrichten via \textit{Schedule $\rightarrow$ Add} Schedule Later, Weekday: Wednesday, Time: 10:30 AM. Mittels Schedule die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden angenommen.}{OK}
 	\testptrow{5b}{Backup wird regelmässig zum definierten Zeitpunkt ausgeführt.}{Backup wird zum definierten Zeitpunkt ausgeführt}{Backup wird nicht ausgeführt}{NOT OK}
@@ -63,10 +61,6 @@ In der Main Success Story dieses Use Cases steht "1. Netzwerk funktioniert einwa
 
 \subsection{UC08: Integration von nicht Fabric Komponenten}
 Andere Use Cases haben eine höhere Priorisierung erhalten. Aus Zeitmangel konnte dieser Use Case nicht behandelt werden. Insbesondere, weil nebst einer funktionierenden Fabric auch ein Mapping zwischen den SGT im Legacy Netzwerk konfiguriert hätte werden müssen. 
-
-
-\subsection{UC10: Gastzugang}
-Gemäss \textit{Sitzungsprotokoll der Sitzung mit Cisco vom 23.05.2018} im Anhang ist "(...)Gast-Netz(...)Nur möglich mit separatem Border exklusiv für Gast Netz $\rightarrow$ Internet(...)". Der Use Case konnte nicht getestet werden, da kein uns kein zusätzlicher Border zu Verfügung stand und andere Use Cases eine höhere Wichtigkeit hatten. 
 
 
 \pagebreak
