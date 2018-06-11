@@ -1361,7 +1361,48 @@ IEEE_8021X_INNER_AUTH_METHODS=MSCHAPV2
 
 \paragraph{Windows}
 ~\\
-TODO
+Unter Windows sind mehrere Schritte notwendig. 
+
+\subparagraph{Service Starten}
+~\\
+Unter Services muss der Service \textit{Wired AutoConfig} gestartet werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{img/8021x/8021x_1.png}
+	\caption{Windows Service Wired AutoConfig aktivieren}
+	\label{fig:windows-8021x-service}
+\end{figure}
+
+\subparagraph{Credentials hinterlegen}
+~\\
+Beim entsprechenden Interface müssen nun die entsprechenden Credentials hinterlegt werden.
+Dazu wählt man mit rechter Maustaste auf den entsprechenden Netzwerkadapter \textit{Properties $\rightarrow$ Authentication $\rightarrow$ Additional Settings}, setzt einen Haken bei \textit{Specify authentication mode}, wählt im Dropdown \textit{User authentication}, klickt auf \textit{Replace credentials} (oder ähnlich) und gibt im im neuen Fenster die Benutzerauthentifizierungsdaten ein. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15cm]{img/8021x/8021x_2.png}
+	\caption{Windows Netzwerkadapter - Benutzerauthentifizierungsdaten hinterlegen - Übersicht über alle Fenster}
+	\label{fig:windows-8021x-userauth}
+\end{figure}
+
+\subparagraph{Wireshark Capture des Authentifizierungsvorganges}
+~\\
+Nachfolgend sind zwei Screenshots eines Wireshark Capture von einer erfolgreichen und einer nicht erfolgreichen Authentifizierung. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15cm]{img/8021x/userauth-success.png}
+	\caption{Wireshark Capture - Erfolgreiches EAP}
+	\label{fig:windows-8021x-userauth-success}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15cm]{img/8021x/userauth-fail.png}
+	\caption{Wireshark Capture - Fehlgeschlagenes EAP}
+	\label{fig:windows-8021x-userauth-fail}
+\end{figure}
 
 \subsection{Policies ausserhalb der Fabric}
 
