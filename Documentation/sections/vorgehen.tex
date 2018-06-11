@@ -1318,6 +1318,51 @@ interface GigabitEthernet1/0/5
 end
 \end{lstlisting}
 
+\subsubsection{802.1x Client Config}
+
+\paragraph{ubuntu}
+~\\
+
+Unter Ubuntu sind zwei Konfigurationen nötig. Zum einen eine "wpa\_supplicant" Konfiguration, sowie die passende Interface Config.
+Die wpa\_supplicant.conf sieht so aus:
+
+\begin{lstlisting}[language=bash]
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=0
+eapol_version=2
+ap_scan=0
+
+network={
+	key_mgmt=IEEE8021X
+	eap=PEAP
+	identity="jessica"
+	password="MYPASSWORD"
+	eapol_flags=0
+}
+\end{lstlisting}
+
+In der Interface Konfiguration unter "/etc/network/interfaces" muss das gewünschte Interface folgendermassen konfiguriert werden:
+\begin{lstlisting}[language=bash]
+auto enxc0742bfff8af
+iface enxc0742bfff8af inet dhcp
+  wpa-driver wired
+  wpa-conf /root/wpa_supplicant.conf
+\end{lstlisting}
+
+\paragraph{Fedora / RedHat}
+~\\
+In Red Hat basierten Linux Distributionen kann die Datei "/etc/sysconfig/network-scripts/ifcfg-INTERFACE\_NAME" angepasst werden. Folgende Zeilen müssen hinzugefügt werden:
+\begin{lstlisting}[language=bash]
+KEY_MGMT=IEEE8021X
+IEEE_8021X_EAP_METHODS=PEAP
+IEEE_8021X_IDENTITY=sandro
+IEEE_8021X_INNER_AUTH_METHODS=MSCHAPV2
+\end{lstlisting}
+
+\paragraph{Windows}
+~\\
+TODO
+
 \subsection{Policies ausserhalb der Fabric}
 
 Damit auch Policies für Ressourcen ausserhalb der Fabric erstellt werden können, sind SGT Mappings nötig, sowie das Protokoll SXP, dass die vom ISE mit den Border Nodes synchronisiert.
