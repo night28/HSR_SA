@@ -1319,11 +1319,31 @@ end
 \end{lstlisting}
 
 \subsection{Policies ausserhalb der Fabric}
-TODO
+
+Damit auch Policies für Ressourcen ausserhalb der Fabric erstellt werden können, sind SGT Mappings nötig, sowie das Protokoll SXP, dass die vom ISE mit den Border Nodes synchronisiert.
+
 \subsubsection{SGT Mapping}
 TODO
 \subsubsection{SXP}
-TODO
+
+Damit die manuell im ISE erstellten Security Groups und IP SGT Mappings am Border bekannt werden, muss das SGT Exchange Protocol (SXP) zwischen ISE und den Border Nodes eingerichtet werden. Dies musste manuell gemacht werden.
+Im ISE ist SXP unter \textit{Workcenters $\rightarrow$ Trustsec $\rightarrow$ SXP} zu finden. Mit dem Add Button konnten Devices hinzugefügt werden, mit denen die SGs synchronisiert werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{img/secondtry/ise-sxp.png}
+	\caption{ISE - SXP}
+	\label{fig:ise-sxp}
+\end{figure}
+
+Auf den Border Nodes musste SXP dann ebenfalls konfiguriert werden. Dies konnte mit folgenden Befehlen erreicht werden:
+\begin{lstlisting}[language=bash]
+cts sxp enable
+cts sxp default password 7 09444F05150A3743595F50
+cts sxp connection peer 10.22.0.22 source 10.22.11.21 password default mode local listener hold-time 0 0 vrf Mitarbeiter
+cts role-based enforcement vlan-list all
+\end{lstlisting}
+
 \subsubsection{Policies}
 TODO
 
