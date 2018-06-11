@@ -1189,7 +1189,7 @@ Zum Schluss muss diese Konfiguration gespeichert werden. Damit diese auch aktivi
 \subsection{Benutzerprofile und Policies}
 
 \subsubsection{SGTs erstellen}
-
+\label{add-sgt}
 Damit Benutzern Policies zugewiesen werden können, müssen zu Beginn Scalable Groups erstellt werden, denen die Benutzer später zugewiesen werden können. Zwischen den Scalable Groups werden die Zugriffe dann mittels Policies geregelt.
 Scalable Groups müssen im ISE erstellt werden und können nicht direkt im DNA Center angelegt werden. Das DNA Center verweist aber under  \textit{Policy $\rightarrow$ Registry $\rightarrow$ Scalable Groups $\rightarrow$ Add Groups} auf die korrekte Seite im ISE und sieht alle bereits vorhandenen Groups. 
 
@@ -1228,7 +1228,7 @@ Untenstehend ein Contract, der lediglich SSH erlaubt.
 \end{figure}
 
 \subsubsection{Policies erstellen}
-
+\label{create-policies}
 Die zuvor erstellten Contracts konnten nun genutzt werden, um Policies zwischen den Scalable Groups zu erstellen. Die Policies sind im DNA Center unter \textit{Policy $\rightarrow$ Policy Administration $\rightarrow$ Group-Based Access Control} zu finden.
 
 Hier kann die Kommunikation zwischen den Scalable Groups geregelt werden. Mit Hilfe des \textit{Add Policy} Buttons können zusätzliche Policies erstellt werden. Die folgende Policy verbietet Traffic aus der Scalable Group "INTERN" zu den Gruppen "VERTRAULICH" und "GEHEIM".
@@ -1323,7 +1323,17 @@ end
 Damit auch Policies für Ressourcen ausserhalb der Fabric erstellt werden können, sind SGT Mappings nötig, sowie das Protokoll SXP, dass die vom ISE mit den Border Nodes synchronisiert.
 
 \subsubsection{SGT Mapping}
-TODO
+Um ein Mapping zwischen IP Adressen ausserhalb der Fabric und Security Groups zu erstellen, mussten in einem ersten Schritt die SGs erstellt werden, die später für das Mapping verwendet werden. SGs können im ISE unter \textit{Workcenters $\rightarrow$ Trustsec $\rightarrow$ Components $\rightarrow$ Security Groups $\rightarrow$ Add}, wie in Abschnitt \ref{add-sgt} beschrieben, erstellt werden.
+
+Anschliessend mussten unter \textit{Workcenters $\rightarrow$ Trustsec $\rightarrow$ Components $\rightarrow$ IP SGT Static Mapping $\rightarrow$ Add} die entsprechenden Mappings erfasst werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{img/secondtry/ise-sgt-mapping.png}
+	\caption{ISE - IP SGT Mapping}
+	\label{fig:ise-ip-sgt-mapping}
+\end{figure}
+
 \subsubsection{SXP}
 
 Damit die manuell im ISE erstellten Security Groups und IP SGT Mappings am Border bekannt werden, muss das SGT Exchange Protocol (SXP) zwischen ISE und den Border Nodes eingerichtet werden. Dies musste manuell gemacht werden.
@@ -1340,12 +1350,31 @@ Auf den Border Nodes musste SXP dann ebenfalls konfiguriert werden. Dies konnte 
 \begin{lstlisting}[language=bash]
 cts sxp enable
 cts sxp default password 7 09444F05150A3743595F50
-cts sxp connection peer 10.22.0.22 source 10.22.11.21 password default mode local listener hold-time 0 0 vrf Mitarbeiter
+cts sxp connection peer 10.22.0.22 source 10.22.11.21 password default \ 
+    mode local listener hold-time 0 0 vrf Mitarbeiter
 cts role-based enforcement vlan-list all
+\end{lstlisting}
+Wichtig dabei war, dass als Source die IP Adresse des VLAN Interfaces gewählt wird, das mit dem VN Mitarbeiter assoziiert ist. Falls in anderen VNs ebenfalls Policies für Ressourcen ausserhalb der Fabric nötig sind, müssen die obigen Schritte für dieses VN wiederholt werden.
+
+Sobald die Verbindung zwischen ISE und Border Node aktiv ist, sieht man die zuvor erstellten Mappings:
+\begin{lstlisting}[language=bash]
+#sh cts role-based sgt-map vrf Mitarbeiter all
+Active IPv4-SGT Bindings Information
+
+IP Address              SGT     Source
+============================================
+10.22.0.100             23      SXP
+10.22.100.253           17      SXP
+217.26.48.0/20          20      SXP
+
+IP-SGT Active Bindings Summary
+============================================
+Total number of SXP      bindings = 3
+Total number of active   bindings = 3
 \end{lstlisting}
 
 \subsubsection{Policies}
-TODO
+Nun konnten für Ressourcen ausserhalb der Fabric die Policies genau gleich wie in Abschnitt \ref{create-policies} beschrieben erstellt werden.
 
 \subsection{Reporting einrichten}
 
