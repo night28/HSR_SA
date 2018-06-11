@@ -1,21 +1,21 @@
 \section{Management Summary}
 
 \subsection{Ausgangslage}
-Diese Arbeit beschäftigt sich mit Software Defined Networking im Campus LAN für die Führungsunterstützungsbasis der Schweizer Armee. Die Lösung soll den Netzwerkzugriff der Mitarbeiter der FUB sicherstellen und die Zugriffsrechte der einzelnen Mitarbeiter oder Teams regeln können. 
-Des Weiteren müssen Reportingfunktionion und eine proaktive Überwachung erstellt werden, um allfällige Fehler schnellstmöglich zu erkennen, das Netzwerk stets zu optimieren und dessen Funktion jederzeit sicherzustellen.
-Zusätzlich wird ein bestehends IP Management Tool in die Lösung integriert.
+Diese Arbeit beschäftigt sich mit Software Defined Networking (SDN) im Campus LAN für die Führungsunterstützungsbasis (FUB) der Schweizer Armee. Die Lösung soll den Netzwerkzugriff der Mitarbeiter der FUB sicherstellen und die Zugriffsrechte der einzelnen Mitarbeiter oder Teams regeln können. 
+Des Weiteren müssen Reportingfunktionen und eine proaktive Überwachung erstellt werden, um allfällige Fehler schnellstmöglich zu erkennen, das Netzwerk stets zu optimieren und dessen Funktion jederzeit sicherzustellen.
+Zusätzlich wird ein bestehendes IP Adress Management (IPAM) Tool in die Lösung integriert.
 
-Da die Anforderungen an Campus Netzwerke aus verschiedensten Gründen, wie z.Bsp. modernen Arbeitsmodellen, neuen Sicherheitsanforderungen usw. ständig steigen, ist es äusserst schwierig und aufwändig, diese Anforderungen mit traditionellen Methoden zu erfüllen. 
+Da die Anforderungen an Campus Netzwerke aus verschiedensten Gründen, wie zum Beispiel neuen modernen Arbeitsmodellen oder neuen Sicherheitsanforderungen ständig steigen, ist es äusserst schwierig und aufwändig, diese Anforderungen mit traditionellen Methoden zu erfüllen. 
 
-Um dies zu erreichen wird in dieser Arbeit daher ein Software Defined Network erstellt, dass diesen neuen Anforderungen gerecht werden soll. Vorteile zeigen sich insbesondere dadurch, dass eine derartige Lösung flexibler ist, also einfacher und schneller an neue Gegebenheiten angepasst werden kann und durch Schnittstellen einfach an bestehende Systeme anzubinden ist. Durch das zentrale Management und Monitoring der Komponenten sinkt zudem das Risiko für Fehler massiv und viele Aufgaben lassen sich einfach und schnell automatisieren.
+Um dies zu erreichen, wird in dieser Arbeit ein SDN erstellt, dass diesen neuen Anforderungen gerecht werden soll. Vorteile zeigen sich insbesondere dadurch, dass eine derartige Lösung flexibler ist, also einfacher und schneller an neue Gegebenheiten angepasst werden kann und durch Schnittstellen einfach an bestehende Systeme anzubinden ist. Durch das zentrale Management und Monitoring der Komponenten sinkt zudem das Risiko für Fehler massiv und viele Aufgaben lassen sich einfach und schnell automatisieren.
 Schlussendlich kann durch diese Vorteile sehr viel Aufwand und damit Kosten eingespart werden.
 
 Ziel ist es, die Vorteile dieser Lösung gegenüber einer traditionellen Netzwerkinfrastruktur aufzuzeigen, allfällige Risiken und mögliche Probleme früh zu erkennen und Lösungen für diese zu finden. 
 \subsection{Vorgehen und Technologien}
-Die Lösung wird mit dem Produkt Software Defined Access von Cisco erstellt. Diese besteht aus mehreren Komponenten dies ist zum einem das DNA Center, welches die grundsätzliche Funktion des Netzwerks sicherstellt, sowie ISE (Identity Service Engine), welches die Benutzeridentitäten und Profile verwaltet.
-Zusätzlich muss das bestehende IP Management in die Lösung integriert werden und Reporting Funktionen mittels Slack und E-Mail implementiert werden. Diese Zusatzfunktionalitäten werden in Python implementiert und nutzen die in Ciscos SDA enthaltenen APIs.
+Die Lösung wird mit dem Produkt Software-Defined Access (SDA) von Cisco erstellt, welche aus mehreren Komponenten besteht. Dies ist zum einem das Digital Network Architecture (DNA) Center, welches die grundsätzliche Funktion des Netzwerks sicherstellt, sowie eine Identity Services Engine (ISE), welches die Benutzeridentitäten und Profile verwaltet.
+Zusätzlich muss das bestehende IPAM in die Lösung integriert und Reporting Funktionen mittels Slack und E-Mail implementiert werden. Diese Zusatzfunktionalitäten werden in Python implementiert und nutzen die in Ciscos SDA enthaltenen APIs.
 \subsection{Ergebnisse}
-Am Ende dieser Arbeit wird ein funktionierender Prototyp eines Software Defined Networks im Access Bereich zur Verfügung stehen, der alle Requirements des Industriepartners abdeckt. Der Prototyp besteht aus den Cisco Komponenten, sowie Eigenentwicklungen, die zusätzliche Features implementieren. 
+Am Ende dieser Arbeit wird ein funktionierender Prototyp eines SDN im Access Bereich zur Verfügung stehen, der alle Anforderungen des Industriepartners abdeckt. Der Prototyp besteht aus den Cisco Komponenten, sowie Eigenentwicklungen, die zusätzliche Features implementieren. 
 Zudem steht eine Dokumentation des Systems zur Verfügung, die den Installationsprozess und die Handhabung des Systems erklärt. Des Weiteren zeigt die Dokumentation Vorteile, aber auch Risiken und mögliche Probleme im Vergleich zu einer traditionellen Netzwerklösung auf.
 \subsection{Ausblick}
-Die Resultate aus dieser Arbeit können dazu dienen, SDA in einer produktiven Umgebung in Betrieb zu nehmen. Zudem kann er Prototyp um zusätzliche Funktionen erweitert werden, an zusätzliche bestehende oder neue Systeme angebunden werden oder mit alternativen Lösungen verglichen werden.
+Die Resultate aus dieser Arbeit können dazu dienen, SDA in einer produktiven Umgebung in Betrieb zu nehmen. Zudem kann er Prototyp um zusätzliche Funktionen erweitert, an zusätzliche bestehende oder neue Systeme angebunden oder mit alternativen Lösungen verglichen werden.
