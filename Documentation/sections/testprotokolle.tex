@@ -102,12 +102,24 @@ In diesem Use Case wird beschrieben, wie sich das Netzwerk verhält, wenn einzel
 \pagebreak
 
 \subsection{UC07: Integration von nicht Fabric Komponenten}
-Andere Use Cases haben eine höhere Priorisierung erhalten. Aus Zeitmangel konnte dieser Use Case nicht behandelt werden. Insbesondere, weil nebst einer funktionierenden Fabric auch ein Mapping zwischen den SGT im Legacy Netzwerk konfiguriert hätte werden müssen. 
-
-
+Der Einsatz von nicht Fabric Komponenten ist im aktuellen Release nicht unterstützt. Es ist aber vorgesehen, dass im Release 1.2 die "SD Access Extension for IoT" eingeführt wird, mit der die Fabric mit Hilfe von Geräten wie zum Beispiel dem C3650CX erweitert werden kann.
 \pagebreak
 
-\subsection{UC08: Migration von bestehendem klasischen Campus}
+\subsection{UC08: Migration von bestehendem klassischen Campus}
+Es gibt derzeit keinen definierten Migrationspfad von einem klassischen Campus Netzwerk. Die Empfehlung von Cisco ist allerdings wie folgt:
+\begin{itemize}
+	\item Parallel zu bestehendem Netzwerk einen Border Node aufsetzen
+	\item Mit Hilfe der LAN Automation einen Intermediate Node in Betrieb nehmen
+	\item Mit Hilfe der LAN Automation einen ersten Edge Node in Betrieb nehmen
+	\item Fabric erstellen
+	\item User, Policies usw. definieren
+	\subitem Schrittweise Clients migrieren
+	\item Schrittweise weitere Nodes (Border, Intermediate, Edge) hinzufügen
+\end{itemize}
+
+Werden Devices aus einem klassischen Netz in die Fabric übernommen, sollten die Konfiguration zuerst gelöscht werden. 
+Dieses Vorgehen wird von Cisco so empfohlen, konnte aber in unserer Testumgebung nicht getestet werden, da ein Parallelbetrieb einer klassischen Umgebung und der Fabric zu aufwändig gewesen wäre.
+\pagebreak
 
 \testpttb{UC09: Einsatz von SGT}{Erstellen einer neuen Scalable Group.}{
 	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashbaord erscheint}{OK}
@@ -116,8 +128,6 @@ Andere Use Cases haben eine höhere Priorisierung erhalten. Aus Zeitmangel konnt
 	\testptrow{3}{Neue Gruppe anlegen mit einem Namen}{Im Dialog kann ein neuer Name für die \textit{Scalable Group} eingegeben werden. Der Dialog wird mit \textit{Speichern} geschlossen. }{Ein neuer Name, ein Symbol und eine Beschreibung kann hinterlegt werden. Zusätzlich muss \textit{Propagate to ACI} angewählt werden. Der Dialog wird mit \textit{Anlegen} geschlossen}{OK}
 	\testptrow{4}{Die Scalable Group ist erstellt.}{In der Liste der Scalable Groups wird die neu erstellte Gruppe angezeigt.}{Da man immernoch in der ISE Ansicht ist, muss zuerst zum alten Tab des DNA Centers gewechselt werden. Anschliessend muss die Seite neu geladen werden. Die neue erstellte Gruppe wird angezeigt.}{OK}
 }
-
-\pagebreak
 
 \subsubsection{Zusammenfassung UC09: Einstaz von SGT}
 Noch nicht alle Funktionen können komplett im DNA Center erledigt werden. Ein Teil der Funktionen erfolgt weiterhin über die GUI der anderen Komponenten. 
