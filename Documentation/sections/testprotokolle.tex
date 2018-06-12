@@ -1,11 +1,10 @@
 \begin{landscape}
 \section {Testprotokolle}
 
-\section{UC01: Definierung von Benutzerprofilen}
 \testpttb{UC01-1: Anlegen von Benutzern}{}{
 \testptrow{1}{Login in ISE}{Eingelogged in ISE}{Eingelogged in ISE}{OK}
 \testptrow{2}{Benutzer anlegen via \textit{Work Centers $\rightarrow$ Network Access $\rightarrow$ Identities $\rightarrow$ Network Access Users}}{User ist erstellt}{User ist erstellt}{OK}
-\testptrow{2}{Benutzer einer Gruppe zuweisen via \textit{Work Centers $\rightarrow$ Network Access $\rightarrow$ Identities $\rightarrow$ Network Access Users}}{User ist in Gruppe}{User ist in Gruppe}{OK}
+\testptrow{3}{Benutzer einer Gruppe zuweisen via \textit{Work Centers $\rightarrow$ Network Access $\rightarrow$ Identities $\rightarrow$ Network Access Users}}{User ist in Gruppe}{User ist in Gruppe}{OK}
 }
 
 Die Benutzer sind nun angelegt, ein Login ist aber noch nicht möglich, da noch keine Authentication Policy für diese erstellt wurde. Dies wird daher im nächsten Schritt erledigt.
@@ -21,12 +20,18 @@ Nun kann sich der Benutzer einloggen, wird aber noch nicht einer Scalable Group 
 \testpttb{UC01-3: Anlegen von Authorization Policies}{}{
 	\testptrow{1}{Login in ISE}{Eingelogged in ISE}{Eingelogged in ISE}{OK}
 	\testptrow{2}{Authorization Policy anlegen via \textit{Work Centers $\rightarrow$ Network Access $\rightarrow$ Policy Sets $\rightarrow$ Default} für 802.1x Wired und Gruppe des Users}{Authorization Policy ist erstellt}{Authorization Policy ist erstellt}{OK}
+	\testptrow{3}{User wird beim Login der korrekten SG zugewiesen}{User ist der korrekten Gruppe zugewiesen}{User ist der korrekten Gruppe zugewiesen}{OK}
 }
 
 \testpttb{UC01-4: Einrichten einer Policy}{}{
-	\testptrow{1}{TheBeschreibung}{TheShould}{TheIs}{TheStatus}
+	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard wird angezeigt}{OK}
+	\testptrow{2}{Policy einrichten unter \textit{Policy $\rightarrow$ Policy Administration $\rightarrow$ Group Based Access Control}}{Policy wird angelegt}{Policy wird angelegt}{OK}
+	\testptrow{3}{DNA Center synchronisiert Policy mit dem ISE}{Policy ist auf ISE}{Policy ist auf ISE}{OK}
+	\testptrow{4}{ISE pushed Policy auf Border und Edge Nodes}{Policy ist auf Nodes vorhanden}{Policy ist auf Nodes vorhanden}{OK}
+	\testptrow{5}{Die Nodes enforcen die Policy für die korrekten Clients}{Policy wird enforced}{Policy wird enforced}{OK}
 }
 
+Die Policy ist nun auf allen nötigen Geräten deployed und wird von diesen enforced. Die Clients dürfen also nur auf die Ressourcen zugreifen, die gemäss der definierten Policy erlaubt sind.
 \pagebreak
 
 \testpttb{UC02-1 Backup DNA Center}{Sämtliche Konfigurationen des DNA Centers sollen gebackuped werden, sodass diese im Notfall wiederhergestellt werden können.}{
