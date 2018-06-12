@@ -11,7 +11,7 @@ Nachfolgend haben wir das Vorgehen von unserem ersten Versuch in einer Grafik ü
 
 \subsubsection{Installation}
 \label{DNACenterSetup_Installation}
-Die Installation des DNA Centers erfolgt direkt an der Konsole oder über die Cisco IMC. Dabei wird der maglev-config-wizard ausgeführt. Dieser Befehl kann zu einem späteren Zeitpunkt erneut ausgeführt werden, wenn die Konfiguration angepasst werden muss.
+Die Installation des DNA Centers erfolgt direkt an der Konsole oder über die Cisco IMC. Dabei wird der maglev-config-wizard ausgeführt. Dieser Befehl sollte zu einem späteren Zeitpunkt nicht erneut ausgeführt werden, da er die Appliance unbrauchbar macht. 
 
 Wie in Kapitel 2\cite{cisco-dna-installation-guide} beschrieben werden folgende Angaben benötigt:
 \begin{itemize}
@@ -218,7 +218,7 @@ Das DNA Center nutzt Plug and Play um automatisch Netzwerkgeräte in Betrieb zu 
 Bei unserem ersten Versuch ein Seed-Device festzulegen, wurde vom DNA Center kein DHCP Server konfiguriert, weshalb wir diesen manuell auf Infoblox eingerichtet haben.\\
 
 
-Cisco PnP kann über die DHCP Optionen 43 und 60 konfiguriert werden (siehe \cite{cisco-pnp-dhcp}). In unserem Fall haben wir diese Optionen wie nachfolgend auf der Grafik erischtlich auf dem Infoblox Server konfiguriert. Diese sind nötig, damit das Netzwerkgerät den PnP Server findet.
+Cisco PnP kann über die DHCP Optionen 43 und 60 konfiguriert werden ( \cite{cisco-pnp-dhcp}). In unserem Fall haben wir diese Optionen wie nachfolgend auf der Grafik erischtlich auf dem Infoblox Server konfiguriert. Diese sind nötig, damit das Netzwerkgerät den PnP Server findet.
 
 \begin{figure}[H]
 	\centering
@@ -455,7 +455,7 @@ Templates können im Template Editor erstellt und entsprechenden Gerätetypen zu
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=12cm]{img/templateeditor.png}
-	\caption{Template Editor}
+	\caption{DNA Center - Template Editor}
 	\label{fig:Template Editor}
 \end{figure}
 
@@ -655,7 +655,7 @@ Sobald das Device gefunden wurde, erscheint dieses im Inventory. Damit dieses al
 Beim Provisioning ist aber aufgefallen, dass es Probleme mit der Verbindung zwischen dem Border Switch und dem ISE gibt. Patrick Mosimann hat uns dann erklärt, dass das DNA Center in den aktuell verfügbaren Versionen ausschliesslich mit ISE in der Version 2.3 kompatibel ist.\\
 Unglücklicherweise war in unserer Lab Umgebung die Version 2.4 installiert. Ein Downgrade ist leider nicht möglich, weshalb die virtuelle Maschine ausgetauscht werden musste und der ISE erneut ins DNA Center integriert werden musste. 
 
-\subsection{LAN Automation PnP}
+\subsubsection{LAN Automation PnP}
 
 Nun konnte die eigentliche LAN Automation gestartet werden. Dabei wird, wie in untenstehender Grafik gezeigt ein Seed Device ausgewählt und definiert, auf welchen Interfaces DHCP Requests der anderen Devices beantwortet werden. Zudem muss ein IP Pool angegeben werden, der für folgende Zwecke verwendet wird:
 \begin{itemize}
@@ -813,8 +813,28 @@ Weiter wird festgelegt für welche \textit{Sites} das Netzwerkprofil verwendet w
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=5cm]{img/secondtry/dna-center-network-profile-assign-sites.png}
-	\caption{Cisco DNA Center - Network Profile - Assign Sites}
+	\caption{DNA Center - Network Profile - Assign Sites}
 	\label{fig:dna-center-network-profile-assign-sites}
+\end{figure}
+
+\subsubsection{Virtual Networks anlegen}
+
+Damit die Virtual Networks später in einer Fabric verwendet werden können, mussten diese zuerst angelegt werden. Wir haben die folgenden VNs angelegt:
+\begin{itemize}
+	\item Mitarbeiter
+	\item Gebäudemgmt
+	\item Guest
+\end{itemize}
+
+Diese wurden im DNA Center unter \textit{Policy $\rightarrow$ Virtual Network $\rightarrow$ Add (Plus Symbol)} angelegt.
+
+Es musste ein Name, sowie die Scalable Groups, die im VN verfügbar sind angegeben werden. Dies kann aber auch später gemacht werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=5cm]{img/secondtry/dna-center-add-vn.png}
+	\caption{DNA Center - Add Virtual Network}
+	\label{fig:dna-center-add-vn}
 \end{figure}
 
 \subsubsection{Initial Provisioning}
@@ -1051,7 +1071,7 @@ ip sla schedule 3  life forever start-time now
 banner motd #\"Welcome to our SA Lab!\"#
 \end{lstlisting}
 
-\subsubsection{Border BGP Konfiguration}
+\subsection{Border BGP Konfiguration}
 
 Auf den Border Nodes wurde nun die BGP Konfiguration erstellt, damit die Fabric mit der Aussenwelt kommunizieren kann. Die Konfiguration der Gegenseite kann das DNA Center leider nicht übernehmen. Diese muss daher manuell erstellt werden.
 
@@ -1114,7 +1134,7 @@ neighbor 10.22.11.29 activate
 
 Je nach Anzahl VNs wird diese Konfiguration natürlich wesentlich grösser. Es ist zu beachten, dass jedes Mal wenn ein VN erstellt wird, die Konfiguration auf dem Legacy Router angepasst werden muss, sofern Kommunikation zwischen dem VN und der Aussenwelt möglich sein soll.
 
-\subsubsection{IP Pools für Clients definieren}
+\subsection{IP Pools für Clients definieren}
 
 Damit sich Clients am Netzwerk anmelden können, mussten IP Pools für die verschiedenen VNs definiert werden. Diese können unter \textit{Design $\rightarrow$ Network Settings  $\rightarrow$ Global $\rightarrow$ IP Address Pools $\rightarrow$ Add IP Pool} hinzugefügt werden.
 
@@ -1157,7 +1177,7 @@ Im zweiten Schritt des Wizards muss definiert werden, welcher Member die Range b
 	\label{fig:infoblox-assign-grid-member}
 \end{figure}
 
-Zum Schluss muss diese Konfiguration gespeichert werden. Damit diese auch aktiviert wird, muss der DHCP Service auf dem Infoblox neu gestartet werden. Infoblox weist jeweils darauf hin, wenn Änderungen einen Neustart der Services benötigen.
+Zum Schluss muss diese Konfiguration gespeichert werden. Damit diese auch aktiviert wird, muss der DHCP Service auf dem Infoblox Server neu gestartet werden. Infoblox weist jeweils darauf hin, wenn Änderungen einen Neustart der Services benötigen, das DNA Center leider nicht.
 
 \begin{figure}[H]
 	\centering
@@ -1166,23 +1186,330 @@ Zum Schluss muss diese Konfiguration gespeichert werden. Damit diese auch aktivi
 	\label{fig:infoblox-restart-services}
 \end{figure}
 
+\subsection{Benutzerprofile und Policies}
 
-\subsubsection{Host Onboarding}
-TODO
+\subsubsection{SGTs erstellen}
+\label{add-sgt}
+Damit Benutzern Policies zugewiesen werden können, müssen zu Beginn Scalable Groups erstellt werden, denen die Benutzer später zugewiesen werden können. Zwischen den Scalable Groups werden die Zugriffe dann mittels Policies geregelt.
+Scalable Groups müssen im ISE erstellt werden und können nicht direkt im DNA Center angelegt werden. Das DNA Center verweist aber under  \textit{Policy $\rightarrow$ Registry $\rightarrow$ Scalable Groups $\rightarrow$ Add Groups} auf die korrekte Seite im ISE und sieht alle bereits vorhandenen Groups. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{img/secondtry/ise-scalable-groups.png}
+	\caption{ISE - Scalable Groups}
+	\label{fig:ise-scalable-groups}
+\end{figure}
+
+Mit dem \textit{Add} Button können weitere Gruppen hinzugefügt werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{img/secondtry/ise-add-scalable-group.png}
+	\caption{ISE - Add Scalable Group}
+	\label{fig:ise-add-scalable-group}
+\end{figure}
+
+\subsubsection{Contracts erstellen}
+
+Um schlussendlich Policies zwischen den Scalable Groups erstellen zu können, waren sogenannte Contracts nötig. Dies sind im Prinzip Access Control Lists (ACLs), die dann mittels Policy zwischen zwei Gruppen angewandt werden kann. Zu Beginn waren zwei Contacts vorhanden:
+\begin{itemize}
+	\item permit
+	\item deny
+\end{itemize}
+Diese entsprechen einer ACL die alles erlaubt oder verbietet. Zusätzlich können weitere Contracts erstellt werden, die einzelne Protokolle erlauben.
+
+Untenstehend ein Contract, der lediglich SSH erlaubt.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{img/secondtry/dna-center-add-contract.png}
+	\caption{DNA Center - Add Contract}
+	\label{fig:dna-center-add-contract}
+\end{figure}
+
+\subsubsection{Policies erstellen}
+\label{create-policies}
+Die zuvor erstellten Contracts konnten nun genutzt werden, um Policies zwischen den Scalable Groups zu erstellen. Die Policies sind im DNA Center unter \textit{Policy $\rightarrow$ Policy Administration $\rightarrow$ Group-Based Access Control} zu finden.
+
+Hier kann die Kommunikation zwischen den Scalable Groups geregelt werden. Mit Hilfe des \textit{Add Policy} Buttons können zusätzliche Policies erstellt werden. Die folgende Policy verbietet Traffic aus der Scalable Group "INTERN" zu den Gruppen "VERTRAULICH" und "GEHEIM".
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=11cm]{img/secondtry/dna-center-add-policy.png}
+	\caption{DNA Center - Add Policy}
+	\label{fig:dna-center-add-policy}
+\end{figure}
+
+So konnten alle Policies erstellt werden, die nötig waren, um die Kommunikation innerhalb der Fabric zu regeln.
+
+\subsection{Host Onboarding}
+
+Im Bereich Host Onboarding wird geregelt, was geschieht, wenn sich ein Client mit dem Netzwerk verbindet. Dies kann global pro Fabric, aber auch pro Port geregelt werden.
 
 
 \subsubsection{Authentifizierungsmethoden}
-TODO
-\begin{tabular}{ | m{8cm} | m{8cm} | }
+
+\begin{tabular}{ | m{4cm} | m{12cm} | }
 	\hline
 	\textbf{Typ} & 	\textbf{Beschreibung} \\
 	\hline
-	Closed Authentication & Based on 802.1X. Authentication MUST succeed prior to network access. Requires networks with complete 802.1x support. \\
-	Open Authentication & Based on 802.1x. Temporary access is granted (e.g. PXE, DHCP) prior to authentication. Optimal for networks with limited 802.1x support. \\
-	Easy Connect & Based on LDAP combined with MAC Address Bypass (MAB). Optimal for networks using Active Directory (AD) authentication. \\
-	No Authentication & Optimal for networks that do not support authentication or require static configuration. \\
+	Closed Authentication & Basiert auf 802.1x. Kein Netzwerkzugriff möglich, bevor sich der Client mittels 802.1x authentifiziert. \\
 	\hline
-
+	Open Authentication & Basiert auf 802.1x. Temporärer Zugriff (PXE, DHCP) ist erlaubt bevor sich der Client mittels 802.1x authentifiziert. \\
+	\hline
+	Easy Connect & Basiert auf LDAP kombiniert mit MAC Address Bypass (MAB).\\
+	\hline
+	No Authentication & Statische Portkonfiguration. Dies ist geeignet für Geräte, die 802.1x nicht unterstützen. \\
+	\hline
 \end{tabular}
-\caption[Erklärung der Host Onboardning Authentifizierungsmethoden]{Erklärung der Host Onboardning Authentifizierungsmethoden.\cite{ivan-caduff-slack}}
+\caption[Erklärung der Host Onboarding Authentifizierungsmethoden]{Erklärung der Host Onboarding Authentifizierungsmethoden.\cite{ivan-caduff-slack}}
 
+In der LAB Umgebung haben wir eine Kombination aus "No Authentication" und "Open Authentication gewählt. An Ports, die für das Gebäudemanagement vorgesehen sind, ist "No Authentication" konfiguriert und das VN "Gebaeudemgmt" ist statisch konfiguriert. Dies aus dem Grund, da solche Geräte 802.1x wahrscheinlich nicht unterstützen. 
+Alle anderen Ports sind mit "Open Authentication" konfiguriert. Ein Client der sich mit dem Netzwerk verbindet, kann also nur DHCP und PXE nutzen, bis er sich erfolgreich authentifiziert hat und anschliessend ins entsprechende VN verschoben wird.
+
+Die Portkonfiguration kann im DNA Center unter \textit{Provision $\rightarrow$ Fabric $\rightarrow$ Host Onboarding} vorgenommen werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{img/secondtry/dna-center-host-onboarding.png}
+	\caption{DNA Center - Host Onboarding}
+	\label{fig:dna-center-host-onboarding}
+\end{figure}
+
+Auf dem Netzwerk Device sah die Port Konfiguration dann wie folgt aus:
+
+\paragraph{No Authentication}
+~\\
+\begin{lstlisting}[language=bash]
+interface GigabitEthernet1/0/1
+  switchport access vlan 1021
+  switchport mode access
+  device-tracking attach-policy IPDT_MAX_10
+  load-interval 30
+  cts manual 
+  policy static sgt 19
+  no propagate sgt
+  spanning-tree portfast
+end
+\end{lstlisting}
+\paragraph{Open Authentication}
+~\\
+\begin{lstlisting}[language=bash]
+interface GigabitEthernet1/0/5
+  switchport access vlan 1022
+  switchport mode access
+  device-tracking attach-policy IPDT_MAX_10
+  load-interval 30
+  authentication control-direction in
+  authentication event server dead action authorize vlan 3999
+  authentication event server dead action authorize voice
+  authentication host-mode multi-auth
+  authentication open
+  authentication order dot1x mab
+  authentication priority dot1x mab
+  authentication port-control auto
+  authentication periodic
+  authentication timer reauthenticate server
+  authentication timer inactivity server dynamic
+  mab
+  dot1x pae authenticator
+  dot1x timeout tx-period 10
+  spanning-tree portfast
+end
+\end{lstlisting}
+
+\subsubsection{802.1x Client Config}
+
+\paragraph{ubuntu}
+~\\
+
+Unter Ubuntu sind zwei Konfigurationen nötig. Zum einen eine "wpa\_supplicant" Konfiguration, sowie die passende Interface Config.
+Die wpa\_supplicant.conf sieht so aus:
+
+\begin{lstlisting}[language=bash]
+ctrl_interface=/var/run/wpa_supplicant
+ctrl_interface_group=0
+eapol_version=2
+ap_scan=0
+
+network={
+	key_mgmt=IEEE8021X
+	eap=PEAP
+	identity="jessica"
+	password="MYPASSWORD"
+	eapol_flags=0
+}
+\end{lstlisting}
+
+In der Interface Konfiguration unter "/etc/network/interfaces" muss das gewünschte Interface folgendermassen konfiguriert werden:
+\begin{lstlisting}[language=bash]
+auto enxc0742bfff8af
+iface enxc0742bfff8af inet dhcp
+  wpa-driver wired
+  wpa-conf /root/wpa_supplicant.conf
+\end{lstlisting}
+
+\paragraph{Fedora / RedHat}
+~\\
+In Red Hat basierten Linux Distributionen kann die Datei "/etc/sysconfig/network-scripts/ifcfg-INTERFACE\_NAME" angepasst werden. Folgende Zeilen müssen hinzugefügt werden:
+\begin{lstlisting}[language=bash]
+KEY_MGMT=IEEE8021X
+IEEE_8021X_EAP_METHODS=PEAP
+IEEE_8021X_IDENTITY=sandro
+IEEE_8021X_INNER_AUTH_METHODS=MSCHAPV2
+\end{lstlisting}
+
+\paragraph{Windows}
+~\\
+Unter Windows sind mehrere Schritte notwendig. 
+
+\subparagraph{Service Starten}
+~\\
+Unter Services muss der Service \textit{Wired AutoConfig} gestartet werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=12cm]{img/8021x/8021x_1.png}
+	\caption{Windows Service Wired AutoConfig aktivieren}
+	\label{fig:windows-8021x-service}
+\end{figure}
+
+\subparagraph{Credentials hinterlegen}
+~\\
+Beim entsprechenden Interface müssen nun die entsprechenden Credentials hinterlegt werden.
+Dazu wählt man mit rechter Maustaste auf den entsprechenden Netzwerkadapter \textit{Properties $\rightarrow$ Authentication $\rightarrow$ Additional Settings}, setzt einen Haken bei \textit{Specify authentication mode}, wählt im Dropdown \textit{User authentication}, klickt auf \textit{Replace credentials} (oder ähnlich) und gibt im im neuen Fenster die Benutzerauthentifizierungsdaten ein. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15cm]{img/8021x/8021x_2.png}
+	\caption{Windows Netzwerkadapter - Benutzerauthentifizierungsdaten hinterlegen - Übersicht über alle Fenster}
+	\label{fig:windows-8021x-userauth}
+\end{figure}
+
+\subparagraph{Wireshark Capture des Authentifizierungsvorganges}
+~\\
+Nachfolgend sind zwei Screenshots eines Wireshark Capture von einer erfolgreichen und einer nicht erfolgreichen Authentifizierung. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15cm]{img/8021x/userauth-success.png}
+	\caption{Wireshark Capture - Erfolgreiches EAP}
+	\label{fig:windows-8021x-userauth-success}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=15cm]{img/8021x/userauth-fail.png}
+	\caption{Wireshark Capture - Fehlgeschlagenes EAP}
+	\label{fig:windows-8021x-userauth-fail}
+\end{figure}
+
+\subsection{Policies ausserhalb der Fabric}
+
+Damit auch Policies für Ressourcen ausserhalb der Fabric erstellt werden können, sind SGT Mappings nötig, sowie das Protokoll SXP, dass die vom ISE mit den Border Nodes synchronisiert.
+
+\subsubsection{SGT Mapping}
+Um ein Mapping zwischen IP Adressen ausserhalb der Fabric und Security Groups zu erstellen, mussten in einem ersten Schritt die SGs erstellt werden, die später für das Mapping verwendet werden. SGs können im ISE unter \textit{Workcenters $\rightarrow$ Trustsec $\rightarrow$ Components $\rightarrow$ Security Groups $\rightarrow$ Add}, wie in Abschnitt \ref{add-sgt} beschrieben, erstellt werden.
+
+Anschliessend mussten unter \textit{Workcenters $\rightarrow$ Trustsec $\rightarrow$ Components $\rightarrow$ IP SGT Static Mapping $\rightarrow$ Add} die entsprechenden Mappings erfasst werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{img/secondtry/ise-sgt-mapping.png}
+	\caption{ISE - IP SGT Mapping}
+	\label{fig:ise-ip-sgt-mapping}
+\end{figure}
+
+\subsubsection{SXP}
+
+Damit die manuell im ISE erstellten Security Groups und IP SGT Mappings am Border bekannt werden, muss das SGT Exchange Protocol (SXP) zwischen ISE und den Border Nodes eingerichtet werden. Dies musste manuell gemacht werden.
+Im ISE ist SXP unter \textit{Workcenters $\rightarrow$ Trustsec $\rightarrow$ SXP} zu finden. Mit dem Add Button konnten Devices hinzugefügt werden, mit denen die SGs synchronisiert werden.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=10cm]{img/secondtry/ise-sxp.png}
+	\caption{ISE - SXP}
+	\label{fig:ise-sxp}
+\end{figure}
+
+Auf den Border Nodes musste SXP dann ebenfalls konfiguriert werden. Dies konnte mit folgenden Befehlen erreicht werden:
+\begin{lstlisting}[language=bash]
+cts sxp enable
+cts sxp default password 7 09444F05150A3743595F50
+cts sxp connection peer 10.22.0.22 source 10.22.11.21 password default \ 
+    mode local listener hold-time 0 0 vrf Mitarbeiter
+cts role-based enforcement vlan-list all
+\end{lstlisting}
+Wichtig dabei war, dass als Source die IP Adresse des VLAN Interfaces gewählt wird, das mit dem VN Mitarbeiter assoziiert ist. Falls in anderen VNs ebenfalls Policies für Ressourcen ausserhalb der Fabric nötig sind, müssen die obigen Schritte für dieses VN wiederholt werden.
+
+Sobald die Verbindung zwischen ISE und Border Node aktiv ist, sieht man die zuvor erstellten Mappings:
+\begin{lstlisting}[language=bash]
+#sh cts role-based sgt-map vrf Mitarbeiter all
+Active IPv4-SGT Bindings Information
+
+IP Address              SGT     Source
+============================================
+10.22.0.100             23      SXP
+10.22.100.253           17      SXP
+217.26.48.0/20          20      SXP
+
+IP-SGT Active Bindings Summary
+============================================
+Total number of SXP      bindings = 3
+Total number of active   bindings = 3
+\end{lstlisting}
+
+\subsubsection{Policies}
+Nun konnten für Ressourcen ausserhalb der Fabric die Policies genau gleich wie in Abschnitt \ref{create-policies} beschrieben erstellt werden.
+
+\subsection{Reporting einrichten}
+
+Die Reporting Funktionalität besteht aus einigen python Scripts. Im ersten Schritt mussten diese auf ein System kopiert werden, welches die regelmässigen Reports versenden kann. Am einfachsten mittels GIT Checkout.
+Anschliessend muss die Datei "config.py" angepasst werden. Folgende Informationen müssen angegeben werden:
+\begin{itemize}
+	\item DNA Center IP Adresse
+	\item DNA Center Port
+	\item DNA Center Benutzername
+	\item DNA Center Password
+	\item Mailserver Hostname
+	\item Mailserver Port
+	\item E-Mail Benutzer
+	\item E-Mail Passwort
+	\item Empfänger der Reports
+\end{itemize}
+
+
+In unserer Lab Umgebung sah die Konfiguration dann folgendermassen aus:
+
+\begin{lstlisting}[language=bash]
+# DNA Center Settings
+
+DNAC_IP = "10.22.0.100"
+DNAC_PORT = 443
+USERNAME = "admin"
+PASSWORD = "********"
+VERSION = "v1"
+
+# Mail Server Settings
+MAIL_SERVER = "asmtp.mail.******.ch"
+MAIL_PORT = 587
+MAIL_USER = "dnacenter@XYZ.ch"
+MAIL_PASSWORD = "********"
+MAIL_RECIPIENTS = ['********@gmail.com', '******@hsr.ch']
+\end{lstlisting}
+
+Sobald die Konfiguration angepasst ist, kann das Script "gen\_config.py" entweder manuell ausgeführt werden oder regelmässig via Cronjob gestartet werden. Dieser sah bei uns für einen täglichen Versand so aus:
+
+\begin{lstlisting}[language=bash]
+30 0 * * * /usr/bin/python2 /opt/dnacenter_reporting/gen_report.py \
+     > /dev/null 2>&1
+\end{lstlisting}
+
+Der erstellte Report ist in untenstehender Grafik ersichtlich:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=17cm]{img/secondtry/report.png}
+	\caption{DNA Center - Report}
+	\label{fig:Report}
+\end{figure}

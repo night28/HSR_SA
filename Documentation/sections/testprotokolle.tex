@@ -2,20 +2,18 @@
 \section {Testprotokolle}
 
 
-\testpttb{UC01}{Kurzbeschreibung}{
+\testpttb{UC01: Definierung von Benutzer und Geräteprofilen}{}{
 \testptrow{1}{TheBeschreibung}{TheShould}{TheIs}{TheStatus}
 }
 \pagebreak
 
-\testpttb{UC02}{Kurzbeschreibung}{
-	\testptrow{1}{TheBeschreibung}{TheShould}{TheIs}{TheStatus}
-}
-\pagebreak
+\subsection{UC02: Gastzugang}
+Gemäss \textit{Sitzungsprotokoll der Sitzung mit Cisco vom 23.05.2018} im Anhang ist "(...)Gast-Netz(...)Nur möglich mit separatem Border exklusiv für Gast Netz $\rightarrow$ Internet(...)". Der Use Case konnte nicht getestet werden, da kein uns kein zusätzlicher Border zu Verfügung stand und andere Use Cases eine höhere Wichtigkeit hatten. 
 
 \testpttb{UC03-1 Backup DNA Center}{Sämtliche Konfigurationen des DNA Centers sollen gebackuped werden, sodass diese im Notfall wiederhergestellt werden können.}{
 	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard erscheint}{OK}
 	\testptrow{2}{Zu den Backup Einstellungen navigieren \textit{Settings $\rightarrow$ System Settings $\rightarrow$ Backup and Restore} }{Backup Einstellungen anzeigen}{Backup Einstellungen erscheinen}{OK}
-	\testptrow{3a}{Backup Server hinzufügen via \textit{Add} $\rightarrow$ SSH IP Address: 217.26.58.9, SSH Port: 22, Server Path: /home/dnacenter/backup, Username: dnacenter, Password: xxx, Encryption Passphrase: xxx. Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden meist nicht angenommen, führt zu Absturz des DNA Centers}{NOT OK}
+	\testptrow{3a}{Backup Server hinzufügen via \textit{Add} $\rightarrow$ SSH IP Address: 217.26.58.9, SSH Port: 22, Server Path: /home/dnacenter/backup, Username: dnacenter, Password: xxx, Encryption Passphrase: xxx. Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden meist nicht angenommen und führen zu Absturz des DNA Centers}{NOT OK}
 	\testptrow{3b}{Backup Server hinzufügen via \textit{Add} $\rightarrow$ SSH IP Address: 217.26.58.9, SSH Port: 22, Server Path: /home/dnacenter/backup, Username: dnacenter, Password: xxx, Encryption Passphrase: xxx. Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden angenommen.}{OK}
 	\testptrow{4b}{Regelmässiges Backup einrichten via \textit{Schedule $\rightarrow$ Add} Schedule Later, Weekday: Wednesday, Time: 10:30 AM. Mittels Schedule die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden angenommen.}{OK}
 	\testptrow{5b}{Backup wird regelmässig zum definierten Zeitpunkt ausgeführt.}{Backup wird zum definierten Zeitpunkt ausgeführt}{Backup wird nicht ausgeführt}{NOT OK}
@@ -33,42 +31,36 @@ Zudem funktioniert der Backup Schedule nicht. Backups werden nicht automatisch a
 Da die Backup Funktionalität des DNA Centers sehr eingeschränkt ist und nur unzuverlässig funktioniert, wird der Use Case "Backup und Restore" nicht vollständig erfüllt.
 \pagebreak
 
-\testpttb{UC11: Infoblox}{Durch die Integration des Infoblox DDI im DNA Center soll das IP-Adressen Management für neue Netzwerkkomponenten vereinfacht werden.}{
-	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard erscheint}{OK}
-	\testptrow{2}{Zu IP Adress Manager Einstellungen navigieren über \textit{Settings $\rightarrow$ System Settings $\rightarrow$ Settings $\rightarrow$ IP Adress Manager} }{IP Adress Manager Einstellungen anzeigen}{IP Adress Manager Einstellungen erscheinen}{OK}
-	\testptrow{3}{Infoblox Informationen hinterlegen $\rightarrow$ Server Name: Infoblox, Server Url: https://10.22.0.21, Username: admin, Password: xxx, Provider: INFOBLOX). Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben wurden angenommen und Verbindung zu Infoblox Server erfolgreich hergestellt.}{OK}
-	\testptrow{4}{IP Adress Pools anzeigen über \textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Adress Pools}.}{IP Adress Pools sollten angezeigt werden.}{Es werden vorher definierte IP Adress Pools angezeigt.}{OK}
-	
+\testpttb{UC04 Reporting}{Mit Hilfe der DNA Center API können regelmässige Reports über den Zustand der Netzwerkumgebung per E-Mail oder Slack versendet werden. Damit dieser Use Case ausgeführt werden kann, muss ein Mailserver und ein Benutzer zur Verfügung stehen, der E-Mails versenden kann. Des weiteren ist ein System benötigt, welches das Script ausführt. Auf diesem muss python installiert sein.}{
+	\testptrow{1}{Reporting Script aus GIT Repository auschecken (auf dem System, das die Reports versenden soll)}{Code ist ausgecheckt}{Code ist ausgecheckt}{OK}
+	\testptrow{2}{config.py mit Texteditor öffnen und anpassen}{Reporting Config ist komplett}{Reporting Config ist komplett}{OK}
+	\testptrow{3}{Cronjob einrichten, der das Script in regelmässigen Abständen ausführt}{Script wird regelmässig ausgeführt}{Script wird regelmässig ausgeführt}{OK}
+	\testptrow{4a}{Cronjob wird ausgeführt und versendet Report per E-Mail}{Report wird per E-Mail versendet.}{Report wird per E-Mail versendet}{OK}
+	\testptrow{4b}{Cronjob wird ausgeführt und versendet Report per Slack}{Report wird per Slack versendet.}{Nicht implementiert}{NOT OK}
 }
-\pagebreak
 
+\subsubsection{Zusammenfassung UC04}
+Mit dieser Lösung ist ein sehr rudimentäres Reporting implementiert worden. Es wird lediglich eine Liste aller Netzwerkgeräte, sowie eine Liste aller Hosts mit den wichtigsten Informationen und dem Zustand der Geräte ausgegeben. Wünschenswert wären natürlich wesentlich mehr Informationen, insbesondere aus dem Bereich Assurance. Leider unterstützt die API des aktuellen Release 1.1.6 diese Funktionien nicht. Im Release 1.2 ist einiges mehr vorhanden, aber nach wie vor als Early Field Trial (EFT) gekennzeichnet. 
+Eine sinnvolle Reporting Funktion ist daher mit den aktuell verfügbaren APIs des DNA Centers nicht realisierbar.
 
-\subsection{UC04: Reporting}
-Andere Use Cases haben eine höhere Priorisierung erhalten. Aus Zeitmangel konnte dieser Use Case nicht behandelt werden. 
-
-\pagebreak
 
 \subsection{UC05: Hardware Ersatz}
 \textit{Offene Frage an Ivan Caduff via Slack}
 
-\pagebreak
+
 
 \subsection{UC06: Benutzermobilität}
 Um diesen Use Case zu testen braucht es eine funktionierende Fabric, zwei Gebäude oder besser zwei Standorte und 802.1X Authentifizierung. Da dies leider nicht der Fall ist, konnte dieser Use Case nicht getestet werden. 
 
-\pagebreak
+
 
 \subsection{UC07: Degradation}
 In der Main Success Story dieses Use Cases steht "1. Netzwerk funktioniert einwandfrei.". Da dies zu diesem Zeitpunkt noch nicht der Fall ist, konnte dieser Use Case nicht getestet werden. 
 
-\pagebreak
+
 
 \subsection{UC08: Integration von nicht Fabric Komponenten}
 Andere Use Cases haben eine höhere Priorisierung erhalten. Aus Zeitmangel konnte dieser Use Case nicht behandelt werden. Insbesondere, weil nebst einer funktionierenden Fabric auch ein Mapping zwischen den SGT im Legacy Netzwerk konfiguriert hätte werden müssen. 
-
-
-\subsection{UC10: Gastzugang}
-Gemäss \textit{Sitzungsprotokoll der Sitzung mit Cisco vom 23.05.2018} im Anhang ist "(...)Gast-Netz(...)Nur möglich mit separatem Border exklusiv für Gast Netz $\rightarrow$ Internet(...)". Der Use Case konnte nicht getestet werden, da kein uns kein zusätzlicher Border zu Verfügung stand und andere Use Cases eine höhere Wichtigkeit hatten. 
 
 
 \pagebreak
@@ -82,6 +74,23 @@ Gemäss \textit{Sitzungsprotokoll der Sitzung mit Cisco vom 23.05.2018} im Anhan
 }
 \subsubsection{Zusammenfassung UC10}
 Noch nicht alle Funktionen können komplett im DNA Center erledigt werden. Ein Teil der Funktionen erfolgt weiterhin über die GUI der anderen Komponenten. 
+
+\pagebreak
+
+\testpttb{UC11-1: Infoblox verknüpfen}{Durch die Integration des Infoblox DDI im DNA Center soll das IP-Adressen Management für neue Netzwerkkomponenten vereinfacht werden.}{
+	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard erscheint}{OK}
+	\testptrow{2}{Zu IP Adress Manager Einstellungen navigieren über \textit{Settings $\rightarrow$ System Settings $\rightarrow$ Settings $\rightarrow$ IP Adress Manager} }{IP Adress Manager Einstellungen anzeigen}{IP Adress Manager Einstellungen erscheinen}{OK}
+	\testptrow{3}{Infoblox Informationen hinterlegen $\rightarrow$ Server Name: Infoblox, Server Url: https://10.22.0.21, Username: admin, Password: xxx, Provider: INFOBLOX). Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben wurden angenommen und Verbindung zu Infoblox Server erfolgreich hergestellt.}{OK}
+}
+
+\testpttb{UC11-2: IP Adress Pool erstellen}{IP Adress Pools auf dem Infoblox erstellen und mit DNA Center synchronisieren}{
+	\testptrow{1}{IP Adress Pools anzeigen über \textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Adress Pools}.}{IP Adress Pools sollten angezeigt werden.}{Es werden vorhandene IP Adress Pools angezeigt.}{OK}
+	\testptrow{2}{Mit einem Klick auf \textit{Add IP Pool} kann ein neuer IP Pool hinzugefügt werden. Hierfür werden folgende Angaben benötigt: IP Pool Name, CIDR Prefix, IP Subnetz, Gateway IP Adresse, DHCP Server (optional), DNS Server (optional)}{Fenster um IP Adress Pool hinzuzufügen erscheint}{Fenster um IP Adress Pool hinzuzufügen ist erschienen}{OK}
+	\testptrow{3}{Mit einem Klick auf Save wird der IP Adress Pool hinzugefügt und mit dem Infoblox Server synchronisiert}{Übersicht über vorhandene IP Adress Pools wird angezeigt}{Übersicht über vorhandene IP Adress Pools wird angezeigt mit vorher hinzugefügtem IP Adress Pool}{OK}
+}
+
+\subsubsection{Zusammenfassung UC11}
+Der Infoblox konnte im DNA Center relativ einfach hinterlegt werden. Das erstellen eines IP Adress Pools auf dem DNA Center funktioniert gut und wird auch schnell mit dem Infoblox synchronisiert. Wird jedoch ein IP Adress Pool auf dem Infoblox erstellt, so ist es eher mühsam diesen neuen IP Adress Pool auf dem DNA Center anzuzeigen. Diese Synchronisation erfolgt nicht sauber. Es ist auf dem DNA Center zwar eine Import Funktion vorhanden, welche die IP Adress Pools vom Infoblox importieren sollte, aber nur mässig gut funktioniert. Jedes Netz welches importiert werden soll, muss einzeln erstellt und genaustens angegeben werden. Aus diesem Grunde sollte generell alles was im DNA Center erstellt werden kann, auf diesem erstellt werden und nicht manuell auf dem Infoblox.
 
 \pagebreak
 
