@@ -1,4 +1,4 @@
-\section{Vorgehen Versuch 1} \label{versuch1}
+\section{Vorgehen Versuch 1}
 Nachfolgend haben wir das Vorgehen von unserem ersten Versuch in einer Grafik übersichtlich dargestellt. Die Blitze deuten dabei auf ein Hindernis bei welchem mehr Aufwand benötigt wurde hin und das rote X als einen fehlgeschlagenen Versuch, welcher abgebrochen werden musste.
 \begin{figure}[H]
 	\centering
@@ -570,7 +570,7 @@ Anschliessend kann der USB-Stick in die Appliance gesteckt und diese gestartet w
 	Nach der Neuinstallation sind alle Daten und die Konfiguration gelöscht. Eine Option die Konfiguration beizubehalten gibt es nicht.
 }
 
-\section{Vorgehen Versuch 2} \label{versuch2}
+\section{Vorgehen Versuch 2}
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=14cm]{img/vorgehen2.png}
@@ -1349,7 +1349,7 @@ end
 
 \subsubsection{802.1x Client Config}
 
-\paragraph{Ubuntu}
+\paragraph{ubuntu}
 ~\\
 
 Unter Ubuntu sind zwei Konfigurationen nötig. Zum einen eine "wpa\_supplicant" Konfiguration, sowie die passende Interface Config.
@@ -1438,6 +1438,7 @@ Nachfolgend sind zwei Screenshots eines Wireshark Capture von einer erfolgreiche
 Damit auch Policies für Ressourcen ausserhalb der Fabric erstellt werden können, sind SGT Mappings nötig, sowie das Protokoll SXP, dass die vom ISE mit den Border Nodes synchronisiert.
 
 \subsubsection{SGT Mapping}
+\label{sxp-mapping}
 Um ein Mapping zwischen IP Adressen ausserhalb der Fabric und Security Groups zu erstellen, mussten in einem ersten Schritt die SGs erstellt werden, die später für das Mapping verwendet werden. SGs können im ISE unter \textit{Workcenters $\rightarrow$ Trustsec $\rightarrow$ Components $\rightarrow$ Security Groups $\rightarrow$ Add}, wie in Abschnitt \ref{add-sgt} beschrieben, erstellt werden.
 
 Anschliessend mussten unter \textit{Workcenters $\rightarrow$ Trustsec $\rightarrow$ Components $\rightarrow$ IP SGT Static Mapping $\rightarrow$ Add} die entsprechenden Mappings erfasst werden.
@@ -1491,6 +1492,83 @@ Total number of active   bindings = 3
 
 \subsubsection{Policies}
 Nun konnten für Ressourcen ausserhalb der Fabric die Policies genau gleich wie in Abschnitt \ref{create-policies} beschrieben erstellt werden.
+
+In der LAB Umbebung haben wir die Policies gemäss untenstehender Matrix definiert:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{img/secondtry/ise-policy-matrix.png}
+	\caption{ISE - Policy Matrix}
+	\label{fig:ise-policy-matrix}
+\end{figure}
+
+Clients den Gruppen "Intern" und "Vertraulich" dürfen also nicht mit Clients in der Gruppe "Geheim" kommunizieren. Des Weiteren dürfen diese nicht auf die Gruppe "HoPo" zugreifen. Dies ist eine externe Gruppe, die wie in Abschnitt \ref{sxp-mapping} beschrieben, erstellt wurde. Die Gruppe "Geheim" hingegegen darf Verbindungen zu allen anderen Gruppen aufbauen.
+
+\subsubsection{Policies testen}
+
+Um die verschiedenen Policies zu testen, haben wir Clients in den verschiedenen Gruppen mit dem Netzwerk verbunden und die verschiedenen Verbindungen ausprobiert.
+Zu den einzelnen Verbindungsversuchen sind diesem Dokument tcpdumps beigelegt, die den Verkehr zwischen den Edge Nodes aufzeichnen.
+
+\paragraph{Intern}
+
+Auf dem folgenden Screenshot ist zu sehen, wie der Client in der Gruppe "Intern" versucht auf die Gruppe "Geheim zuzugreifen.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{img/secondtry/ssh-intern-geheim.png}
+	\caption{SSH - Intern - Geheim}
+	\label{fig:ssh-intern-geheim}
+\end{figure}
+
+Im nachfolgenden Screenshot ist der Verbindungsversuch in die Gruppe "HoPo" zu sehen.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{img/secondtry/ssh-intern-hopo.png}
+	\caption{SSH - Intern - HoPo}
+	\label{fig:ssh-intern-hopo}
+\end{figure}
+
+Das die Policy funktioniert sieht man auf den Edge Nodes an den entsprechenden Counters.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{img/secondtry/cts-counters.png}
+	\caption{CTS - Counters}
+	\label{fig:cts-counters}
+\end{figure}
+
+Das Enforcement der Policy findet jeweils auf dem Destination Edge Node statt. Dies erkennt man am einfachsten daran, dass die entsprechende Policy nur dort vorhanden ist. Der Edge Node bezieht also nur die Policies für die Security Groups, in denen Clients verbunden sind.
+
+\paragraph{Vertraulich}
+
+Aus der Gruppe "Vertraulich sehen die Verbindungsversuche gleich aus wie bei der Gruppe Intern. Der einzige Unterschied liegt darin, dass hier eine Verbindung von "Vertraulich" nach "Intern", also in der Gegenrichtung, erlaubt ist.
+
+\paragraph{Geheim}
+
+Diese Gruppe darf auf alle anderen Gruppen zugreifen. Dass dies funktioniert ist im folgenden Bild ersichtlich.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{img/secondtry/ssh-geheim-intern.png}
+	\caption{SSH - Geheim - Intern}
+	\label{fig:ssh-geheim-intern}
+\end{figure}
+
+\subsubsection{Benutzermobilität testen}
+
+Um die Benutzermobilität zu testen, haben wir einen Client an einem Edge Node im Gebäude zwei angeschlossen. Dieser hat sich als User authentifiziert, hat alle benötigten Policies erhalten und konnte auf alle nótigen Ressourcen zugreifen. 
+Wir haben dann eine SSH Session auf einen Host im Internet gestartet.
+Anschliessend wurde der Client vom Switch getrennt und an einem anderen Edge Device im Gebäude eins angeschlossen. Er hat sich umgehend authentifiziert und wieder die korrekten Policies erhalten. Die SSH Session wurde dabei nicht getrennt und hat weiterhin funktioniert.
+In der folgenden Grafik ist der LISP Traffic des neuen Edge Nodes zu sehen, nachdem sich der Client verbunden hat.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{img/secondtry/client-mobility-dump.png}
+	\caption{LISP - Client Mobility}
+	\label{fig:lisp-client-mobility}
+\end{figure}
+
 
 \subsection{Reporting einrichten}
 
