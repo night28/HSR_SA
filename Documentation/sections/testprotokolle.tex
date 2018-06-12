@@ -39,11 +39,24 @@ Da die Backup Funktionalität des DNA Centers sehr eingeschränkt ist und nur un
 \subsubsection{Zusammenfassung UC03}
 Mit dieser Lösung ist ein sehr rudimentäres Reporting implementiert worden. Es wird lediglich eine Liste aller Netzwerkgeräte, sowie eine Liste aller Hosts mit den wichtigsten Informationen und dem Zustand der Geräte ausgegeben. Wünschenswert wären natürlich wesentlich mehr Informationen, insbesondere aus dem Bereich Assurance. Leider unterstützt die API des aktuellen Release 1.1.6 diese Funktionien nicht. Im Release 1.2 ist einiges mehr vorhanden, aber nach wie vor als Early Field Trial (EFT) gekennzeichnet. 
 Eine sinnvolle Reporting Funktion ist daher mit den aktuell verfügbaren APIs des DNA Centers nicht realisierbar.
-
+\pagebreak
 
 \subsection{UC04: Hardware Ersatz}
-\textit{Offene Frage an Ivan Caduff via Slack}
+Wenn ein Device in der Fabric ausfällt, ist folgendermassen vorzugehen, um dieses auszutauschen und den alten Stand der Fabric wiederherzustellen.\\
+\begin{itemize}
+	\item Altes Gerät durch neues ersetzen
+	\item Neues Gerät identisch verkabeln
+	\item Das Gerät mittels LAN Automation wieder in Betrieb nehmen
+	\item Device Provisioning ausführen
+	\item Device der ursprünglichen Fabric hinzufügen
+	\item Device Provisioning erneut ausführen
+	\subitem Sofern der Gerättyp zwischen altem und neuen Device identisch ist, sollte die Access Portkonfiguration übernommen werden
+	\subitem Sind es unterschiedliche Gerätetypen müssen die Access Ports manuell konfiguriert werden
+	\item Der neue Switch sollte nun die komplette Funktion des alten übernommen haben\\
+\end{itemize}
 
+Die obigen Informationen sind nur theoretisch und konnten in der Testumgebung nicht getestet werden.
+\pagebreak
 
 
 \subsection{UC05: Benutzermobilität}
