@@ -347,17 +347,26 @@ Die Softwareupdates von Netzwerkgeräten können im DNA Center unter \textit{Pro
 
 Das automatische Softwareupdate hat bei keinem von unseren Switches oder Routern geklappt. Nachfolgend eine kleine Übersicht über die verschiedenen Update Methoden und ausgeführten Versuche.
 
-\begin{tabular}{ | l | l |}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabular}{ | l | l |}
 	\hline
+	\rowcolor{gray!50}
 	\textbf{Methode} & \textbf{Resultat} \\
 	\hline	
-	\makecell{DNA Center über HTTP und SFTP} & Fehlgeschlagen (siehe \ref{fig:dna-center-provision-updates-1}) \\
+	\makecell
+	{DNA Center über HTTP und SFTP} & Fehlgeschlagen (siehe \ref{fig:dna-center-provision-updates-1}) \\
+	\hline
 	CLI - HTTPS    & Fehlgeschlagen (siehe \ref{fig:dna-center-provision-updates-2}) \\
+	\hline
 	CLI - SCP      & Fehlgeschlagen (siehe \ref{fig:dna-center-provision-updates-3}) \\
+	\hline
 	CLI - TFTP     & Erfolgreich (siehe \ref{fig:dna-center-provision-updates-4}) \\	
 	\hline
-\end{tabular}
-\captionof{table}{Softwareupdate - Übersicht Methoden und ausgeführten Versuche}
+	\end{tabular}
+	\captionof{table}{Softwareupdate - Übersicht Methoden und ausgeführten Versuche}
+\end{table}
 
 Beim Versuch die Softwareupdates im DNA Center über HTTP oder SFTP durchzuführen, wurden folgende Fehlermeldungen angezeigt.
 
@@ -433,17 +442,23 @@ Die Lizenzen bezieht das DNA Center vom konfigurierten CCO Account.
 	\label{fig:dna-center-licence-7}
 \end{figure}
 
-\begin{tabular}{ | c | c | }
-	\hline
-	\textbf{Geräteserie} & 	\textbf{Lizenzzuweisung möglich} \\
-	\hline
-	Cisco Catalyst 9300 Series Switches & Ja \\
-	\hline
-	Cisco Catalyst 3850 Series Ethernet Stackable Switch & Ja \\
-	\hline
-	Cisco 4400 Series Integrated Services Routers & Nein \\
-	\hline
-\end{tabular}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+		\begin{tabular}{ | c | c | }
+		\hline
+		\rowcolor{gray!50}
+		\textbf{Geräteserie} & 	\textbf{Lizenzzuweisung möglich} \\
+		\hline
+		Cisco Catalyst 9300 Series Switches & Ja \\
+		\hline
+		Cisco Catalyst 3850 Series Ethernet Stackable Switch & Ja \\
+		\hline
+		Cisco 4400 Series Integrated Services Routers & Nein \\
+		\hline
+	\end{tabular}
+	\captionof{table}{Netzwerkgeräte Lizenzzuweisung}
+\end{table}
 
 \subsection{Device Provisioning via DNA Center}
 \label{device-provisioning}
@@ -482,19 +497,27 @@ Nachdem alle Geräte der entsprechenden Fabric zugeteilt worden sind, kann die K
 	\label{fig:IP Base and Services}
 \end{figure}
 
-
-\begin{tabular}{| l | l | l | l | l |}
-	\hline
-	\textbf{Darstellung} & \makecell{\textbf{Teil einer}\\ \textbf{Fabric}} & \makecell{\textbf{Änderung}\\ \textbf{ausstehend}} & \textbf{Provisioniert} & \textbf{Bemerkung} \\
-	\hline
-	Dunkelgrau & Ja & Nein & Nein & fremde Fabric \\
-	Hellgrau & Nein & Nein & Nein &  \\
-	Grau mit blauem Rand & Ja & Ja & Nein & nicht deployed\\
-	Blau & Ja & Nein & Ja & aktuelle Fabric\\
-	Umrandung mit Pfeil & - & - & - & Gruppierte Geräte\\	
-	\hline
-\end{tabular}
-\captionof{table}{DNA Center Provision - Fabric - Darstellung}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+	\begin{tabular}{| l | l | l | l | l |}
+		\hline
+		\rowcolor{gray!50}
+		\textbf{Darstellung} & \makecell{\textbf{Teil einer}\\ \textbf{Fabric}} & \makecell{\textbf{Änderung}\\ \textbf{ausstehend}} & \textbf{Provisioniert} & \textbf{Bemerkung} \\
+		\hline
+		Dunkelgrau & Ja & Nein & Nein & fremde Fabric \\
+		\hline
+		Hellgrau & Nein & Nein & Nein &  \\
+		\hline
+		Grau mit blauem Rand & Ja & Ja & Nein & nicht deployed\\
+		\hline
+		Blau & Ja & Nein & Ja & aktuelle Fabric\\
+		\hline
+		Umrandung mit Pfeil & - & - & - & Gruppierte Geräte\\	
+		\hline
+	\end{tabular}
+	\captionof{table}{DNA Center Provision - Fabric - Darstellung}
+\end{table}
 
 \subsection{DNA Center Reset}
 Da das Overlay Provisioning auch nach mehreren Versuchen nur teilweise funktioniert hatte, haben wir entschlossen, die Switches zusätzlich über das Out-of-Band Management zu verbinden, da dies in mehreren Videos von Cisco so erwähnt wird und im ersten Release zwingend nötig war. \\
@@ -1250,20 +1273,25 @@ Im Bereich Host Onboarding wird geregelt, was geschieht, wenn sich ein Client mi
 \subsubsection{Authentifizierungsmethoden}
 \label{authentifizierungsmethoden}
 
-\begin{tabular}{ | m{4cm} | m{12cm} | }
-	\hline
-	\textbf{Typ} & 	\textbf{Beschreibung} \\
-	\hline
-	Closed Authentication & Basiert auf 802.1x. Kein Netzwerkzugriff möglich, bevor sich der Client mittels 802.1x authentifiziert. \\
-	\hline
-	Open Authentication & Basiert auf 802.1x. Temporärer Zugriff (PXE, DHCP) ist erlaubt bevor sich der Client mittels 802.1x authentifiziert. \\
-	\hline
-	Easy Connect & Basiert auf LDAP kombiniert mit MAC Address Bypass (MAB).\\
-	\hline
-	No Authentication & Statische Portkonfiguration. Dies ist geeignet für Geräte, die 802.1x nicht unterstützen. \\
-	\hline
-\end{tabular}
-\caption[Erklärung der Host Onboarding Authentifizierungsmethoden]{Erklärung der Host Onboarding Authentifizierungsmethoden.\cite{ivan-caduff-slack}}
+\begin{table}[H]
+	\rowcolors{2}{gray!25}{white}
+	\centering
+		\begin{tabular}{ | m{4cm} | m{12cm} | }
+			\hline
+			\rowcolor{gray!50}
+			\textbf{Typ} & 	\textbf{Beschreibung} \\
+			\hline
+			Closed Authentication & Basiert auf 802.1x. Kein Netzwerkzugriff möglich, bevor sich der Client mittels 802.1x authentifiziert. \\
+			\hline
+			Open Authentication & Basiert auf 802.1x. Temporärer Zugriff (PXE, DHCP) ist erlaubt bevor sich der Client mittels 802.1x authentifiziert. \\
+			\hline
+			Easy Connect & Basiert auf LDAP kombiniert mit MAC Address Bypass (MAB).\\
+			\hline
+			No Authentication & Statische Portkonfiguration. Dies ist geeignet für Geräte, die 802.1x nicht unterstützen. \\
+			\hline
+		\end{tabular}
+		\captionof{table}{Host Onboarding Methoden}
+\end{table}
 
 In der LAB Umgebung haben wir eine Kombination aus "No Authentication" und "Open Authentication gewählt. An Ports, die für das Gebäudemanagement vorgesehen sind, ist "No Authentication" konfiguriert und das VN "Gebaeudemgmt" ist statisch konfiguriert. Dies aus dem Grund, da solche Geräte 802.1x wahrscheinlich nicht unterstützen. 
 Alle anderen Ports sind mit "Open Authentication" konfiguriert. Ein Client der sich mit dem Netzwerk verbindet, kann also nur DHCP und PXE nutzen, bis er sich erfolgreich authentifiziert hat und anschliessend ins entsprechende VN verschoben wird.
@@ -1400,7 +1428,7 @@ Nachfolgend sind zwei Screenshots eines Wireshark Capture von einer erfolgreiche
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=15cm]{img/8021x/userauth-fail.png}
+	\includegraphics[width=15cm]{img/8021x/userauth-fail.PNG}
 	\caption{Wireshark Capture - Fehlgeschlagenes EAP}
 	\label{fig:windows-8021x-userauth-fail}
 \end{figure}
