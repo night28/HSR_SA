@@ -6,6 +6,60 @@ Es ist wichtig das DNA Center auf einem aktuellen Stand zu halten, da es noch eh
 Auf folgender Webseite veröffentlicht Cisco die Sicherheitslücken und erklärt gleich zu welcher Version das DNA Center geupdatet werden muss:
 https://tools.cisco.com/security/center/publicationListing.x?resourceIDs=233151\&apply=1\&totalbox=1\&pt0=Cisco\&cp0=233151\#~FilterByProduct
 
+\subsection{Design}
+Mit dem Design wird die physische Struktur bis auf die Gebäude genau hinterlegt. Zusätzlich werden Informationen hinterlegt, die das DNA Center während der Provisionierung auf die Netzwerkkomponenten schreibt. 
+
+\subsubsection{Site hinzufügen}
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Hierarchy} navigieren. 
+	\item \textit{Add Site} wählen. 
+	\item Im neuen Popup den gewünschten Namen eingeben.
+	\item \textit{Add} anwählen. 	
+\end{enumerate}
+
+\subsubsection{Gebäude zur Site hinzufügen}
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Hierarchy} navigieren. 
+	\item \textit{Add Site} wählen. 
+	\item Im neuen Popup den gewünschten Namen eingeben.
+	\item \textit{Building} anwählen
+	\item Adresse und/oder Koordinaten eingeben.
+	\item \textit{Add} anwählen.
+\end{enumerate}
+
+
+\subsubsection{Netzwerkdienste Konfigurieren}
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Settings} navigieren. 
+	\item \textit{Global} wählen. 
+	\item Bei \textit{AAA Server Network} und \textit{Client/Endpoint} anwählen.
+	\item Bei \textit{Network $\rightarrow$ ISE} wählen und entsprechende IP Adresse eingeben.
+	\item Bei \textit{Network $\rightarrow$ RADIUS} wählen und entsprechende IP Adresse eingeben.
+	\item Bei \textit{Client/Endpoint $\rightarrow$ Servers $\rightarrow$ ISE} wählen und entsprechende IP Adresse eingeben.
+	\item Bei \textit{Client/Endpoint $\rightarrow$ Protocol $\rightarrow$ RADIUS} wählen und entsprechende IP Adresse eingeben.
+	\item Bei \textit{DHCP Server} das \textbf{PLUS}-Zeichen anklicken und die IP Adresse des DHCP Servers (in diesem Fall Adresse des Infoblox) hinterlegen. 
+	\item \textit{SYSLOG Server}, \textit{SNMP Server} und \textit{Netflow Collector Server} können leer gelassen werden.
+	\item Bei \textit{Message of the day} eine für den Netzwerkadministrator aufstellende, aber nicht nervige Willkommensnachricht eingeben. 
+	\item Mit einem Klick auf \textit{Save} alles abspeichern.
+\end{enumerate}
+
+\subsubsection{Device Credentials hinterlegen}
+TODO
+
+\subsubsection{IP Address Pools hinzufügen}
+TODO
+
+\subsubsection{Netzwerkprofile zuweisen}
+Um den Geräten Templates zugeweisen zu können, müssen die Sites Profile zugewiesen werden.
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Profiles} navigieren. 
+	\item In der Zeile von \textit{Default Swichting Profile} auf \textit{0 Sites} klicken. 
+	\item Im neuen Popup alle Sites über das Multidropdown-Menü hinzufügen.
+	\item Mit \textit{Save} das Netzwerkprofil speichern.
+\end{enumerate}
+
+\subsection{Provision}
+TODO
 
 \subsection{Access Control Policies}
 
@@ -37,9 +91,6 @@ Das folgende Beispiel zeigt den Prozess der Authentifizierung und Zugriffskontro
 \end{enumerate}
 
 
-
-
-
 \subsubsection{Workflow}
 Workflow zur Konfiguration einer gruppenbasierten Zugriffskontrollrichtlinie.
 
@@ -62,26 +113,48 @@ Workflow zur Konfiguration einer gruppenbasierten Zugriffskontrollrichtlinie.
 
 \subsubsection{Erstellen eines virtuellen Netzwerkes}
 \begin{enumerate}
-	\item Wähle auf der DNA Center Homepage \textbf{Policy / Virtual Network}.
-	\item Klicke auf den \textbf{Add Button} und fülle die erforderlichen Informationen aus.
-	\item Klicke \textbf{Save}.
+	\item Wähle auf der DNA Center Homepage \textit{Policy $\rightarrow$ Virtual Network}.
+	\item Klicke auf den \textit{Add Button} und fülle die erforderlichen Informationen aus.
+	\item Klicke \textit{Save}.
 \end{enumerate}
 
 \subsubsection{Erstellen einer Skalierbaren Gruppe}
 \begin{enumerate}
-	\item Wähle auf der DNA Center Homepage \textbf{Policy / Registry / Scalable Groups}. Alle skalierbaren Gruppen, die auf dem Cisco ISE erstellt wurden, erscheinen in der Registry.
-	\item Klick \textbf{Add}. DNA Center öffnet eine direkte Verbindung zum Cisco ISE Server, wo die skalierbaren Gruppen hinzugefügt werden können.
+	\item Wähle auf der DNA Center Homepage \textit{Policy $\rightarrow$ Registry $\rightarrow$ Scalable Groups}. Alle skalierbaren Gruppen, die auf dem Cisco ISE erstellt wurden, erscheinen in der Registry.
+	\item Klick \textit{Add}. DNA Center öffnet eine direkte Verbindung zum Cisco ISE Server, wo die skalierbaren Gruppen hinzugefügt werden können.
 	\item Erstelle in Cisco ISE skalierbare Gruppen (in Cisco ISE Sicherheitsgruppen genannt).
 	\item Gehe zum DNA Center zurück. Nun sollte die erstellte skalierbare Gruppe angezeigt werden.
 \end{enumerate}
 
 \subsection{Erstellen eines Zugriffskontrollvertrages}
 \begin{enumerate}
-	\item Wähle auf der DNA Center Homepage \textbf{Policy / Contracts / Access Contracts}.
-	\item Klick \textbf{Add Contract}.
-	\item Im Dialogfenster des \textbf{Contract Editor} kann ein Namen und eine Beschreibung für den Vertrag erfasst werden.
-	\item Wähle in der Dropdown-Liste \textbf{Implicit Action} entweder \textbf{Deny} oder \textbf{Permit}.
-	\item Wähle aus der Dropdown-Lste in der Spalte \textbf{Port/Protocol} einen Port oder ein Protokoll aus. Hinweis: Wenn das DNA Center nicht über den Port oder das Protokoll verfügt welches benötigt wird, kann dies selbst erstellt werden. Klicke hierzu auf \textbf{Add Port/Protocol}, füge alle erforderlichen Informationen hinzu und klicke auf \textbf{Save}.
-	\item (Optional) Um weitere Regeln in den Vertrag aufzunehmen, klicke auf \textbf{Add} und wiederhole Schritt 5 und 6.
-	\item Klicke \textbf{Save}.
+	\item Wähle auf der DNA Center Homepage \textit{Policy $\rightarrow$ Contracts $\rightarrow$ Access Contracts}.
+	\item Klick \textit{Add Contract}.
+	\item Im Dialogfenster des \textit{Contract Editor} kann ein Namen und eine Beschreibung für den Vertrag erfasst werden.
+	\item Wähle in der Dropdown-Liste \textit{Implicit Action} entweder \textit{Deny} oder \textit{Permit}.
+	\item Wähle aus der Dropdown-Lste in der Spalte \textit{Port/Protocol} einen Port oder ein Protokoll aus. Hinweis: Wenn das DNA Center nicht über den Port oder das Protokoll verfügt welches benötigt wird, kann dies selbst erstellt werden. Klicke hierzu auf \textit{Add Port/Protocol}, füge alle erforderlichen Informationen hinzu und klicke auf \textit{Save}.
+	\item (Optional) Um weitere Regeln in den Vertrag aufzunehmen, klicke auf \textit{Add} und wiederhole Schritt 5 und 6.
+	\item Klicke \textit{Save}.
 \end{enumerate}
+
+\subsection{Provision}
+\subsubsection{Seed Device manuell konfigurieren}
+
+\subsubsection{LAN Automation durchführen}
+
+\subsubsection{Netzwerkkomponenten Provisionieren}
+
+\subsubsection{Netzwerkkomponenten Provisionieren}
+
+\subsubsection{Fabric erstellen}
+\paragraph{Border + CP festlegen}
+\paragraph{Intermediate Nodes festlegen}
+\paragraph{Edge Nodes festlegen}
+
+\subsubsection{Host Onboarding}
+
+\paragraph{Virtual Networks auswählen}
+
+\paragraph{Ports konfigurieren}
+
+
