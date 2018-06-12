@@ -59,9 +59,17 @@ Die obigen Informationen sind nur theoretisch und konnten in der Testumgebung ni
 \pagebreak
 
 
-\subsection{UC05: Benutzermobilität}
-Um diesen Use Case zu testen braucht es eine funktionierende Fabric, zwei Gebäude oder besser zwei Standorte und 802.1X Authentifizierung. Da dies leider nicht der Fall ist, konnte dieser Use Case nicht getestet werden. 
+\testpttb{UC05 Benutzermobilität}{Ein User ändert seinen Arbeitsplatz, das Gebäude oder den Arbeitsort. Er muss an allen Standorten dieselben Policies erhalten und auf dieselben Ressourcen zugreifen können.}{
+	\testptrow{1}{User ist in Gebäude 1 mit dem Netzwerk verbunden}{User ist mit dem Netzwerk verbunden}{User ist mit dem Netzwerk verbunden}{OK}
+	\testptrow{2}{User authentifiziert sich und erhält die korrekten Policies}{User erreicht nur die Ressourcen, die per Policy erlaubt sind}{User erreicht nur die Ressourcen, die per Policy erlaubt sind}{OK}
+	\testptrow{3}{User trennt Verbindung in Gebäude 1}{Verbindung ist getrennt}{Verbindung ist getrennt}{OK}
+	\testptrow{4}{User verbindet sich im Gebäude 2}{User ist mit dem Netzwerk verbunden}{User ist mit dem Netzwerk verbunden}{OK}
+	\testptrow{5}{User authentifiziert sich}{User ist authentifiziert}{User ist authentifiziert}{OK}
+	\testptrow{6}{User erhält die korrekten Policies}{User erreicht dieselben Ressourcen wie zuvor in Gebäude 1}{User erreicht dieselben Ressourcen wie zuvor n Gebäude 1}{OK}
+}
 
+\subsubsection{Zusammenfassung UC05}
+Benutzermobilität funktioniert in einer vom DNA Center verwalteten sehr gut. In unseren Tests wurden sogar bestehende Sessions vom alten an den neuen Standort übernommen. 
 \pagebreak
 \subsection{UC06: Degradation}
 In diesem Use Case wird beschrieben, wie sich das Netzwerk verhält, wenn einzelne Komponenten ausfallen. In untenstehender Tabelle ist zu sehen, was für einen Impact der Ausfall der einzelnen Komponenten hat. Die Informationen sind allerdings nur theoretisch und konnten in der Lab Umbegung nicht getestet werden.
