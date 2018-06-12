@@ -57,7 +57,7 @@ Dieses Campus Fabric besteht aus folgenden Elementen: \cite{webinar-sda-troubles
 Der SDA Fabric Control Plane basiert auf der LISP Map Server (MS) und LISP Map Resolver (MR), welche auf demselben Node kombiniert sind. Die Funktion des Control Planes wird am Border Node oder Dedicated Node instanziiert. Der Control Plane Node ermöglicht folgende Funktionen: \cite{sda-designguide}
 \begin{itemize}	
 	\item Host Tracking Database (HTDB): Die HTDB ist ein zentrales Repository von EID zu Fabric Edge Nodes Verbindungen.
-	\item Map Server (MS): Der LISP MS wird verwendet, um die HTDB mit Registrierungsnachrichten von Fabric Edge Geräten zu füllen.
+	\item Map Server (MS): Der LISP MS wird verwendet, um die HTDB mit Registrierungs-nachrichten von Fabric Edge Geräten zu füllen.
 	\item Map Resolver (MR): Der LISP MR wird verwendet, um auf Map Abfragen von Fabric Edge Geräten zu reagieren, die RLOC Mapping Informationen für Ziel EIDs anfordern.
 \end{itemize}
 
@@ -279,9 +279,6 @@ RFC 7348 definiert die Verwendung von VXLAN als eine Möglichkeit, ein L2 Netzwe
 Das SDA Fabric verwendet die VXLAN Data Plane, um das vollständige ursprünglichen L2 Frame bereitzustellen und verwendet zusätzlich LISP als Control Plane, um die Endpunkt zu VTEP Zuordnungen aufzulösen. Das SDA Fabric ersetzt 16 der reservierten Bits im VXLAN Header, um bis zu 64'000 SGTs zu transportieren. Dabei wird ein modifiziertes VXLAN-GPO-Format verwendet.
 
 Der VNI wird einer virtuellen Routing- und Weiterleitungsinstanz für L3 Overlays zugeordnet, während ein L2 VNI einer VLAN Broadcastdomäne zugeordnet wird. Beide bieten den Mechanismus zur Isolierung von Data und Control Plane für jedes einzelne virtuelle Netzwerk. Die SGT trägt Gruppenmitgliedschaftsinformationen von Benutzern und stellt eine Data Plane Segmentierung innerhalb des virtualisierten Netzwerks bereit. \cite{sda-designguide}
-
-\subsection{Slack}
-Slack ist ein webbasierter Instant-Messaging-Dienst zur Kommunikation innerhalb von Arbeitsgruppen. Slack erlaubt, Nachrichten auszutauschen, mit Einzelpersonen oder in einer Gruppe zu chatten sowie gemeinsam Dokumente zu bearbeiten. Andere Online Dienste wie Dropbox, Google Drive oder GitHub lassen sich in Slack integrieren.
 
 \subsection{Infoblox}
 Infoblox ist einer der führenden Hersteller für DNS, DHCP, Trivial File Transfer Protocol (TFTP) und IPAM. Die Integration von Infoblox ermöglicht dem DNA Center die IPAM Funktionen von Infoblox zu nutzen. Dafür werden beispielsweise die IP-Adresspools zwischen dem DNA Center und Infoblox synchronisiert. Mit dieser Integration können IP-Adresszuweisungen automatisiert werden, was eine richtlinienbasierte Bereitstellung in einer einzigen Operation ermöglicht und so die betriebliche Effizienz verbessert. \\

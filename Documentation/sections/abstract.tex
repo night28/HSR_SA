@@ -4,7 +4,7 @@
 Ziel dieser Studienarbeit war die Evaluation des Cisco Digital Network Architecture (DNA) Center, der Software-Defined Network (SDN) Lösung von Cisco, für die Führungsunterstützungsbasis (FUB) der Schweizer Armee. Das DNA Center ist eine Softwarelösung zur Netzwerkautomatisierung. Diese vereinfacht und automatisiert das Deployment und Management einer Campus Netzwerk Umgebung mit Hilfe von Technologien wie Virtual Extensible LAN (VXLAN) und Locator/ID Separation Protocol (LISP). Dank der zentralen Verwaltung der Infrastruktur, wird die Qualität, sowie die Sicherheit der Netzwerkumgebung stark erhöht.\\
 Für die FUB sollte die Lösung unter anderem folgende Anforderungen abdecken:
 \begin{itemize}
-	\item Definierung von Benutzer- und Geräteprofilen
+	\item Definierung von Benutzerprofilen
 	\item Reporting der Netzwerkaktivitäten
 	\item Benutzermobilität
 	\item Degradation der Infrastruktur
@@ -13,12 +13,8 @@ Für die FUB sollte die Lösung unter anderem folgende Anforderungen abdecken:
 \end{itemize}
 
 \subsection{Vorgehen}
-Der erste Teil der Arbeit war die Installation und Konfiguration des DNA Centers, die Anbindung an externe Systeme und das Deployment einer Fabric in einer Testumgebung.\\
-
-Die erste Inbetriebnahme hat einigen Aufwand gekostet, konnte aber schlussendlich erfolgreich abgeschlossen werden. Viele Schritte auf diesem Weg waren nur teilweise automatisiert und im aktuellen Release ist noch manueller Aufwand nötig. Auf diesem Weg konnten aber viele neue Erkenntnisse gewonnen werden, die ohne manuellen Aufwand nicht möglich gewesen wären. Als Beispiel kann hier die LAN Automation aufgeführt werden. Mit Hilfe dieser sollten sich Netzwerkgeräte automatisiert mittels Plug and Play (PnP) in Betrieb nehmen und konfigurieren lassen. Dieser Prozess erwies sich als komplex, war aber mehrheitlich dokumentiert. \\
-
+Der erste Teil der Arbeit beinhaltete die Installation und Konfiguration des DNA Centers, die Anbindung an externe Systeme und das Deployment einer Fabric in einer Testumgebung. Die erste Inbetriebnahme hat einigen Aufwand gekostet, konnte aber schlussendlich erfolgreich abgeschlossen werden. Viele Schritte auf diesem Weg waren nur teilweise automatisiert und im aktuellen Release ist noch manueller Aufwand nötig. Auf diesem Weg konnten aber viele neue Erkenntnisse gewonnen werden, die ohne manuellen Aufwand nicht möglich gewesen wären. Als Beispiel kann hier die LAN Automation aufgeführt werden. Mit Hilfe dieser sollten sich Netzwerkgeräte automatisiert mittels Plug and Play (PnP) in Betrieb nehmen und konfigurieren lassen. Dieser Prozess erwies sich als komplex, war aber mehrheitlich dokumentiert. \\
 In einem zweiten Schritt ging es darum, Benutzer- und Geräteprofile zu definieren, sowie deren Zugriffe zentral zu verwalten. Des Weiteren sollte mit DNA Assurance eine proaktive Überwachung, Fehlerbehebung und Optimierung des Netzwerkes sichergestellt werden. Mit diesen Informationen sollen wöchentliche Reports über den Status des Netzwerks per E-Mail versendet werden.
 
 \subsection{Fazit}
-Abschliessend kann gesagt werden, dass für die Installation und Konfiguration des DNA Centers genug Zeit eingerechnet werden muss. Zudem sollte im optimalen Fall ein Green Field vorliegen, da zur Zeit kein bestehendes Netzwerk ohne Unterbrüche migriert werden kann. Bei der Installation sollten die empfohlenen Softwareversionen vom ISE und auch der Switches genauestens eingehalten werden, da sonst die volle Funktionalität des DNA Centers nicht gewährleistet werden kann. \\
-Das DNA Center hat grosses Potenzial. Es vereinfacht die Umsetzung und Inbetriebnahme des Campus Netzwerkes ernorm und macht es sicherer. Insbesondere duch die API kann vieles automatisiert werden und die Anbindung an bestehende Systeme gestaltet sich einfach.
+Abschliessend kann gesagt werden, dass für die Installation und Konfiguration des DNA Centers genug Zeit eingerechnet werden muss. Zudem sollte im optimalen Fall ein Green Field vorliegen, da zur Zeit kein bestehendes Netzwerk ohne Unterbrüche migriert werden kann. Bei der Installation sollten die empfohlenen Softwareversionen vom ISE und auch der Switches genauestens eingehalten werden, da sonst die volle Funktionalität des DNA Centers nicht gewährleistet werden kann. Das DNA Center hat grosses Potenzial. Es vereinfacht die Umsetzung und Inbetriebnahme des Campus Netzwerkes ernorm und macht es sicherer. Insbesondere duch die API kann vieles automatisiert werden und die Anbindung an bestehende Systeme gestaltet sich einfach.
