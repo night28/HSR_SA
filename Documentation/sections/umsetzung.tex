@@ -26,6 +26,15 @@ Folgende zentrale Überlegungen sind eingeflossen:
 
 Unsere Netzwerk Architektur besteht aus drei Layer. Weitere Informationen über die Funktion des Fabric Border, Fabric Intermediate und Fabric Edge sind im Kapitel der Technologien beschrieben (siehe Kapitel \ref{CampusFabric} Campus Fabric).
 
+\subsubsection{Empfehlungen Cisco}
+Unsere ursprüngliche Architektur wurde an die Empfehlungen von Cisco angepasst. Die Border sind wie in der Abbildung oben ersichtlich nun Catalyst 3850 und die Catalyst 9300 kommen erst als Edge zum Zug.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\linewidth]{img/SDA-switchingplatformanddeploymentcapabilities.png}\\[1px]
+	\caption{SDA Switching Platform and Deployment Capabilities \cite{sda-designguide}}
+	\label{fig:SDA Switching Platform and Deployment Capabilities}
+\end{figure}
+
 \subsection{Netzwerkarchitekturen Vergleich}
 Hauptunterschiede zwischen der klassischen Netzwerkarchitektur und der "Modernen" Software-Defined Access Architektur. 
 
@@ -39,7 +48,7 @@ Hauptunterschiede zwischen der klassischen Netzwerkarchitektur und der "Modernen
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{img/LabNetworkArchitecture_Vergleich.png}\\[1px]
-	\caption{Netzwerk Architektur Vergleich}
+	\caption{Netzwerk Architektur Vergleich \cite{sda-designguide}}
 	\label{fig:LabNetworkArchitectureVergleich}
 \end{figure}
 
@@ -49,28 +58,28 @@ Nachfolgend werden die aktuell maximalen Skalierungen des DNA Centers, sowie der
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{img/MaximumScale-HACluster.png}\\[1px]
-	\caption{DNA Center Maximum Scale Constraints HA Cluster}
+	\caption{DNA Center Maximum Scale Constraints HA Cluster \cite{sda-designguide}}
 	\label{fig:Maximum Scale HACluster}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{img/MaximumScale-Fabric.png}\\[1px]
-	\caption{DNA Center Maximum Scale Constraints Fabric}
+	\caption{DNA Center Maximum Scale Constraints Fabric \cite{sda-designguide}}
 	\label{fig:Maximum Scale Fabric}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{img/MaximumScale-EdgeNode.png}\\[1px]
-	\caption{SDA Edge Node Scale Constraints}
+	\caption{SDA Edge Node Scale Constraints \cite{sda-designguide}}
 	\label{fig:SDA Edge Node Scale Constraints}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\linewidth]{img/MaximumScale-BorderNode.png}\\[1px]
-	\caption{SDA Border Node Scale Constraints}
+	\caption{SDA Border Node Scale Constraints \cite{sda-designguide}}
 	\label{fig:SDA Border Node Scale Constraints}
 \end{figure}
 
