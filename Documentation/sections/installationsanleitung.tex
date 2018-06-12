@@ -9,66 +9,11 @@ Das DNA Center kann auf zwei verschiedene Modi aufgesetzt werden. Einerseits als
 \paragraph{Schritt 1}
 \label{installguide-cimc-step1}
 ~\\
-Um die Installation über KVM durchzuführen zu können, muss zuerst Cisco CIMC aktiviert werden. Dafür ist es nötig einen Bildschirm, Maus und Tastatur direkt an der Appliance anzuschliessen (Siehe: \cite{cisco-dna-installation-guide-1-2-chapter-install}, \textit{Figure 2. DNA Center Rear Panel LEDs}).
+Um die Installation über KVM durchzuführen zu können, muss zuerst Cisco IMC aktiviert werden. In unserem Fall macht das Cisco IMC DHCP. Die IP Adresse wird über die Leases auf dem DHCP Server ermittelt. (Siehe: \cite{cisco-dna-installation-guide-1-2-chapter-install}, \textit{Figure 2. DNA Center Rear Panel LEDs}). 
 
 \paragraph{Schritt 2}
 ~\\
-Nebst der in Schritt 1 [\ref{installguide-cimc-step1}] aufgeführten Peripherie muss das Stromkabel angeschlossen sein und die Appliance über den Einschaltknopf auf der Vorderseite eingeschaltet werden.
-
-\paragraph{Schritt 3}
-~\\
-Sobald der Bootscreen erscheint, drücken Sie die Taste F8, um in die Cisco IMC Konfiguration zu gelangen. 
-
-
-\paragraph{Schritt 4}
-~\\
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=9cm]{img/installguide/pic_1.jpg}
-	\caption{Cisco DNA Center Appliance Boot Screen. Quelle: \cite{cisco-dna-installation-guide-1-2-chapter-install}}
-	\label{fig:installguide-dna-center-install-step-1}
-\end{figure} 
-
-\paragraph{Schritt 5}
-~\\
-Anschliessend muss das Passwort geändert werden. Das Standardpasswort lautet \textit{password}. Folgen Sie den Anweisungen.
-
-\paragraph{Schritt 6}
-~\\
-In Cisco IMC Konfigurationsformular sind folgende Angaben zu hinterlegen:
-\begin{itemize}
-	\item NIC Mode - Wähle \textbf{Dedicated}
-	\item IP (Basic) - Wähle \textbf{IPV4}
-	\item CIMC IP - Die gewünschte IP 
-	\item Prefix/Subnet - Die entsprechende Subnetzmaske für die gewählte CIMC IP
-	\item Gateway - Das gewünschte Gateway
-	\item Pref DNS Server - Der gewünschte DNS Server
-	\item NIC Redundancy - Wähle \textbf{None}
-\end{itemize}
-
-\paragraph{Schritt 7}
-~\\
-Drücken Sie F1 um in die \textit{Additional settings} zu gelangen. In dieser Ansicht sind folgende Angaben zu hinterlegen:
-\begin{itemize}
-	\item Hostname - Hostname für die CIMC dieser Appliance
-	\item Dynamic DNS - Checkbox abwählen, um das Feature zu deaktivieren.
-	\item Factory Defaults - Checkbox abwählen, um das Feature zu deaktivieren.
-	\item Default User(Basic) Defaults - Leer lassen, damit das Passwort auf dem Standard bleibt.
-	\item Port Properties - Keine Änderung
-	\item Port Profile - Checkbox abwählen, um das Feature zu deaktivieren. 
-\end{itemize}
-
-\paragraph{Schritt 8}
-~\\
-F10 drücken, um die Einstellungen zu speichern.
-
-\paragraph{Schritt 9}
-~\\
-Escape drücken,  um den Server neu zu starten.
-
-\paragraph{Schritt 10}
-~\\
-Anschliessend greifen Sie mit einem Computer, der im oben gewählten Subnet angeschlossen ist, mit einen modernen Webbrowser (z.B. Firefox Version 60) auf den CIMC zu (\textit{https://CIMC\_IP\_ADDRESS}) und loggen Sie sich mit den festgelegten Anmeldedaten ein. 
+Anschliessend greifen Sie mit einem Computer, der im oben gewählten Subnet angeschlossen ist, mit einen modernen Webbrowser (z.B. Firefox Version 60) auf den CIMC zu (\textit{https://CIMC\_IP\_ADDRESS}) und loggen Sie sich mit den Standard Anmeldedaten (Benutzername: admin, Passwort: password) ein. 
 
 \subsection{Konfiguration des Master Nodes}
 \paragraph{Schritt 1}
@@ -115,7 +60,7 @@ In diesem Schritt des Wizards werden alle User Account Einstellungen festgelegt.
 	\label{fig:installguide-dna-center-install-step-13}
 \end{figure}
 
-\paragraph{Schritt 6}
+\paragraph{Schritt 7}
 ~\\
 In diesem Schritt wird der gewünschte NTP Server eingegeben. In unserem Fall \url{pool.ntp.org}.
 \begin{figure}[H]
@@ -125,7 +70,7 @@ In diesem Schritt wird der gewünschte NTP Server eingegeben. In unserem Fall \u
 	\label{fig:installguide-dna-center-install-step-14}
 \end{figure} 
 
-\paragraph{Schritt 7}
+\paragraph{Schritt 8}
 ~\\
 Das DNA Center benötigt für das interne Netzwerk ein Subnet. Geben Sie das entsprechende Subnet ein.
 \begin{figure}[H]
@@ -135,11 +80,11 @@ Das DNA Center benötigt für das interne Netzwerk ein Subnet. Geben Sie das ent
 	\label{fig:installguide-dna-center-install-step-16}
 \end{figure} 
 
-\paragraph{Schritt 8}
+\paragraph{Schritt 9}
 ~\\
 Schliessen Sie den Wizard ab in dem Sie im Dialog entweder \textit{next} oder \textit{proceed} anwählen.
 
-\paragraph{Schritt 9}
+\paragraph{Schritt 10}
 ~\\
 Nun wird das DNA Center aufgesetzt. Dieser Prozess dauert mehrere Stunden. 
 
