@@ -49,12 +49,36 @@ Eine sinnvolle Reporting Funktion ist daher mit den aktuell verfügbaren APIs de
 \subsection{UC05: Benutzermobilität}
 Um diesen Use Case zu testen braucht es eine funktionierende Fabric, zwei Gebäude oder besser zwei Standorte und 802.1X Authentifizierung. Da dies leider nicht der Fall ist, konnte dieser Use Case nicht getestet werden. 
 
-
-
+\pagebreak
 \subsection{UC06: Degradation}
-In der Main Success Story dieses Use Cases steht "1. Netzwerk funktioniert einwandfrei.". Da dies zu diesem Zeitpunkt noch nicht der Fall ist, konnte dieser Use Case nicht getestet werden. 
+In diesem Use Case wird beschrieben, wie sich das Netzwerk verhält, wenn einzelne Komponenten ausfallen. In untenstehender Tabelle ist zu sehen, was für einen Impact der Ausfall der einzelnen Komponenten hat. Die Informationen sind allerdings nur theoretisch und konnten in der Lab Umbegung nicht getestet werden.
+\\
 
-
+\rowcolors{2}{gray!25}{white}
+\begin{longtable}{| m{2.5cm} | m{21.5cm} |}
+		\hline
+		\textbf{Ausfall Gerät}  & \textbf{Impact}        \\
+		\hline
+		Edge Node  & Alle Clients an diesem Device verlieren die Konnektivität.  \\ 
+		\hline
+		Intermediate Node & Kein Impact solange alle Edge Devices noch einen Pfad zum Border und somit zu den anderen Edge Nodes haben \\ 
+		\hline
+		Border Node & Kein Impact, solange ein weiterer Border verhanden ist. Falls nicht, verliert die Fabric die Kommunikation zu Geräten ausserhalb der Fabric \\
+		\hline
+		Control Plane & Kein Impact, solange eine weitere Control Plane vorhanden ist. Falls nicht, können die Edge Nodes den RLOC von Clients nicht mehr ermitteln und müssen auf den eigenen Cache zurückgreifen. Die Kommunikation innerhalb und ausserhalb der Fabric ist also eingeschränkt. Sobald die TTL der Cache Einträge abgelaufen ist, ist nur noch Kommunikation zwischen Clients am gleichen Edge Node möglich. \\
+		\hline
+		DNA Center & Ein Ausfall des DNA Centers hat keinen direkten Einfluss auf das Netzwerk. Es können allerdings keine Anpassungen mehr gemacht werden, die Assurance Daten stehen nicht zur Verfügung und werden nicht mehr erfasst. \\
+		\hline
+		ISE & Fällt der ISE aus und es ist kein weiterer ISE vorhanden, können sich Benutzer nicht mehr am Netzwerk authentifizieren und die Policies sind nicht mehr verfügbar. Das heisst, der Netzwerkbetrieb ist stark eingeschränkt oder gar komplett unterbrochen. Es gibt daher die Möglichkeit, ein "Notfall VLAN" zu definieren, über welches die Clients in diesem Fall weiterhin kommunizieren könnten. \\
+		\hline
+		Infoblox & Fällt Infoblox aus, können keine neuen IP Pools angelegt werden. Des Weiteren funktioniert DNS nicht mehr, sofern Infoblox der einzige DNS Server war. Dasselbe gilt auch für DHCP. \\
+		\hline
+		Kabelunter- bruch & Ein Kabelunterbruch zwischen zwei Netzwerkkomponenten in der Fabric hat keinen Impact auf den Betrieb, sofern alle Edge Nodes über Pfade zu den anderen Edge Nodes und dem Border verfügen.\\
+		\hline
+	\caption{UC06: Testprotokoll Degradation}
+	\label{tab:UC06_Testprotokoll}
+\end{longtable}
+\pagebreak
 
 \subsection{UC07: Integration von nicht Fabric Komponenten}
 Andere Use Cases haben eine höhere Priorisierung erhalten. Aus Zeitmangel konnte dieser Use Case nicht behandelt werden. Insbesondere, weil nebst einer funktionierenden Fabric auch ein Mapping zwischen den SGT im Legacy Netzwerk konfiguriert hätte werden müssen. 
