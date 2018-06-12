@@ -66,3 +66,11 @@ Weil das Update für den DNA Server nicht geklappt haben:
 - tftpd-hap installiert auf OrangePi
 - (rest siehe Screenshots)
 - Installation via tftp war erfolgreich
+
+
+#Kategorien für Zeitauswertung
+- Dokumentation
+- Research
+- Initiale Inbetriebnahme Labumgebung
+- UseCases
+- Meetings

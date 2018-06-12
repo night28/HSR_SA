@@ -4,7 +4,7 @@
 Es ist wichtig das DNA Center auf einem aktuellen Stand zu halten, da es noch eher in einem frühen Release steckt.
 
 Auf folgender Webseite veröffentlicht Cisco die Sicherheitslücken und erklärt gleich zu welcher Version das DNA Center geupdatet werden muss:
-https://tools.cisco.com/security/center/publicationListing.x?resourceIDs=233151\&apply=1\&totalbox=1\&pt0=Cisco\&cp0=233151\#~FilterByProduct
+\url{https://tools.cisco.com/security/center/publicationListing.x?resourceIDs=233151\&apply=1\&totalbox=1\&pt0=Cisco\&cp0=233151\#~FilterByProduct}
 
 \subsection{Design}
 Mit dem Design wird die physische Struktur bis auf die Gebäude genau hinterlegt. Zusätzlich werden Informationen hinterlegt, die das DNA Center während der Provisionierung auf die Netzwerkkomponenten schreibt. 
@@ -39,15 +39,32 @@ Mit dem Design wird die physische Struktur bis auf die Gebäude genau hinterlegt
 	\item Bei \textit{Client/Endpoint $\rightarrow$ Protocol $\rightarrow$ RADIUS} wählen und entsprechende IP Adresse eingeben.
 	\item Bei \textit{DHCP Server} das \textbf{PLUS}-Zeichen anklicken und die IP Adresse des DHCP Servers (in diesem Fall Adresse des Infoblox) hinterlegen. 
 	\item \textit{SYSLOG Server}, \textit{SNMP Server} und \textit{Netflow Collector Server} können leer gelassen werden.
-	\item Bei \textit{Message of the day} eine für den Netzwerkadministrator aufstellende, aber nicht nervige Willkommensnachricht eingeben. 
-	\item Mit einem Klick auf \textit{Save} alles abspeichern.
+	\item Bei \textit{Message of the day} ist eine für den Netzwerkadministrator aufstellende, aber nicht nervige Willkommensnachricht einzugeben. 
+	\item Mit einem Klick auf \textit{Save} ist alles abzuspeichern.
 \end{enumerate}
 
 \subsubsection{Device Credentials hinterlegen}
-TODO
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Settings $\rightarrow$ Device Credentials} navigieren. 
+	\item \textit{Add} wählen. 
+	\item Entsprechende(r) \textit{Name}, \textit{Username}, \textit{Password} und \textit{Enable Password} eingeben.
+	\item Mit einem Klick auf \textit{Save} alles abspeichern.
+\end{enumerate}
 
 \subsubsection{IP Address Pools hinzufügen}
-TODO
+Das DNA Center benötigt verschiedene IP Adressen Pools. 
+\begin{itemize}
+	\item 1 x /23 (mindestens empfohlen) für die LAN Automation
+	\item 1 x /24 (mindestens empfohlen) für die Border
+	\item Für jedes VN ein Pool. Die Grösse ist abhängig von den Anforderungen.
+\end{itemize}
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Address Pools} navigieren. 
+	\item \textit{Add IP Pool} wählen. 
+	\item Nun gilt es einen IP Pool Name, ein IP Subnet, ein CIDR Präfix, eine Gateway IP Adresse einzugeben.
+	\item Der korrekte DHCP Server und DNS Server ist per Dropdown auszuwählen.
+	\item Mit einem Klick auf \textit{Save} alles abspeichern.
+\end{enumerate}
 
 \subsubsection{Netzwerkprofile zuweisen}
 Um den Geräten Templates zugeweisen zu können, müssen die Sites Profile zugewiesen werden.
@@ -58,12 +75,9 @@ Um den Geräten Templates zugeweisen zu können, müssen die Sites Profile zugew
 	\item Mit \textit{Save} das Netzwerkprofil speichern.
 \end{enumerate}
 
-\subsection{Provision}
-TODO
-
 \subsection{Access Control Policies}
 
-\paragraph{Virtual Network}
+\subsubsection{Virtual Network}
 Virtuelle Netzwerke sind isolierte Routing- und Switching-Umgebungen. Standardmässig können Hosts die in seperaten virtuellen Netzwerken existieren nicht miteinander kommunizieren. Mit Hilfe von virtuellen Netzwerken kann das physische Netzwerk in mehrere logische Netzwerk geteilt werden. Ein typischer Anwendungsfall ist die Segmentierung von Gästen, Mitarbeitern und Kontraktor in getrennte Gruppen, so dass der Zugriff nur auf Teile des Netzwerkes erlaubt oder eingeschränkt werden kann. Die verschiedenen Arten von Netzwerken sind:
 
 \begin{itemize}
@@ -72,14 +86,31 @@ Virtuelle Netzwerke sind isolierte Routing- und Switching-Umgebungen. Standardm�
 	\item Kontraktor-Netzwerk: Netzwerkverbindung, die es den Benutzern ermöglicht, auf das Internet und auf unternehmensspezifische Anwendungen innerhalb des Unternehmensnetzwerks zuzugreifen. Ein virtuelles Netzwerk kann sich über mehrere Standorte und Netzwerkdomänen (Wireless, Campus und WAN) erstrecken.
 \end{itemize}
 
+\subsubsection{Virtual Network hinzufügen}
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Virtual Network} navigieren. 
+	\item \textbf{PLUS} Zeichen anwählen.
+	\item Der gewünschte Virtual Network Name ist einzugeben.
+	\item Die gewünschten Scalable Groups können nun der Drap\&Drop in das Virtual Network gezogen werden.
+	\item Die Ansicht wird mit \textit{Save} gespeichert.
+\end{enumerate}
 
-\paragraph{Scalable Group}
+\subsubsection{Scalable Group}
 Skalierbare Gruppen umfassen eine Gruppierung von Benutzern, Endgeräten oder Ressourcen, die dieselben Anforderungen an die Zugriffskontrolle stellen. Diese Gruppen (in Cisco ISE als Sicherheitsgruppen oder SGs bekannt) werden auf dem Cisco ISE definiert. Eine skalierbare Gruppe kann nur ein Element (ein Benutzer, ein Endgerät oder eine Ressource) enthalten.
 
-\paragraph{Access Control Contract}
+\paragraph{Scalable Group hinzufügen}
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Registry $\rightarrow$ Scalable Groups} navigieren. 
+	\item \textit{Add Groups} wählen.
+	\item Bei bedarf ist ein Login in Cisco ISE erforderlich.
+	\item \textit{+ Add} anklicken.
+	\item Im Formular ist Name, Icon und Beschreibung im neuen Formular einzugeben und mit \textit{Submit} zu speichern. 
+\end{enumerate}
+
+\subsubsection{Access Control Contract}
 Ein Zugriffsvertrag ist eine Security Group Access Control List (SGACL). Sie definiert das Regelwerk, dass die Netzwerkinteraktion zwischen Quelle und Ziel in einer Zugriffskontrollrichtlinie regelt.
 
-\paragraph{Group-based Access Control Policy}
+\subsubsection{Group-based Access Control Policy}
 Gruppenbasierte Zugriffskontrollrichtlinien sind Security Group Access Control Lists (SGACLs). DNA Center hat den Cisco ISE integriert, um den Prozess der Erstellung und Pflege von SGACLs zu vereinfachen. Während der initialen Integration von DNA Center und Cisco ISE werden skalierbare Gruppen und Richtlinien, die in Cisco ISE vorhanden sind, an das DNA Center weitergegeben und in das standardmäßige virtuelle Netzwerk eingefügt.
 
 Das folgende Beispiel zeigt den Prozess der Authentifizierung und Zugriffskontrolle, den ein Benutzer durchläuft, wenn er sich in das Netzwerk einloggt:
@@ -89,7 +120,6 @@ Das folgende Beispiel zeigt den Prozess der Authentifizierung und Zugriffskontro
 	\item Cisco ISE authentifiziert den Benutzer und lädt die SGACLs auf den Port, mit dem der Benutzer verbunden ist.
 	\item  Dem Benutzer wird der Zugang zu bestimmten Benutzern oder Geräten (Servern) auf der Grundlage des in die SGACL gewährt.
 \end{enumerate}
-
 
 \subsubsection{Workflow}
 Workflow zur Konfiguration einer gruppenbasierten Zugriffskontrollrichtlinie.
@@ -111,22 +141,7 @@ Workflow zur Konfiguration einer gruppenbasierten Zugriffskontrollrichtlinie.
 	\label{tab:Workflow zur Erstellung der Access Control Policies}
 \end{table}
 
-\subsubsection{Erstellen eines virtuellen Netzwerkes}
-\begin{enumerate}
-	\item Wähle auf der DNA Center Homepage \textit{Policy $\rightarrow$ Virtual Network}.
-	\item Klicke auf den \textit{Add Button} und fülle die erforderlichen Informationen aus.
-	\item Klicke \textit{Save}.
-\end{enumerate}
-
-\subsubsection{Erstellen einer Skalierbaren Gruppe}
-\begin{enumerate}
-	\item Wähle auf der DNA Center Homepage \textit{Policy $\rightarrow$ Registry $\rightarrow$ Scalable Groups}. Alle skalierbaren Gruppen, die auf dem Cisco ISE erstellt wurden, erscheinen in der Registry.
-	\item Klick \textit{Add}. DNA Center öffnet eine direkte Verbindung zum Cisco ISE Server, wo die skalierbaren Gruppen hinzugefügt werden können.
-	\item Erstelle in Cisco ISE skalierbare Gruppen (in Cisco ISE Sicherheitsgruppen genannt).
-	\item Gehe zum DNA Center zurück. Nun sollte die erstellte skalierbare Gruppe angezeigt werden.
-\end{enumerate}
-
-\subsection{Erstellen eines Zugriffskontrollvertrages}
+\subsection{Erstellen einer Group-Based Access Control (Fabric)}
 \begin{enumerate}
 	\item Wähle auf der DNA Center Homepage \textit{Policy $\rightarrow$ Contracts $\rightarrow$ Access Contracts}.
 	\item Klick \textit{Add Contract}.
