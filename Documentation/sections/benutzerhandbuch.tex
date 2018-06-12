@@ -169,7 +169,23 @@ Workflow zur Konfiguration einer gruppenbasierten Zugriffskontrollrichtlinie.
 \subsubsection{Host Onboarding}
 
 \paragraph{Virtual Networks auswählen}
+Um ein Virtual Network verwenden zu können, muss dies in der entsprechenden Fabric zuerst aktiviert und ein IP zugewiesen werden. 
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Provision $\rightarrow$ Fabric $\rightarrow$ FABRIC\_NAME $\rightarrow$ Host Onboarding} navigieren. 
+	\item Im Abschnitt werden nun alle gewünschten \textit{Virtual Networks} ausgewählt. 
+	\item Im neuen Popup wird der gewünschte IP Pool ausgewählt. 
+	\item Der Dialog wird mit \textit{Update} geschlossen.
+\end{enumerate}
+
 
 \paragraph{Ports konfigurieren}
+Für jeden Port, der nicht bereits für die Konnektivität zwischen den Fabric Nodes verwendet wird, kann ein Addresspool, eine Gruppe und eine Authentifizierungsmethode (Siehe: \ref{authentifizierungsmethoden}) definiert werden. 
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Provision $\rightarrow$ Fabric $\rightarrow$ FABRIC\_NAME $\rightarrow$ Host Onboarding} navigieren. 
+	\item Im \textit{Select Port Assignment} werden die zu konfigurierende Ports \textit{Virtual Networks} ausgewählt. 
+	\item Für die ausgewählten Ports wird nun ein \textit{Address Pool}, \textit{Scalable Group}, \textit{Voice Pool} und eine Authentifizierungsmethode gewählt. 
+	\item Die Änderungen werden mit einem Klick auf \textit{Save} gespeichert. 
+\end{enumerate}
+
 
 
