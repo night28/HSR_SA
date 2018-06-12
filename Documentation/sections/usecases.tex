@@ -4,37 +4,34 @@
 \subsubsection{UC01: Definierung von Benutzer und Geräteprofilen}
 Ein Administrator definiert die Profile für Benutzer, Gruppen oder Geräte, sodass diese auf alle nötigen Ressourcen zugreifen können, unberechtigter Zugriff aber verhindert wird.
 
-\subsubsection{UC02: Gastzugang}
-Ein Gast (unbekannter User mit unbekanntem Gerät) steckt sich im Netzwerk an. Er erhält Zugriff auf alle definierten Ressourcen. Im einfachsten Fall einfach Internetzugriff.
-
-\subsubsection{UC03: Backup and Restore DNA Center}
+\subsubsection{UC02: Backup and Restore DNA Center}
 Auf Grund eines Problems des DNA-Centers muss die Appliance ausgetauscht oder auf einen vorherigen Konfigurationsstand zurückgesetzt werden. Um eine Neukonfiguration des Systems zu verhindern, wird eine zuvor gesicherte Konfiguration wiederhergestellt.
 
-\subsubsection{UC04: Reporting}
+\subsubsection{UC03: Reporting}
 Es werden regelmässig Reports über relevante Netzwerkaktivitäten erstellt und den zuständigen Personen via Mail und/oder Slack zugestellt.
 
-\subsubsection{UC05: Hardware Ersatz}
+\subsubsection{UC04: Hardware Ersatz}
 Ein Switch muss auf Grund eines Hardwaredefekts oder ähnlichen Gründen ausgetauscht werden.
 
-\subsubsection{UC06: Benutzermobilität}
+\subsubsection{UC05: Benutzermobilität}
 Ein User ändert seinen Arbeitsplatz, das Gebäude oder den Arbeitsort. Er muss an allen Standorten dieselben Policies erhalten und auf dieselben Ressourcen zugreifen können.
 
-\subsubsection{UC07: Degradation}
+\subsubsection{UC06: Degradation}
 Bearbeitung von mögliche Degradations-Szenarios mit den entsprechenden Degradationstests.
 
-\subsubsection{UC08: Integration von nicht Fabric Komponenten}
+\subsubsection{UC07: Integration von nicht Fabric Komponenten}
 Netzintegration von „nicht Campus-Fabric Netzkomponenten“ (zum Beispiel traditionelle Access und Distribution Switches).
 
-\subsubsection{UC09:  Migration von bestehenden klassichen Campus}
+\subsubsection{UC08:  Migration von bestehendem klassichen Campus}
 Migrationskonzept bestehende CampusLAN Lösung zu einem Campus-Fabric Lösung mit DNA-Center
 
-\subsubsection{UC10: Einsatz von SGT}
+\subsubsection{UC09: Einsatz von SGT}
 Einsatz von SGT zusammen mit VXLAN (Netzdesign, Design-Rules, Transport innerhalb und aussehlab des Fabrics, Schnittstelle L2/L3 und Überführung des IP-Konnektivität an einem IP-Backbone zB MPLS VPN).
 
-\subsubsection{UC11: Infoblox}
+\subsubsection{UC10: Infoblox}
 Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Center für die Provisionierung von IP-Adresse für das Management von neuen Netzkomponenten in die Fabric (zB Access-Switches, usw).
 
-\subsection{Use Cases Fully dressed}
+\subsection{Use Cases Fully Dressed}
 \subsubsection{UC01: Definierung von Benutzer und Geräteprofilen}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
@@ -87,43 +84,8 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 	\caption{UC01 Fully Dressed}
 	\label{tab:UC01}
 \end{table}
-\subsubsection{UC02: Gastzugang}
-\begin{table}[H]
-	\rowcolors{2}{gray!25}{white}
-	\centering
-	\begin{tabularx}{\textwidth}{l | X}
-		Primary Actor   & Guest        \\
-		\hline
-		Beschreibung   & Ein Gast (unbekannter User mit unbekanntem Gerät) steckt sich im Netzwerk an. Er erhält Zugriff auf alle definierten Ressourcen. Im einfachsten Fall einfach Internetzugriff.  \\ 
-		\hline
-		Stakeholders       & - \\ 
-		Preconditions      &
-		\begin{itemize}	
-			\item Profil für Gastzugriff definiert
-			\item Gast ist mit dem Netzwerk verbunden
-		\end{itemize}  \\
-		\hline
-		Postconditions     & 
-		\begin{itemize}	
-			\item Gast hat Zugriff auf definierte Ressourcen
-			\item Gast hat keinen Zugriff auf interne Ressourcen
-		\end{itemize}  \\
-		\hline
-		Main Success Story & 
-		\begin{enumerate}
-			\item Gast verbindet sich mit dem Netzwerk
-			\item Gast erhält Zugriff auf defnierte Ressourcen
-			\item Gast verlässt das Netzwerk
-		\end{enumerate}
-		\\
-		\hline
-		Alternative Flows  & -
-	\end{tabularx}
-	\caption{UC02 Fully Dressed}
-	\label{tab:UC02}
-\end{table}
 
-\subsubsection{UC03: Backup and Restore DNA Center}
+\subsubsection{UC02: Backup and Restore DNA Center}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
@@ -152,11 +114,11 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 		\hline
 		Alternative Flows  & -
 	\end{tabularx}
-	\caption{UC03 Fully Dressed}
-	\label{tab:UC03}
+	\caption{UC02 Fully Dressed}
+	\label{tab:UC02}
 \end{table}
 
-\subsubsection{UC04: Reporting}
+\subsubsection{UC03: Reporting}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
@@ -196,11 +158,11 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 			\end{enumerate}
 		\end{itemize}
 	\end{tabularx}
-	\caption{UC04 Fully Dressed}
-	\label{tab:UC04}
+	\caption{UC03 Fully Dressed}
+	\label{tab:UC03}
 \end{table}
 
-\subsubsection{UC05: Hardware Ersatz}
+\subsubsection{UC04: Hardware Ersatz}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
@@ -245,11 +207,11 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 			\end{enumerate} 
 		\end{itemize}
 	\end{tabularx}
-	\caption{UC05 Fully Dressed}
-	\label{tab:UC05}
+	\caption{UC04 Fully Dressed}
+	\label{tab:UC04}
 \end{table}
 
-\subsubsection{UC06: Benutzermobilität}
+\subsubsection{UC05: Benutzermobilität}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
@@ -290,11 +252,11 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 			\end{enumerate}
 		\end{itemize}
 	\end{tabularx}
-	\caption{UC06 Fully Dressed}
-	\label{tab:UC06}
+	\caption{UC05 Fully Dressed}
+	\label{tab:UC05}
 \end{table}
 
-\subsubsection{UC07: Degradation}
+\subsubsection{UC06: Degradation}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
@@ -358,11 +320,11 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 			\item Ausfall einer physischen Netzwerkleitung
 		\end{itemize}
 	\end{tabularx}
-	\caption{UC07 Fully Dressed}
-	\label{tab:UC07}
+	\caption{UC06 Fully Dressed}
+	\label{tab:UC06}
 \end{table}
 
-\subsubsection{UC08: Integration von nicht Fabric Komponenten}
+\subsubsection{UC07: Integration von nicht Fabric Komponenten}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
@@ -403,11 +365,11 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 			\item[3a.] Policies können wie bei der Kommunikation innerhalb der Fabric angewendet werden
 		\end{itemize}
 	\end{tabularx}
-	\caption{UC08 Fully Dressed}
-	\label{tab:UC08}
+	\caption{UC07 Fully Dressed}
+	\label{tab:UC07}
 \end{table}
 
-\subsubsection{UC09: Migration von bestehenden klassichen Campus}
+\subsubsection{UC08: Migration von bestehenden klassichen Campus}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
@@ -449,11 +411,11 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 		\hline
 		Alternative Flows  & -
 	\end{tabularx}
-	\caption{UC09 Fully Dressed}
-	\label{tab:UC09}
+	\caption{UC08 Fully Dressed}
+	\label{tab:UC08}
 \end{table}
 
-\subsubsection{UC10: Einsatz von SGT}
+\subsubsection{UC09: Einsatz von SGT}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
@@ -492,11 +454,11 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 			\end{enumerate}
 		\end{itemize}
 	\end{tabularx}
-	\caption{UC10 Fully Dressed}
-	\label{tab:UC10}
+	\caption{UC09 Fully Dressed}
+	\label{tab:UC09}
 \end{table}
 
-\subsubsection{UC11: Infoblox}
+\subsubsection{UC10: Infoblox}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
@@ -539,8 +501,8 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 			\item[1b.] Schritt in erstem Konfigurations-Wizard überspringen und Infoblox mit nachfolgenden Schritten hinzufügen.
 		\end{itemize}
 	\end{tabularx}
-	\caption{UC11 Fully Dressed}
-	\label{tab:UC11}
+	\caption{UC10 Fully Dressed}
+	\label{tab:UC10}
 \end{table}
 
 
