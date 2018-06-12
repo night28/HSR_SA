@@ -1,17 +1,17 @@
 \section{Projektmanagement}
 
 \subsection{Projektübersicht}
-Das Hauptziel dieser Studienarbeit ist die Installation des DNA-Centers und Integration eines bestehenden Labor-Netzwerkes.
+Das Hauptziel dieser Studienarbeit ist die Installation des DNA Centers und Integration eines bestehenden Campus Labor Netzwerkes.
 
 \subsubsection{Ziele der Projektes}
-Da Software-Defined Access Neuland im Campus Bereich ist, wollen wir die SD-Access Lösung vom Hersteller Cisco ausarbeiten. Dazu gehören folgende Ziele:
+Da SDN im Campus Bereich Neuland ist, soll die SDA Lösung vom Hersteller Cisco ausgearbeitet werden. Dazu gehören folgende Ziele:
 
 \begin{itemize}
-	\item Installation von DNA-Center und Integration vom bestehenden Campus Labor-Netzwerk.
-	\item Definieren von Benutzer- und Geräteprofilen, um basierend auf Geschäftsanforderungen die Zugriffsrechte und Netzwerksegmentierung zu veralten und so das Netzwerk sicher zu halten.
-	\item Verwendung von Erkenntnissen von DNA Analytics and Assurance für eine proaktive Überwachung, Fehlerbehebung und Optimierung des Netzwerks.
-	\item Integration vom bestehenden IP Address Management Tool im DNA Center
-	\item Durch APIs, Erstellung von wöchentlichen Reports über den Campus Netzwerk Status in einem E-Mail und einer Slack Message. 
+	\item Installation von DNA Center und Integration vom bestehenden Campus Labor-Netzwerk
+	\item Definition von Benutzer- und Geräteprofilen, um basierend auf Geschäftsanforderungen die Zugriffsrechte und Netzwerksegmentierung zu verwalten und so das Netzwerk sicher zu halten
+	\item Verwendung von Erkenntnissen von DNA Analytics and Assurance für eine proaktive Überwachung, Fehlerbehebung und Optimierung des Netzwerks
+	\item Integration vom bestehenden IPAM Tool im DNA Center
+	\item Durch APIs, Erstellung von wöchentlichen Reports über den Campus Netzwerk Status in einem E-Mail 
 \end{itemize}
 
 \subsection{Projektorganisation}
@@ -109,11 +109,11 @@ Sollten sich während dem Projekt neue potenzielle Risiken zeigen, wird dieses D
 	\hline\hline
 	1 & Ausfall eines Teammitglieds & Ausfall auf Grund unvorhergesehener Ereignisse wie Krankheit, Unfall etc. & 40 & 15\% & 6 & Reserven einplanen, Kommunikation sicherstellen, damit andere Teammitglieder die Aufgaben übernehmen können & Tasks des ausgefallen Mitglieds möglichst auf die anderen Teammitglieder aufteilen. \\ 
 	\hline
-	2 & Hardwareausfall DNA-Center & DNA-Center Appliance fällt durch Hardwaredefekt aus & 30 & 5\% & 1.5 & keine Verbeugenden Massnahmen möglich & Austausch im Rahmen der Garantie veranlassen \\
+	2 & Hardwareausfall DNA-Center & DNA-Center Appliance fällt durch Hardwaredefekt aus & 30 & 5\% & 1.5 & keine vorbeugenden Massnahmen möglich & Austausch im Rahmen der Garantie veranlassen \\
 	\hline
-	3 & Fehlendes Know-How & Da viele der Themen neu sind, kann entsprechendes Wissen fehlen & 40 & 20\% & 8 & Zeit einplanen um sich in neue Themen einzuarbeiten & Fehlendes Wissen sobald wie möglich aneignen. Bei Bedarf Rat der Betreuer einholen \\
+	3 & Fehlendes Know-How & Da viele der Themen neu sind, kann entsprechendes Wissen fehlen & 40 & 20\% & 8 & Zeit einplanen, um sich in neue Themen einzuarbeiten & Fehlendes Wissen sobald wie möglich aneignen. Bei Bedarf Rat der Betreuer einholen \\
 	\hline
-	4 & Konflikte oder Missverständnisse im Team & Das Team ist sich bezüglich wichtigen Entscheidungen uneinig & 25 & 15\% & 3.75 & Entscheidungen stets mit Begründung dokumentieren & Kann auch mit Hilfe der Doku keine Einigung gefunden werden, fachlichen Rat des Betreuers einholen \\
+	4 & Konflikte oder Missverständnisse im Team & Das Team ist sich bezüglich wichtigen Entscheidungen uneinig & 25 & 15\% & 3.75 & Entscheidungen stets mit Begründung dokumentieren & Kann auch mit Hilfe der Dokumentation keine Einigung gefunden werden, fachlichen Rat des Betreuers einholen \\
 	\hline
 	5 & Missverständnisse im Team & Im Team herrscht Uneinigkeit über bereits getroffene Entscheidungen & 20 & 20\% & 4 & Protokolle führen und Entscheidungen klar dokumentieren & Protokolle und Dokumentationen beiziehen \\
 	\hline
@@ -209,8 +209,8 @@ Das DNA Center befand sich beim Beginn unserer Studienarbeit noch in der Version
 Das DNA Center enthält in diesen frühen Versionen noch viele Bugs und auch Beta Features, welche oft zu Problemen führen können. Die Funktionalitäten sind teilweise nur beschränkt so umsetzbar, wie sie angekündigt und beschrieben wurden. 
 Bei unserem ersten Versuch mit der Version 1.1.3 stiessen wir auf das Problem, dass wir die Geräte über die LAN Automation nicht durchführen konnten, da nicht einmal ein DHCP Server auf den Geräten konfiguriert wurden. Weitere Probleme kamen auch beim Provisionierungsprozess hinzu. Geräte welche vorher verwaltet werden konnte, waren auf einmal nicht mehr erreichbar im DNA Center, obwohl dies manuell per SSH kein Problem darstellte. Ein Versuch das DNA Center per Backup zu sichern, brachte das ganze DNA Center zum Absturz. Nachdem viele solche Hürden und Probleme aufgetaucht waren, entschieden wir uns es mit einem Out of Band Management zu versuchen. Hierzu musste der Konfigurations-Wizard des DNA Centers nochmal gestartet werden, um das zweite Netzwerkinterface zu definieren. Das erneute Durchführen dieses Konfigurations-Wizard führte zum kompletten Absturz, so dass die ganze DNA Center Appliance gar nicht mehr bootete. \\
 Nach einer zweiten Installation des DNA Centers versuchten wir erneut die LAN Automation, um ein Underlay zu bereitzustellen. Diesmal funktionierte das Hinzufügen eines Seed-Devices. Die LAN Automation soll nach der Konfiguration eines Seed-Devices so oft wie nötig gestartet und gestoppt werden können. Sollte später ein weiterer Switch hinzu kommen, so könnte diese erneut für dieses Device gestartet werden. In unserem Fall führe dies zu Problemen mit der Konfiguration des IS-IS Protokolls. Es wurden nur die Routen der ersten Geräte zum Border hinzugefügt. Die Routen aller nachfolgenden Geräte wurden nur teilweise oder gar nicht hinzugefügt, so dass diese keine Kommunikation zum DNA Center aufbauen konnten. 
-Dies führte bei einigen Konfiguration zur Verwirrung, da wir teilweise nicht wussten ob es sich um ein falsches Verhalten der Software oder einen Fehler unsererseits handelte. Aus diesem Grunde wurde beschlossen uns für einen Tag einen Cisco Experten zur Verfügung zu stellen. Wir konnten mit ihm die Konfiguration nochmal von Grund auf durchführen und kamen bis zur Konfiguration eines Seed-Devices für die LAN Automation. An diesem Punkt stiessen wir aber wieder auf diverse Hindernisse, bei welchen uns der Cisco Experte zu dieser Zeit nicht weiterhelfen konnte. Nach eigenen weiteren Versuchen gelang es uns jedoch, die LAN Automation auf einem weiteren Gerät durchzuführen.\\
-Des Weiteren Fehlen Dokumentationen zu der Verwendung von Policies oder der genauen Verwendung der \textit{Authentication Templates} für das \textit{Host Onboarding}. Bei dieser Bedeutung der verschiedenen Authentication Templates konnte uns jedoch jemand von Cisco Auskunft geben. 
+Dies führte bei einigen Konfiguration zur Verwirrung, da wir teilweise nicht wussten ob es sich um ein falsches Verhalten der Software oder einen Fehler unsererseits handelte. Aus diesem Grund wurde beschlossen, uns für einen Tag einen Cisco Experten zur Verfügung zu stellen. Wir konnten mit ihm die Konfiguration nochmal von Grund auf durchführen und kamen bis zur Konfiguration eines Seed-Devices für die LAN Automation. An diesem Punkt stiessen wir aber wieder auf diverse Hindernisse, bei welchen uns auch der Cisco Experte zu dieser Zeit nicht weiterhelfen konnte. Nach eigenen weiteren Versuchen gelang es uns jedoch, die LAN Automation auf einem weiteren Gerät durchzuführen.\\
+Des Weiteren fehlen Dokumentationen zu der Verwendung von Policies oder der genauen Verwendung der \textit{Authentication Templates} für das \textit{Host Onboarding}. Zur Bedeutung der verschiedenen Authentication Templates konnte uns jedoch jemand von Cisco Auskunft geben. 
 
 Da bei uns bereits zwei eher schwerwiegende Risiken eingetreten waren, wurde entschieden das der Abgabetermin um knapp zwei Wochen, auf den 13. Juni 2018 verschoben wird. Das hat folgende Anpassungen in der Projektplanung zur Folge:
 
@@ -246,7 +246,7 @@ Folgende Meilensteine sind nun aufgrund der Lieferverzögerung für das Projekt 
 	\label{tab:Erweiterte Anpassung der Meilensteine}
 \end{table}
 
-Auf der Grafik ist ersichtlich, dass die komplette Konfiguration des DNA Centers nach der Zwischenpräsentation stattfand. Geplant war die Fabric Konfiguration schon in der zehnten Woche, jedoch funktionierte zu diesem Zeitpunkt die LAN Automation nur teilweise und die Geräte wurden manuell zum DNA Center hinzugefügt, sodass eine Fabric konfiguriert werden konnte. Kurz vor der Zwischenpräsentation war die Definierung der Benutzer- und Geräteprofilen wichtig, da an der Präsentation unter anderem die Konnektivität zwischen zwei Clients vorgeführt werden sollte. Dies war jedoch wegen mehreren aufgetretenen Fehlern und Problemen nicht möglich. Der Versuch das DNA Center nochmals komplett zu mit einem Out of Band Management zu Konfigurieren scheiterte leider. Der Maglev Configuration Wizard brach am Schluss der Konfigurationen mit einem Fehler ab und brachte das ganze DNA Center in einen "not bootable" Zustand. \\
+Auf der Grafik ist ersichtlich, dass die komplette Konfiguration des DNA Centers nach der Zwischenpräsentation stattfand. Geplant war die Fabric Konfiguration schon in der zehnten Woche, jedoch funktionierte zu diesem Zeitpunkt die LAN Automation nur teilweise und die Geräte wurden manuell zum DNA Center hinzugefügt, sodass eine Fabric konfiguriert werden konnte. Kurz vor der Zwischenpräsentation war die Definierung der Benutzer- und Geräteprofilen wichtig, da an der Präsentation unter anderem die Konnektivität zwischen zwei Clients vorgeführt werden sollte. Dies war jedoch wegen mehreren aufgetretenen Fehlern und Problemen nicht möglich. Der Versuch das DNA Center nochmals komplett zu mit einem Out of Band Management zu konfigurieren scheiterte leider. Der Maglev Configuration Wizard brach am Schluss der Konfigurationen mit einem Fehler ab und brachte das ganze DNA Center in einen "not bootable" Zustand. \\
 Dies war ein guter Zeitpunkt um die komplette Installation des DNA Center nochmal von vorne zu beginnen. Durch die vielen aufgetretenen Probleme wurde uns wie schon oben erwähnt für einen Tag ein Cisco Experte zur Seite gestellt, mit welchen wir die Konfiguration des Underlay Netzwerkes bis zum Definieren eines ersten Seed-Devices durchführen konnten.
 
 
