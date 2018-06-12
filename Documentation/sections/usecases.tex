@@ -5,31 +5,31 @@
 Ein Administrator definiert die Profile für Benutzer, Gruppen oder Geräte, sodass diese auf alle nötigen Ressourcen zugreifen können, unberechtigter Zugriff aber verhindert wird.
 
 \subsubsection{UC02: Backup and Restore DNA Center}
-Auf Grund eines Problems des DNA-Centers muss die Appliance ausgetauscht oder auf einen vorherigen Konfigurationsstand zurückgesetzt werden. Um eine Neukonfiguration des Systems zu verhindern, wird eine zuvor gesicherte Konfiguration wiederhergestellt.
+Auf Grund eines Problems des DNA Centers muss die Appliance ausgetauscht oder auf einen vorherigen Konfigurationsstand zurückgesetzt werden. Um eine Neukonfiguration des Systems zu verhindern, wird eine zuvor gesicherte Konfiguration wiederhergestellt.
 
 \subsubsection{UC03: Reporting}
-Es werden regelmässig Reports über relevante Netzwerkaktivitäten erstellt und den zuständigen Personen via Mail und/oder Slack zugestellt.
+Es werden regelmässig Reports über relevante Netzwerkaktivitäten erstellt und den zuständigen Personen via Mail zugestellt.
 
 \subsubsection{UC04: Hardware Ersatz}
-Ein Switch muss auf Grund eines Hardwaredefekts oder ähnlichen Gründen ausgetauscht werden.
+Ein Switch muss auf Grund eines Hardwaredefekts oder anderen Gründen ausgetauscht werden.
 
 \subsubsection{UC05: Benutzermobilität}
 Ein User ändert seinen Arbeitsplatz, das Gebäude oder den Arbeitsort. Er muss an allen Standorten dieselben Policies erhalten und auf dieselben Ressourcen zugreifen können.
 
 \subsubsection{UC06: Degradation}
-Bearbeitung von mögliche Degradations-Szenarios mit den entsprechenden Degradationstests.
+Bearbeitung von möglichen Degradations-Szenarien mit entsprechenden Degradations-Tests.
 
 \subsubsection{UC07: Integration von nicht Fabric Komponenten}
-Netzintegration von „nicht Campus-Fabric Netzkomponenten“ (zum Beispiel traditionelle Access und Distribution Switches).
+Netzintegration von „nicht Campus Fabric Netzkomponenten“ (zum Beispiel traditionelle Access und Distribution Switches).
 
 \subsubsection{UC08:  Migration von bestehendem klassichen Campus}
-Migrationskonzept bestehende CampusLAN Lösung zu einem Campus-Fabric Lösung mit DNA-Center
+Migrationskonzept einer bestehenden Campus LAN Lösung zu einer Campus Fabric Lösung mit dem DNA Center.
 
 \subsubsection{UC09: Einsatz von SGT}
-Einsatz von SGT zusammen mit VXLAN (Netzdesign, Design-Rules, Transport innerhalb und aussehlab des Fabrics, Schnittstelle L2/L3 und Überführung des IP-Konnektivität an einem IP-Backbone zB MPLS VPN).
+Einsatz von SGTs zusammen mit VXLAN (Netzdesign, Design-Rules, Transport innerhalb und ausserhalb der Fabrics, Schnittstelle L2/L3 und Überführung der IP-Konnektivität an ein IP-Backbone wie zum Beispiel MPLS VPN).
 
 \subsubsection{UC10: Infoblox}
-Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Center für die Provisionierung von IP-Adresse für das Management von neuen Netzkomponenten in die Fabric (zB Access-Switches, usw).
+Integration Infoblox DNS, DHCP und IPAM (DDI) mit dem DNA Center für die Provisionierung von IP-Adressen für das Management von neuen Netzkomponenten in die Fabric (beispielsweise Access Switches).
 
 \subsection{Use Cases Fully Dressed}
 \subsubsection{UC01: Definierung von Benutzer und Geräteprofilen}
@@ -92,7 +92,7 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 	\begin{tabularx}{\textwidth}{l | X}
 		Primary Actor   & Netzwerkadministrator        \\
 		\hline
-		Beschreibung   & Auf Grund eines Problems des DNA-Centers muss die Appliance ausgetauscht oder auf einen vorherigen Konfigurationsstand zurückgesetzt werden. Um eine Neukonfiguration des Systems zu verhindern, wird eine zuvor gesicherte Konfiguration wiederhergestellt.  \\ 
+		Beschreibung   & Auf Grund eines Problems des DNA Centers muss die Appliance ausgetauscht oder auf einen vorherigen Konfigurationsstand zurückgesetzt werden. Um eine Neukonfiguration des Systems zu verhindern, wird eine zuvor gesicherte Konfiguration wiederhergestellt.  \\ 
 		\hline
 		Stakeholders       & Alle Netzwerkbenutzer \\ 
 		Preconditions      &
@@ -125,7 +125,7 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 	\begin{tabularx}{\textwidth}{l | X}
 		Primary Actor   & Netzwerkadministrator        \\
 		\hline
-		Beschreibung   & Es werden regelmässig Reports über relevante Netzwerkaktivitäten erstellt und den zuständigen Personen via Mail und/oder Slack zugestellt  \\ 
+		Beschreibung   & Es werden regelmässig Reports über relevante Netzwerkaktivitäten erstellt und den zuständigen Personen via Mail zugestellt  \\ 
 		\hline
 		Stakeholders       & 
 		\begin{itemize}
@@ -255,7 +255,7 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 	\caption{UC05 Fully Dressed}
 	\label{tab:UC05}
 \end{table}
-
+~
 \subsubsection{UC06: Degradation}
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
@@ -277,7 +277,7 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 		\hline
 		Postconditions     & 
 		\begin{itemize}	
-			\item Ausfall oder Probleme bei einer oder mehrerer Komponenten
+			\item Ausfall/Probleme bei einer oder mehrerer Komponenten
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
@@ -308,16 +308,10 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 		\hline
 		Mögliche Szenarien  & 
 		\begin{itemize}
-			\item Ausfall eines Edge Nodes
-			\item Ausfall eines Intermediate Nodes
-			\item Ausfall eines Border/Controller Nodes
+			\item Ausfall eines Edge-, Intermediate- oder Border/Controller-Nodes
 			\subitem Wenn 1 Node vorhanden ist
 			\subitem Wenn 2 Nodes vorhanden sind
-			\item Ausfall DNA Center Appliance
-			\item Ausfall ISE
-			\item Ausfall Infoblox
-			\item Ausfall WLC
-			\item Ausfall einer physischen Netzwerkleitung
+			\item Ausfall DNA Center Appliance, ISE, Infoblox, WLC oder einer physischen Netzwerkleitung
 		\end{itemize}
 	\end{tabularx}
 	\caption{UC06 Fully Dressed}
@@ -376,7 +370,7 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 	\begin{tabularx}{\textwidth}{l | X}
 		Primary Actor   & Netzwerkadministrator       \\
 		\hline
-		Beschreibung   & Ein bestehendes Netzwerk nach klassischem Campusdesign soll in eine moderne Fabric migriert werden  \\ 
+		Beschreibung   & Ein bestehendes Netzwerk nach klassischem Campus Design soll zu einer modernen Fabric migriert werden  \\ 
 		\hline
 		Stakeholders       & 
 		\begin{itemize}
@@ -385,8 +379,8 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 		\end{itemize} \\ 
 		Preconditions      &
 		\begin{itemize}	
-			\item Netzwerk nach klassischem Campusdesign existiert und funktioniert einwandfrei
-			\item DNA Center Appliance inkl. aller Abhängigkeiten ist vorhanden
+			\item Netzwerk nach klassischem Campus Design existiert und funktioniert einwandfrei
+			\item DNA Center Appliance inklusive aller Abhängigkeiten ist vorhanden
 			\item Netzwerkkomponenten sind fähig in einer Fabric verwendet zu werden
 		\end{itemize}  \\
 		\hline
@@ -401,9 +395,9 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 		\begin{enumerate}
 			\item Bestehende Infrastruktur wird analysiert und inventarisiert
 			\item DNA Center wird aufgesetzt (inkl. aller Abhängigkeiten)
-			\item User, Gruppen, Policies etc. werden in DNA Center übernommen
+			\item User, Gruppen und Policies werden in DNA Center übernommen
 			\item Falls nötig wird das Netzwerkdesign angepasst
-			\item Downtime wird geschätzt und organisatorische Massnahmen werden getroffen. 
+			\item Downtime wird geschätzt und organisatorische Massnahmen werden getroffen
 			\item Bestehende Netzwerkgeräte werden in die Fabric übernommen
 			\item Benutzer können Fabric analog der traditionellen Infrastruktur nutzen
 		\end{enumerate}
@@ -442,7 +436,7 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 		\begin{enumerate}
 			\item Login auf DNA Center
 			\item Unter Systemeinstellungen Cisco ISE Panel auswählen
-			\item Unter Policy / Registry / Scalable Groups können neue SGT Gruppen hinzugefügt werden
+			\item Unter \textit{Policy $\rightarrow$ Registry $\rightarrow$ Scalable Groups} können neue SGT Gruppen hinzugefügt werden
 		\end{enumerate}
 		\\
 		\hline
@@ -478,25 +472,25 @@ Integration Infoblox DDI (DNS, DHCP and IP address management) mit dem DNA-Cente
 		\hline
 		Postconditions     & 
 		\begin{itemize}	
-			\item Unter Design / Network Settings / IP Address Pools sind nun die IP-Adressen ersichtlich.
-			\item Anpassungen an Addresspool werdne zwischen DNA Center und Infoblox synchronisiert
+			\item Unter \textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Address Pools} sind nun die IP-Adressen ersichtlich.
+			\item Anpassungen an Addresspool werden zwischen DNA Center und Infoblox synchronisiert
 			\item Infoblox verwendet die im DNA Center erstellten Infos für weitere Dienste wie DNS oder DHCP
 		\end{itemize}  \\
 		\hline
 		Main Success Story & 
 		\begin{enumerate}
 			\item Login auf DNA Center
-			\item Unter Settings / IP Adress Manager kann ein Infoblox Server hinterlegt werden.
-			\item Unter Design / Network Settings / IP Address Pools können nun die IP-Adressen angezeigt werden
+			\item Unter \textit{Settings $\rightarrow$ IP Adress Manager} kann ein Infoblox Server hinterlegt werden.
+			\item Unter \textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Address Pools} können nun die IP-Adressen angezeigt werden
 		\end{enumerate}
 		\\
 		\hline
 		Alternative Flows  & 
 		\begin{itemize}
-			\item[1a.] Direkt nach Installation Infoblox Server bei erstem Konfigurations-Wizard hinzufügen
+			\item[1a.] Direkt nach der Installation des DNA Centers, Infoblox Server bei erstem Konfigurations-Wizard hinzufügen
 			\begin{enumerate}
 				\item Login auf DNA Center
-				\item IP Adress Manager angeben (Server Name, Server URL, Username, Password, Provider)
+				\item IPAM angeben (Server Name, Server URL, Username, Password, Provider)
 			\end{enumerate}
 			\item[1b.] Schritt in erstem Konfigurations-Wizard überspringen und Infoblox mit nachfolgenden Schritten hinzufügen.
 		\end{itemize}
