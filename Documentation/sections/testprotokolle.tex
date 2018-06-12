@@ -1,10 +1,32 @@
 \begin{landscape}
 \section {Testprotokolle}
 
-
-\testpttb{UC01: Definierung von Benutzer und Geräteprofilen}{}{
-\testptrow{1}{TheBeschreibung}{TheShould}{TheIs}{TheStatus}
+\section{UC01: Definierung von Benutzerprofilen}
+\testpttb{UC01-1: Anlegen von Benutzern}{}{
+\testptrow{1}{Login in ISE}{Eingelogged in ISE}{Eingelogged in ISE}{OK}
+\testptrow{2}{Benutzer anlegen via \textit{Work Centers $\rightarrow$ Network Access $\rightarrow$ Identities $\rightarrow$ Network Access Users}}{User ist erstellt}{User ist erstellt}{OK}
+\testptrow{2}{Benutzer einer Gruppe zuweisen via \textit{Work Centers $\rightarrow$ Network Access $\rightarrow$ Identities $\rightarrow$ Network Access Users}}{User ist in Gruppe}{User ist in Gruppe}{OK}
 }
+
+Die Benutzer sind nun angelegt, ein Login ist aber noch nicht möglich, da noch keine Authentication Policy für diese erstellt wurde. Dies wird daher im nächsten Schritt erledigt.
+
+\testpttb{UC01-2: Anlegen von Authentication Policies}{}{
+	\testptrow{1}{Login in ISE}{Eingelogged in ISE}{Eingelogged in ISE}{OK}
+	\testptrow{2}{Authentication Policy anlegen via \textit{Work Centers $\rightarrow$ Network Access $\rightarrow$ Policy Sets $\rightarrow$ Default} für 802.1x Wired}{Policy ist erstellt}{Policy ist erstellt}{OK}
+	\testptrow{3}{User logged sich ein}{User ist eingelogged}{User ist eingelogged}{OK}
+}
+
+Nun kann sich der Benutzer einloggen, wird aber noch nicht einer Scalable Group zugewiesen. Somit hat er keine für ihn gültige Policy und somit keine Zugriffe im Netzwerk. Damit der Benutzer die korrekten Policies erhält, muss eine Authorization Policy erstellt werden.
+
+\testpttb{UC01-3: Anlegen von Authorization Policies}{}{
+	\testptrow{1}{Login in ISE}{Eingelogged in ISE}{Eingelogged in ISE}{OK}
+	\testptrow{2}{Authorization Policy anlegen via \textit{Work Centers $\rightarrow$ Network Access $\rightarrow$ Policy Sets $\rightarrow$ Default} für 802.1x Wired und Gruppe des Users}{Authorization Policy ist erstellt}{Authorization Policy ist erstellt}{OK}
+}
+
+\testpttb{UC01-4: Einrichten einer Policy}{}{
+	\testptrow{1}{TheBeschreibung}{TheShould}{TheIs}{TheStatus}
+}
+
 \pagebreak
 
 \testpttb{UC02-1 Backup DNA Center}{Sämtliche Konfigurationen des DNA Centers sollen gebackuped werden, sodass diese im Notfall wiederhergestellt werden können.}{
