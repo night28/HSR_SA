@@ -34,7 +34,7 @@ Nun kann sich der Benutzer einloggen, wird aber noch nicht einer Scalable Group 
 Die Policy ist nun auf allen nötigen Geräten deployed und wird von diesen enforced. Die Clients dürfen also nur auf die Ressourcen zugreifen, die gemäss der definierten Policy erlaubt sind.
 \pagebreak
 
-\testpttb{UC02-1 Backup DNA Center}{Sämtliche Konfigurationen des DNA Centers sollen gebackuped werden, sodass diese im Notfall wiederhergestellt werden können.}{
+\testpttb{UC02-1 Backup DNA Center}{Sämtliche Konfigurationen des DNA Centers sollen gesichert werden, sodass diese im Notfall wiederhergestellt werden können.}{
 	\testptrow{1}{Login auf DNA Center}{DNA Center Dashboard wird angezeigt}{DNA Center Dashboard erscheint}{OK}
 	\testptrow{2}{Zu den Backup Einstellungen navigieren \textit{Settings $\rightarrow$ System Settings $\rightarrow$ Backup and Restore} }{Backup Einstellungen anzeigen}{Backup Einstellungen erscheinen}{OK}
 	\testptrow{3a}{Backup Server hinzufügen via \textit{Add} $\rightarrow$ SSH IP Address: 217.26.58.9, SSH Port: 22, Server Path: /home/dnacenter/backup, Username: dnacenter, Password: xxx, Encryption Passphrase: xxx. Mittels Apply die Eingaben bestätigen.}{Eingaben werden angenommen.}{Eingaben werden meist nicht angenommen und führen zu Absturz des DNA Centers}{NOT OK}
@@ -50,12 +50,12 @@ Die Policy ist nun auf allen nötigen Geräten deployed und wird von diesen enfo
 }
 
 \subsubsection{Zusammenfassung UC02}
-Es kann ein Backup erstellt werden und auch ein Restore eines zuvor erstellten Backups ist möglich. Leider ist das Erfassen, Bearbeiten und Löschen eines Backupservers enorm unzuverlässig und hat mehrfach zu kompletten Abstürzen des DNA Centers geführt. \\
-Zudem funktioniert der Backup Schedule nicht. Backups werden nicht automatisch ausgeführt, sind also nur manuell möglich. Auch ein Restore einzelner Komponenten des DNA Centers ist nicht vorgesehen und es gibt kein komplettes Backup des DNA Centers. Einzelne Teile wie z.Bsp. Assurance werden nicht gebackuped. \\
+Es kann ein Backup erstellt werden und auch ein Restore eines zuvor erstellten Backups ist möglich. Leider ist das Erfassen, Bearbeiten und Löschen eines Backup Servers enorm unzuverlässig und hat mehrfach zu kompletten Abstürzen des DNA Centers geführt. \\
+Zudem funktioniert der Backup Schedule nicht. Backups werden nicht automatisch ausgeführt, sind also nur manuell möglich. Auch ein Restore einzelner Komponenten des DNA Centers ist nicht vorgesehen und es gibt kein komplettes Backup des DNA Centers. Einzelne Teile wie zum Beispiel Assurance werden nicht gesichert. \\
 Da die Backup Funktionalität des DNA Centers sehr eingeschränkt ist und nur unzuverlässig funktioniert, wird der Use Case "Backup und Restore" nicht vollständig erfüllt.
 \pagebreak
 
-\testpttb{UC03 Reporting}{Mit Hilfe der DNA Center API können regelmässige Reports über den Zustand der Netzwerkumgebung per E-Mail oder Slack versendet werden. Damit dieser Use Case ausgeführt werden kann, muss ein Mailserver und ein Benutzer zur Verfügung stehen, der E-Mails versenden kann. Des weiteren ist ein System benötigt, welches das Script ausführt. Auf diesem muss python installiert sein.}{
+\testpttb{UC03 Reporting}{Mit Hilfe der DNA Center API können regelmässige Reports über den Zustand der Netzwerkumgebung per E-Mail oder Slack versendet werden. Damit dieser Use Case ausgeführt werden kann, muss ein Mailserver und ein Benutzer zur Verfügung stehen, der E-Mails versenden kann. Des weiteren wird ein System benötigt, welches das Script ausführt. Auf diesem muss Python installiert sein.}{
 	\testptrow{1}{Reporting Script aus GIT Repository auschecken (auf dem System, das die Reports versenden soll)}{Code ist ausgecheckt}{Code ist ausgecheckt}{OK}
 	\testptrow{2}{config.py mit Texteditor öffnen und anpassen}{Reporting Config ist komplett}{Reporting Config ist komplett}{OK}
 	\testptrow{3}{Cronjob einrichten, der das Script in regelmässigen Abständen ausführt}{Script wird regelmässig ausgeführt}{Script wird regelmässig ausgeführt}{OK}
@@ -96,7 +96,7 @@ Die obigen Informationen sind nur theoretisch und konnten in der Testumgebung ni
 }
 
 \subsubsection{Zusammenfassung UC05}
-Benutzermobilität funktioniert in einer vom DNA Center verwalteten sehr gut. In unseren Tests wurden sogar bestehende Sessions vom alten an den neuen Standort übernommen. 
+Benutzermobilität funktioniert in einer vom DNA Center verwalteten Umgebung sehr gut. In unseren Tests wurden sogar bestehende SSH Sessions vom alten an den neuen Standort übernommen. 
 \pagebreak
 \subsection{UC06: Degradation}
 In diesem Use Case wird beschrieben, wie sich das Netzwerk verhält, wenn einzelne Komponenten ausfallen. In untenstehender Tabelle ist zu sehen, was für einen Impact der Ausfall der einzelnen Komponenten hat. Die Informationen sind allerdings nur theoretisch und konnten in der Lab Umbegung nicht getestet werden.
@@ -174,7 +174,7 @@ Noch nicht alle Funktionen können komplett im DNA Center erledigt werden. Ein T
 }
 
 \subsubsection{Zusammenfassung UC10}
-Der Infoblox konnte im DNA Center relativ einfach hinterlegt werden. Das erstellen eines IP Adress Pools auf dem DNA Center funktioniert gut und wird auch schnell mit dem Infoblox synchronisiert. Wird jedoch ein IP Adress Pool auf dem Infoblox erstellt, so ist es eher mühsam diesen neuen IP Adress Pool auf dem DNA Center anzuzeigen. Diese Synchronisation erfolgt nicht sauber. Es ist auf dem DNA Center zwar eine Import Funktion vorhanden, welche die IP Adress Pools vom Infoblox importieren sollte, aber nur mässig gut funktioniert. Jedes Netz welches importiert werden soll, muss einzeln erstellt und genaustens angegeben werden. Aus diesem Grunde sollte generell alles was im DNA Center erstellt werden kann, auf diesem erstellt werden und nicht manuell auf dem Infoblox.
+Der Infoblox konnte im DNA Center relativ einfach hinterlegt werden. Das Erstellen eines IP Adress Pools auf dem DNA Center funktioniert gut und wird auch schnell mit dem Infoblox synchronisiert. Wird jedoch ein IP Adress Pool auf dem Infoblox erstellt, so ist es eher mühsam diesen neuen IP Adress Pool auf dem DNA Center anzuzeigen. Diese Synchronisation erfolgt nicht sauber. Es ist auf dem DNA Center zwar eine Import Funktion vorhanden, welche die IP Adress Pools vom Infoblox importieren sollte, aber nur mässig gut funktioniert. Jedes Netz welches importiert werden soll, muss einzeln erstellt und genaustens angegeben werden. Aus diesem Grunde sollte generell alles was im DNA Center erstellt werden kann, auf diesem erstellt werden und nicht manuell auf dem Infoblox.
 
 \pagebreak
 
