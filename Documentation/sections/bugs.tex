@@ -1,5 +1,5 @@
 \section{Bugs}
-Im folgenden werden Bugs aufgeführt, die während unserer Arbeit aufgetreten sind. Die hier erwähnten Bugs wurden auch via Slack an Cisco gemeldet. Alle erwähnten Bugs beziehen sich auf das DNA Center in Version 1.1.6 und ISE in Version 2.3.
+Im Folgenden werden Bugs aufgeführt, die während dieser Arbeit aufgetreten sind. Die hier erwähnten Bugs wurden auch via Slack an Cisco gemeldet. Alle erwähnten Bugs beziehen sich auf das DNA Center in Version 1.1.6 und ISE in Version 2.3.
 
 \newcommand{\bugreport}[9]{
 \subsection{#1}
@@ -10,7 +10,7 @@ Im folgenden werden Bugs aufgeführt, die während unserer Arbeit aufgetreten si
 			\hline
 			Komponente   & #2       \\
 			\hline
-			Dringlichkeit   & #3       \\
+			Priorität   & #3       \\
 			\hline
 			Beschreibung   & #4  \\ 
 			\hline
@@ -33,11 +33,11 @@ Im folgenden werden Bugs aufgeführt, die während unserer Arbeit aufgetreten si
 % Titel
 {Backup Server hinzufügen}
 % Komponente
-{Einstellungen $\rightarrow$ System Settings $\rightarrow$ Backup \& Restore}
+{\textit{Einstellungen $\rightarrow$ System Settings $\rightarrow$ Backup \& Restore}}
 % Dringlichkeit
 {Hoch}
 % Beschreibung
-{Nach der Eingabe der Backup Server Einstellungen und dem Klick auf \textit{Apply} geschieht nichts. Nach einer Weile werden immer mehr Docker Container gestoppt, bis das DNA Center nicht mehr gebraucht werden kann. Ein Neustart ist erforderlich.
+{Nach der Eingabe der Backup Server Einstellungen und dem Klick auf \textit{Apply} geschieht nichts. Nach einer Weile stürzen immer mehr Docker Container ab, bis das DNA Center nicht mehr gebraucht werden kann. Ein Neustart des DNA Centers ist erforderlich.
 \textbf{Nachtrag:} Nach mehreren Versuchen mit verschiedenen SSH Servern hat es geklappt. Über die genaue Ursache kann keine Aussage gemacht werden.
 }
 % Konsequenzen
@@ -47,7 +47,7 @@ Im folgenden werden Bugs aufgeführt, die während unserer Arbeit aufgetreten si
 %Reproduzieren
 {
 	\begin{enumerate}
-		\item Einstellungen $\rightarrow$ System Settings $\rightarrow$ Backup \& Restore
+		\item \textit{Settings $\rightarrow$ System Settings $\rightarrow$ Backup \& Restore}
 		\item Im Popup \textit{Configure} wählen. 
 		\item SSH Servereinstellungen eingeben
 		\item \textit{Apply} drücken. 
@@ -62,24 +62,24 @@ Im folgenden werden Bugs aufgeführt, die während unserer Arbeit aufgetreten si
 % Titel
 {Netzwerkgerät OS Update}
 % Komponente
-{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}
+{\textit{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}}
 % Dringlichkeit
 {Mittel}
 % Beschreibung
 {Im DNA Center können OS Images der Netzwerkgeräte aktualisiert werden. Dieser Funktion hat bei allen Versuchen immer zu Fehlern geführt und konnte nicht fertiggestellt werden.
 \textbf{Wichtig:}
-Im Imagerepository muss das Image verfügbar sein. }
+Im Image Repository muss das Image verfügbar sein.}
 % Konsequenzen
 {OS Updates müssen manuell durchgeführt werden.}
 % Workaround
-{Update manuell via TFTP direkt via CLI auf dem Netzwergerät ausführen.}
+{Update manuell via CLI mit Hilfe eines TFTP Servers auf dem Netzwerkgerät ausführen.}
 %Reproduzieren
 {
 	\begin{enumerate}
-		\item Provision $\rightarrow$ Devices $\rightarrow$ Inventory
+		\item \textit{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}
 		\item Gewünschtes Gerät anwählen 
-		\item Action $\rightarrow$ Update OS Image
-		\item Im Popup Gerät auswählen $\rightarrow$ Update
+		\item \textit{Action $\rightarrow$ Update OS Image}
+		\item \textit{Im Popup Gerät auswählen $\rightarrow$ Update}
 	\end{enumerate}
 }
 % Reporter
@@ -91,7 +91,7 @@ Im Imagerepository muss das Image verfügbar sein. }
 % Titel
 {DNA Center Update - Appliance nicht nutzbar während Update}
 % Komponente
-{Einstellungen $\rightarrow$ App Management}
+{\textit{Einstellungen $\rightarrow$ App Management}}
 % Dringlichkeit
 {Mittel}
 % Beschreibung
@@ -104,10 +104,10 @@ Im Imagerepository muss das Image verfügbar sein. }
 {
 	Bedingung: Updates sind verfügbar
 	\begin{enumerate}
-		\item Einstellungen $\rightarrow$ App Management
+		\item \textit{Einstellungen $\rightarrow$ App Management}
 		\item \textit{System Update} oder \textit{Package Update} wählen
 		\item Packages auswählen
-		\item Install oder Update wählen
+		\item \textit{Install} oder \textit{Update} wählen
 	\end{enumerate}
 }
 % Reporter
@@ -120,7 +120,7 @@ Im Imagerepository muss das Image verfügbar sein. }
 % Titel
 {Devices mit Namen "NULL" können nicht gelöscht werden}
 % Komponente
-{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}
+{\textit{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}}
 % Dringlichkeit
 {Niedrig}
 % Beschreibung
@@ -133,7 +133,7 @@ Im Imagerepository muss das Image verfügbar sein. }
 {
 	Bedingung: "NULL-Device" in \textit{Inventory} vorhanden
 	\begin{enumerate}
-		\item Provision $\rightarrow$ Devices $\rightarrow$ Inventory
+		\item \textit{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}
 		\item "NULL-Device" anwählen
 		\item Versuchen \textit{Action} Schaltfläche anzuwählen
 	\end{enumerate}
@@ -145,9 +145,9 @@ Im Imagerepository muss das Image verfügbar sein. }
 
 \bugreport
 % Titel
-{https://dnacenter/mypnp \textit{Configurations} nicht löschbar}
+{\url{https://dnacenter/mypnp} \textit{Configurations} nicht löschbar}
 % Komponente
-{https://dnacenter/mypnp $\rightarrow$ Configurations}
+{\url{https://dnacenter/mypnp} \textit{$\rightarrow$ Configurations}}
 % Dringlichkeit
 {Mittel}
 % Beschreibung
@@ -160,7 +160,7 @@ Im Imagerepository muss das Image verfügbar sein. }
 {
 	Bedingung: In myPNP sind Konfigurationen vorhanden.
 	\begin{enumerate}
-		\item https://dnacenter/mypnp $\rightarrow$ Configurations
+		\item \textit{https://dnacenter/mypnp $\rightarrow$ Configurations}
 		\item Beliebige Konfiguration anwählen
 		\item \textit{Delete} klicken
 	\end{enumerate}
@@ -173,13 +173,13 @@ Im Imagerepository muss das Image verfügbar sein. }
 
 \bugreport
 % Titel
-{9xxx Serie Lizenzzuordnung}
+{9xxx Series Lizenzzuordnung}
 % Komponente
-{Licence Manager $\rightarrow$ Switches}
+{\textit{Licence Manager $\rightarrow$ Switches}}
 % Dringlichkeit
 {Mittel}
 % Beschreibung
-{In der Tabelle \textit{Switch Licence Usage} werden redundante Einträge für Switches der 9xxx Serie angezeigt. Einerseits gibt es den Eintrag \textit{Cisco Catalyst 9300 Series Switches} andererseits \textit{Cisco Catalyst 9xxx Series Switches} Ein Gerät mit der Version 9300 fällt demnach in zwei verschiedene \textit{Model}.}
+{In der Tabelle \textit{Switch Licence Usage} werden redundante Einträge für Switches der 9xxx Series angezeigt. Einerseits gibt es den Eintrag \textit{Cisco Catalyst 9300 Series Switches} andererseits \textit{Cisco Catalyst 9xxx Series Switches} Ein Gerät mit der Version 9300 fällt demnach in zwei verschiedene \textit{Model}.}
 % Konsequenzen
 {Die Lizenzen können nicht zugewiesen werden.}
 % Workaround
@@ -198,7 +198,7 @@ Siehe Beschreibung
 % Titel
 {Lizenzanzeige}
 % Komponente
-{Licence Manager $\rightarrow$ Switches}
+{\textit{Licence Manager $\rightarrow$ Switches}}
 % Dringlichkeit
 {Niedrig}
 % Beschreibung
@@ -221,7 +221,7 @@ Siehe Beschreibung
 % Titel
 {PNP}
 % Komponente
-{Provision $\rightarrow$ LAN Automation}
+{\textit{Provision $\rightarrow$ LAN Automation}}
 % Dringlichkeit
 {Mittel}
 % Beschreibung
@@ -242,7 +242,7 @@ Siehe Beschreibung
 % Titel
 {LAN Automation IP Vergabe}
 % Komponente
-{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}
+{\textit{Provision $\rightarrow$ Devices $\rightarrow$ Inventory}}
 % Dringlichkeit
 {Mittel}
 % Beschreibung
@@ -264,7 +264,7 @@ Siehe Beschreibung
 % Titel
 {Manuelle Eingriffe Infoblox}
 % Komponente
-{Design $\rightarrow$ Network Settings $\rightarrow$ IP Address Pool}
+{\textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Address} Pool}
 % Dringlichkeit
 {Niedrig}
 % Beschreibung
@@ -286,7 +286,7 @@ Siehe Beschreibung
 % Titel
 {Cisco ISE - TrustSec - Monitor}
 % Komponente
-{Work Center $\rightarrow$ TrustSec $\rightarrow$ TrustSec Policy $\rightarrow$ Matrix $\rightarrow$ Monitor All - Off}
+{\textit{Work Center $\rightarrow$ TrustSec $\rightarrow$ TrustSec Policy $\rightarrow$ Matrix $\rightarrow$ Monitor All - Off}}
 % Dringlichkeit
 {Hoch}
 % Beschreibung
@@ -309,7 +309,7 @@ Siehe Beschreibung
 % Titel
 {Policies - Contracts - Access Contract}
 % Komponente
-{Policy $\rightarrow$ Contracts $\rightarrow$ Access Contract}
+{\textit{Policy $\rightarrow$ Contracts $\rightarrow$ Access Contract}}
 % Dringlichkeit
 {Niedrig}
 % Beschreibung
@@ -330,7 +330,7 @@ Siehe Beschreibung
 % Titel
 {Policies - Contracts - Traffic Copy Destination}
 % Komponente
-{Policy $\rightarrow$ Contracts $\rightarrow$ Traffic Copy Destination $\rightarrow$ Add Traffic Copy Destination}
+{\textit{Policy $\rightarrow$ Contracts $\rightarrow$ Traffic Copy Destination $\rightarrow$ Add Traffic Copy Destination}}
 % Dringlichkeit
 {Mittel}
 % Beschreibung
