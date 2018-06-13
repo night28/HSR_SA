@@ -89,7 +89,8 @@ Um Konfigurationen auf den Geräten vorzunehmen, die nicht vom DNA Center abgede
 	\item Template mittels \textit{Actions $\rightarrow$ Save} und \textit{Actions $\rightarrow$ Save} speichern
 \end{enumerate}
 
-\subsubsection{Netzwerkprofile erstellen}
+\subsubsection{Netzwerkprofile}
+\paragraph{Netzwerkprofile erstellen}
 Um die erstellten Templates anwenden zu können, müssen Netzwerkprofile erstellt werden.
 \begin{enumerate}
 	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Profiles} navigieren
@@ -98,7 +99,7 @@ Um die erstellten Templates anwenden zu können, müssen Netzwerkprofile erstell
 	\item Mittels \textit{Add} die gewünschten Templates hinzufügen
 \end{enumerate}
 
-\subsubsection{Netzwerkprofile zuweisen}
+\paragraph{Netzwerkprofile zuweisen}
 Damit die Netzwerkprofile angewendet werden, müssen diese noch den nötigen Sites zugewiesen werden.
 \begin{enumerate}
 	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Profiles} navigieren
@@ -118,7 +119,7 @@ Virtuelle Netzwerke dienen der Isolierung der Netzwerkbenutzer und dienen somit 
 	\item Kontraktor-Netzwerk: Netzwerkverbindung, die es den Benutzern ermöglicht, auf das Internet und auf unternehmensspezifische Anwendungen innerhalb des Unternehmensnetzwerks zuzugreifen. 
 \end{itemize}
 
-\subsubsection{Virtual Network hinzufügen}
+\paragraph{Virtual Network hinzufügen}
 \begin{enumerate}
 	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Virtual Network} navigieren.
 	\item \textbf{PLUS} Zeichen anwählen
@@ -141,56 +142,99 @@ Scalable Groups umfassen eine Gruppierung von Benutzern, Endgeräten oder Ressou
 \end{enumerate}
 Die erstellte Scalable Group ist nun auch im DNA Center verfügbar und kann verwendet werden um Policies zu definieren.
 
-\subsubsection{Access Control Contract}
-Ein Zugriffsvertrag ist eine Security Group Access Control List (SGACL). Sie definiert das Regelwerk, dass die Netzwerkinteraktion zwischen Quelle und Ziel in einer Zugriffskontrollrichtlinie regelt.
-
 \subsubsection{Group-based Access Control Policy}
-Gruppenbasierte Zugriffskontrollrichtlinien sind Security Group Access Control Lists (SGACLs). DNA Center hat den Cisco ISE integriert, um den Prozess der Erstellung und Pflege von SGACLs zu vereinfachen. Während der initialen Integration von DNA Center und Cisco ISE werden skalierbare Gruppen und Richtlinien, die in Cisco ISE vorhanden sind, an das DNA Center weitergegeben und in das standardmäßige virtuelle Netzwerk eingefügt.
+\textit{Group-based Access Control Policies} regeln die Kommunikation zwischen Scalable Groups. Diese Policies können im DNA Center definiert werden und werden mit dem ISE synchronisiert, damit diese den Netzwerkgeräten zur Verfügung stehen.
 
 Das folgende Beispiel zeigt den Prozess der Authentifizierung und Zugriffskontrolle, den ein Benutzer durchläuft, wenn er sich in das Netzwerk einloggt:
 \begin{enumerate}
-	\item Ein Benutzer verbindet sich mit einem Port auf einem Switch und stellt seine Zugangsdaten zur Verfügung.
-	\item Der Switch kontaktiert Cisco ISE.
-	\item Cisco ISE authentifiziert den Benutzer und lädt die SGACLs auf den Port, mit dem der Benutzer verbunden ist.
-	\item  Dem Benutzer wird der Zugang zu bestimmten Benutzern oder Geräten (Servern) auf der Grundlage des in die SGACL gewährt.
+	\item Ein Benutzer verbindet sich mit dem Netzwerk.
+	\item Der Benutzer authentifiziert sich am ISE.
+	\item Der Switch lädt alle relevanten SGTs und SGACLs vom ISE.
+	\item  Dem Benutzer wird der Zugang zu bestimmten Benutzern oder Geräten auf Grundlage der definierten Policies gewährt.
 \end{enumerate}
 
-\subsubsection{Workflow}
+\paragraph{Workflow}
 Workflow zur Konfiguration einer gruppenbasierten Zugriffskontrollrichtlinie.
 
 \begin{table}[H]
 	\rowcolors{2}{gray!25}{white}
 	\centering
-	\begin{tabularx}{\textwidth}{p{2 cm} | X | p{2 cm}}
+	\begin{tabularx}{\textwidth}{| p{2 cm} | X |}
 		\rowcolor{gray!50}
-		\textbf{Schritt} & \textbf{Aktion} & \textbf{Zweck} \\
+		\hline
+		\textbf{Schritt} & \textbf{Aktion}  \\
 		\hline	
-		1 & Erstellen eines virtuellen Netzwerkes. Abhängig von der Konfiguration des Unternehmens und seinen Zugriffsanforderungen und -beschränkungen können die Gruppen in verschiedene virtuelle Netzwerke unterteilt werden, um eine weitere Segmentierung zu ermöglichen. & (Optional) \\
-		2 & Erstellen einer skalierbaren Gruppe. Nach der Integration von Cisco ISE werden die in ISE vorhandenen skalierbaren Gruppen in das DNA Center übertragen. Wenn eine skalierbare Gruppe nicht besteht, kann diese direkt angelegt werden. & (Optional) \\
-		3 & Erstellen eines Zugriffskontrollvertrag (access control contract). Ein Contract definiert eine Reihe von Regeln, die eine Aktion (erlauben oder verweigern), die Netzwerkgeräte basierend auf dem Datenverkehr durchführen, der bestimmten Protokollen oder Ports entspricht. & \\
-		4 & Erstellen einer gruppenbasierten Zugriffskontrollrichtlinie (group-based access control policy). Die Zugriffskontrollrichtlinie definiert den Zugriffskontrollvertrag, der den Verkehr zwischen den skalierbaren Quell- und Zielgruppen regelt. & \\
-		
+		1 & Erstellen eines virtuellen Netzwerkes. Abhängig von der Konfiguration des Unternehmens und seinen Zugriffsanforderungen und -beschränkungen können die Gruppen in verschiedene virtuelle Netzwerke unterteilt werden, um eine weitere Segmentierung zu ermöglichen. \\
+		\hline
+		2 & Erstellen einer skalierbaren Gruppe. Nach der Integration von Cisco ISE werden die in ISE vorhandenen skalierbaren Gruppen in das DNA Center übertragen. Wenn eine skalierbare Gruppe nicht besteht, kann diese direkt angelegt werden. \\
+		\hline
+		3 & Erstellen eines Contracts. Ein Contract definiert eine Reihe von Regeln, die eine Aktion (erlauben oder verweigern), die Netzwerkgeräte basierend auf dem Datenverkehr durchführen, der bestimmten Protokollen oder Ports entspricht.  \\
+		\hline
+		4 & Erstellen einer \textit{Group-based Access Control Policy}. Die Policy definiert den Zugriffskontrollvertrag, der den Verkehr zwischen den skalierbaren Quell- und Zielgruppen regelt. \\
+		\hline
 	\end{tabularx}
 	\caption{Workflow zur Erstellung der Access Control Policies}
 	\label{tab:Workflow zur Erstellung der Access Control Policies}
 \end{table}
 
-\subsection{Erstellen einer Group-Based Access Control (Fabric)}
+\paragraph{Erstellen eines Contracts}
 \begin{enumerate}
-	\item Wähle auf der DNA Center Homepage \textit{Policy $\rightarrow$ Contracts $\rightarrow$ Access Contracts}.
-	\item Klick \textit{Add Contract}.
-	\item Im Dialogfenster des \textit{Contract Editor} kann ein Namen und eine Beschreibung für den Vertrag erfasst werden.
-	\item Wähle in der Dropdown-Liste \textit{Implicit Action} entweder \textit{Deny} oder \textit{Permit}.
-	\item Wähle aus der Dropdown-Lste in der Spalte \textit{Port/Protocol} einen Port oder ein Protokoll aus. Hinweis: Wenn das DNA Center nicht über den Port oder das Protokoll verfügt welches benötigt wird, kann dies selbst erstellt werden. Klicke hierzu auf \textit{Add Port/Protocol}, füge alle erforderlichen Informationen hinzu und klicke auf \textit{Save}.
-	\item (Optional) Um weitere Regeln in den Vertrag aufzunehmen, klicke auf \textit{Add} und wiederhole Schritt 5 und 6.
-	\item Klicke \textit{Save}.
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Contracts $\rightarrow$ Access Contracts} navigieren
+	\item \textit{Add Contract} klicken
+	\item Im Dialogfenster des \textit{Contract Editor} kann ein Name und eine Beschreibung für den Contract erfasst werden
+	\item \textit{Implicit Action} \textit{Deny} oder \textit{Permit} wählen
+	\item \textit{Port/Protocol} wählen
+	\item Mit \textit{Save} speichern
 \end{enumerate}
 
-\subsection{Provision}
+\paragraph{Erstellen einer Group-Based Access Control Policy}
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Policy Administration $\rightarrow$ Group-Baed Access Control} navigieren
+	\item \textit{Add Policy} klicken
+	\item \textit{Name} und \textit{Contract} angeben
+	\item \textit{Scalable Groups} für Source und Destination in die gewünschten Felder ziehen
+	\item Mit \textit{Save} speichern
+\end{enumerate}
+
+\subsection{LAN Automation}
+Die LAN Automation nimmt die Netzwerkgeräte mittels PnP in Betrieb und konfiguriert das Underlay Netzwerk für die Fabric und stellt somit das Routing innerhalb des Netzwerks sicher.
+
 \subsubsection{Seed Device manuell konfigurieren}
+Ein Seed Device ist nötig, damit die restlichen Geräte automatisch in Betrieb genommen werden können.
+\begin{enumerate}
+	\item VLAN Interface definieren, welches das \textit{Seed Device} mit dem Legacy Netzwerk verbindet und sicherstellt, dass das \textit{Seed Device} vom DNA Center aus erreichbar ist
+	\item IP Adresse auf dem Loopback Interface konfigurieren (muss für das DNA Center erreichbar sein)
+	\item Die im DNA Center konfigurierten Device Credentials setzen
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Discovery} navigieren
+	\subitem \textit{Discovery Name} definieren
+	\subitem \textit{Range} wählen und eine Range angeben in der sich die Loopback Adresse des Seed Devices befindet
+	\subitem \textit{Preferred Management IP} auf \textit{Use Loopback} setzen
+	\item Discovery mittels \textit{Start} starten
+\end{enumerate}
+
+Das Seed Device wird nach dem erfolgreichen Discovery im Inventory auftauchen und kann nun zur LAN Automation verwendet werden.
 
 \subsubsection{LAN Automation durchführen}
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Provision $\rightarrow$ Devices $\rightarrow$ Inventory} navigieren
+	\item \textit{LAN Automation} klicken
+	\item \textit{Site, Seed Device, IP Pool} wählen
+	\item Alle Ports wählen, über die weitere Netzwerkgeräte verbunden sind, die mittels \textit{LAN Automation} konfiguriert werden sollen
+	\item \textit{LAN Automation} mittels Klick auf \textit{Start} starten
+\end{enumerate}
 
+Nun wird automatisch ein DHCP Server auf dem Seed Device konfiguriert, der den Geräten mitteilt wo sich der PnP Server befindet.
+
+\begin{enumerate}
+	\item Konfiguration eines Devices mittels \textit{write erase} löschen
+	\item Gerät mittels \textit{reload} neu starten
+	\subitem Das Gerät wird während dem Start den PnP Server erkennen und sich automatisch konfigurieren
+	\item Die Schritte 1 und 2 wiederholen, bis alle Geräte konfiguriert sind
+\end{enumerate}
+
+Die Geräte sollten nacheinander in Betrieb genommen werden. Wird dies parallel gemacht, kann es zu Problemen mit PnP kommen.
+
+\subsection{Provisioning}
 \subsubsection{Netzwerkkomponenten Provisionieren}
 
 \subsubsection{Fabric erstellen}
