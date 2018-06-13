@@ -45,6 +45,11 @@
 \let\oldsection\section
 \renewcommand\section{\clearpage\oldsection}
 
+%Fix for to long Roman letters
+\makeatletter 
+\renewcommand{\@pnumwidth}{5em} 
+\makeatother
+
 %Set space around and between lists
 \setlist[enumerate]{noitemsep, topsep=0cm}
 \setlist[itemize]{noitemsep, topsep=0cm}
