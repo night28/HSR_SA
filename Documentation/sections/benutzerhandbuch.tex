@@ -120,6 +120,7 @@ Virtuelle Netzwerke dienen der Isolierung der Netzwerkbenutzer und dienen somit 
 \end{itemize}
 
 \paragraph{Virtual Network hinzufügen}
+~\\
 \begin{enumerate}
 	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Virtual Network} navigieren.
 	\item \textbf{PLUS} Zeichen anwählen
@@ -132,6 +133,7 @@ Virtuelle Netzwerke dienen der Isolierung der Netzwerkbenutzer und dienen somit 
 Scalable Groups umfassen eine Gruppierung von Benutzern, Endgeräten oder Ressourcen, die dieselben Anforderungen an die Zugriffskontrolle stellen. Diese Gruppen, in Cisco ISE als Sicherheitsgruppen oder SGs bekannt, werden auf dem Cisco ISE definiert. 
 
 \paragraph{Scalable Group hinzufügen}
+~\\
 \begin{enumerate}
 	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Registry $\rightarrow$ Scalable Groups} navigieren
 	\item \textit{Add Groups} wählen
@@ -154,6 +156,7 @@ Das folgende Beispiel zeigt den Prozess der Authentifizierung und Zugriffskontro
 \end{enumerate}
 
 \paragraph{Workflow}
+~\\
 Workflow zur Konfiguration einer gruppenbasierten Zugriffskontrollrichtlinie.
 
 \begin{table}[H]
@@ -178,6 +181,7 @@ Workflow zur Konfiguration einer gruppenbasierten Zugriffskontrollrichtlinie.
 \end{table}
 
 \paragraph{Erstellen eines Contracts}
+~\\
 \begin{enumerate}
 	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Contracts $\rightarrow$ Access Contracts} navigieren
 	\item \textit{Add Contract} klicken
@@ -233,25 +237,64 @@ Nun wird automatisch ein DHCP Server auf dem Seed Device konfiguriert, der den G
 \end{enumerate}
 
 Die Geräte sollten nacheinander in Betrieb genommen werden. Wird dies parallel gemacht, kann es zu Problemen mit PnP kommen.
+Sobald die LAN Automation auf den Geräten erfolgreich durchgeführt wurde, erscheinen diese im Inventar.
 
 \subsection{Provisioning}
-\subsubsection{Netzwerkkomponenten Provisionieren}
-
 \subsubsection{Fabric erstellen}
-\paragraph{Border + CP festlegen}
-\paragraph{Intermediate Nodes festlegen}
-\paragraph{Edge Nodes festlegen}
+Im ersten Schritt des Provisionings muss eine Fabric erstellt werden. 
+
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Provision $\rightarrow$ Fabric} navigieren
+	\item \textit{Add} klicken
+	\item \textit{Campus} wählen und einen Namen für die Fabric angeben
+	\item \textit{Add} klicken um die Fabric zu speichern
+\end{enumerate}
+
+\subsubsection{Devices zur Fabric hinzufügen}
+\paragraph{Border + CP Nodes definieren}
+~\\
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Provision $\rightarrow$ Fabric} navigieren
+	\item Die gewünschte Fabric wählen
+	\item Klick auf den gewünschten Border und \textit{Add as Border + CP} wählen
+	\item \textit{Local AS Number} angeben
+	\item \textit{Layer 3 Handoff} anklicken und das Interface zum Legacy Netzwerk definieren
+	\subitem \textit{Remote AS} und \textit{VNs} angeben
+	\subitem \textit{Save} klicken um zu speichern
+	\item \textit{Add} klicken um den Border Node zu speichern
+	\item Schritte 3 bis 5 wiederholen falls mehrere Border definiert werden
+\end{enumerate}
+Auf den Border Nodes wurde nun BGP für die Anbindung an das Legacy Netzwerk konfiguriert. Daher muss auf dem Legacy Device, das mit den Border Nodes verbunden ist, die Gegenseite für das BGP Routing konfiguriert werden.
+
+\paragraph{Intermediate und Edge Nodes definieren}
+~\\
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Provision $\rightarrow$ Fabric} navigieren
+	\item Die gewünschte Fabric wählen
+	\item Klick auf den gewünschten Node und \textit{Add to Fabric} wählen
+	\item Klick auf den gewünschten Node und \textit{Device Role} definieren
+\end{enumerate}
+
+Sobald alle Geräte zur Fabric hinzugefügt sind, kann die Fabric mittels \textit{Save} gespeichert werden.
+
+\subsubsection{Netzwerkkomponenten Provisionieren}
+Damit die definierten Konfigurationen auf die Geräte geschrieben werden, muss das Provisioning ausgeführt werden.
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Provision $\rightarrow$ Devices $\rightarrow$ Inventory} navigieren
+	\item Gewünschtes Device markieren
+	\item Provisioning mittels \textit{Actions $\rightarrow$ Provision} ausführen 
+\end{enumerate}
 
 \subsubsection{Host Onboarding}
 
 \paragraph{Virtual Networks auswählen}
 ~\\
-Um ein Virtual Network verwenden zu können, muss dieses in der entsprechenden Fabric zuerst aktiviert und ein IP Pool zugewiesen werden. 
+Um ein Virtual Network verwenden zu können, muss dieses in der entsprechenden Fabric zuerst aktiviert und ein IP Pool zugewiesen werden.
 \begin{enumerate}
-	\item Ausgehend vom DNA Center Dashboard nach \textit{Provision $\rightarrow$ Fabric $\rightarrow$ FABRIC\_NAME $\rightarrow$ Host Onboarding} navigieren. 
-	\item Im Abschnitt \textit{Virtual Networks} werden nun alle gewünschten \textit{Virtual Networks} ausgewählt. 
-	\item Im neuen Popup wird der gewünschte IP Pool ausgewählt. 
-	\item Der Dialog wird mit einem Klick auf \textit{Update} geschlossen.
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Provision $\rightarrow$ Fabric $\rightarrow$ FABRIC\_NAME $\rightarrow$ Host Onboarding} navigieren
+	\item Im Abschnitt \textit{Virtual Networks} werden nun alle gewünschten \textit{Virtual Networks} ausgewählt
+	\item Im neuen Popup wird der gewünschte IP Pool ausgewählt
+	\item Der Dialog wird mit einem Klick auf \textit{Update} geschlossen
 \end{enumerate}
 
 
@@ -259,11 +302,35 @@ Um ein Virtual Network verwenden zu können, muss dieses in der entsprechenden F
 ~\\
 Für jeden Port, der nicht bereits für die Konnektivität zwischen den Fabric Nodes verwendet wird, kann ein Addresspool, eine Gruppe und eine Authentifizierungsmethode (Siehe: \ref{authentifizierungsmethoden}) definiert werden. 
 \begin{enumerate}
-	\item Ausgehend vom DNA Center Dashboard nach \textit{Provision $\rightarrow$ Fabric $\rightarrow$ FABRIC\_NAME $\rightarrow$ Host Onboarding} navigieren. 
-	\item Im \textit{Select Port Assignment} werden die zu konfigurierende Ports \textit{Virtual Networks} ausgewählt. 
-	\item Für die ausgewählten Ports wird nun ein \textit{Address Pool}, \textit{Scalable Group}, \textit{Voice Pool} und eine Authentifizierungsmethode gewählt. 
-	\item Die Änderungen werden mit einem Klick auf \textit{Save} gespeichert. 
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Provision $\rightarrow$ Fabric $\rightarrow$ FABRIC\_NAME $\rightarrow$ Host Onboarding} navigieren 
+	\item Im \textit{Select Port Assignment} werden für die zu konfigurierenden Ports \textit{Virtual Networks} ausgewählt
+	\item Für die ausgewählten Ports wird nun ein \textit{Address Pool}, \textit{Scalable Group}, \textit{Voice Pool} und eine Authentifizierungsmethode gewählt
+	\item Die Änderungen werden mit einem Klick auf \textit{Save} gespeichert 
 \end{enumerate}
 
+\subsection{Debugging}
+Untenstehend sind die wichtigsten Befehle für das Debugging innerhalb der Fabric aufgeführt.
 
+\subsubsection{Policies / Authentication}
 
+\begin{lstlisting}[language=bash]
+sh cts role-based permissions # Policies anzeigen
+sh cts role-based sgt-map vrf VRF_NAME all # Zuweisungen von IPs \
+    zu SGTs anzeigen
+sh cts role-based counters # Counter der Policies anzeigen
+sh cts rbacl # Role Based ACLs anzeigen
+sh cts server-list # CTS Server anzeigen
+sh AAA servers # AAA Server anzeigen
+\end{lstlisting}
+
+\subsubsection{Connectivity / LISP}
+
+\begin{lstlisting}[language=bash]
+sh ip lisp eid-table sum # EID VRFs anzeigen
+sh ip cef vrf VRF_NAME DESTINATION  # Next Hop zu \
+    einer Destination anzeigen
+sh ip lisp eid-table vrf VRF_NAME map-cache # LISP Map Cache anzeigen
+sh ip lisp eid-table vrf Mitarbeiter database # LISP Database anzeigen
+sh isis neighbors detail # IS-IS Neighbors anzeigen
+sh ip route vrf Mitarbeiter # Routing Table eines VN anzeigen
+\end{lstlisting}
