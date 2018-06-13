@@ -1,7 +1,7 @@
 \section{Installationsanleitung}
 
 \subsection{DNA Center Installation}
-Die nachfolgende Installationsanleitung wurde aus der Anleitung (Siehe: \cite{cisco-dna-installation-guide-1-2-chapter-configure}) entnommen. Informationen die für unsere Installation nicht relevant sind, wurden weggelassen. 
+Teile der nachfolgenden Installationsanleitung wurden aus den Anleitungen \cite{cisco-dna-installation-guide-1-2-chapter-configure}, \cite{cisco-dna-installation-guide}, \cite{cisco-dna-installation-guide-1-2-chapter-install} entnommen. Informationen die für die Installation nicht relevant sind, wurden weggelassen. 
 
 Das DNA Center kann auf zwei verschiedene Modi aufgesetzt werden. Einerseits als Standalone Version oder als Cluster. Beim Cluster werden mehrere DNA Center Instanzen beziehungsweise Appliances benötigt. Diese Installationsanleitung behandelt nur die Variante \textit{Standalone}.
 
@@ -13,25 +13,25 @@ Um die Installation über KVM durchzuführen zu können, muss zuerst Cisco IMC a
 
 \paragraph{Schritt 2}
 ~\\
-Anschliessend greifen Sie mit einem Computer, der im oben gewählten Subnet angeschlossen ist, mit einen modernen Webbrowser (z.B. Firefox Version 60) auf den CIMC zu (\textit{https://CIMC\_IP\_ADDRESS}) und loggen Sie sich mit den Standard Anmeldedaten (Benutzername: admin, Passwort: password) ein. 
+Anschliessend kann mit folgendem Link (\textit{\url{https://CIMC\_IP\_ADDRESS}}) auf die CIMC zugegriffen werden. Auf diesem muss mit den Standard Anmeldedaten (Benutzername: admin, Passwort: password) eingeloggt werden. 
 
 \subsection{Konfiguration des Master Nodes}
-Wir haben uns an diese Anleitung (Siehe: \cite{cisco-dna-installation-guide} gehalten. Zusätzlich haben wir neue Elemente aus \cite{cisco-dna-installation-guide-1-2-chapter-install} genommen.)
+
 \paragraph{Schritt 1}
 ~\\
-Nachdem Sie sich wie im vorherigen Abschnitt beschrieben im DNA Center eingeloggt haben, wählen Sie im Cisco IMC \textit{Host Power $\rightarrow$ Power Cycle} und drücken Sie anschliessend auf OK. 
+Nachdem wie im vorherigen Abschnitt beschrieben im DNA Center eingeloggt wurde, kann im Cisco IMC \textit{Host Power $\rightarrow$ Power Cycle} gewählt und bestätigt werden.
 
 \paragraph{Schritt 2}
 ~\\
-Wählen Sie im Cisco IMC \textit{Launch KVM $\rightarrow$ Java based KVM}.
+Im Cisco IMC \textit{Launch KVM $\rightarrow$ Java based KVM} auswählen.
 
 \paragraph{Schritt 3}
 ~\\
-Nun sind wir in der KVM Session und sehen den \textit{Maglev Configuration Wizard}. Wählen Sie \textit{Start a DNA-C Cluster}.
+Nun wird der \textit{Maglev Configuration Wizard} angezeigt und es kann \textit{Start a DNA-C Cluster} ausgewählt werden.
 
 \paragraph{Schritt 4}
 ~\\
-Im nächsten Schritt muss die IP Konfiguration für die DNA Center Appliance angegeben werden. Es muss mindestens ein Interface konfiguriert werden und als Cluster Link definiert sein. Statische Routen können definiert werden, sind aber optional. Klicken Sie jeweils auf \textit{next} um zur nächsten Ansicht zu gelangen.
+Im nächsten Schritt muss die IP Konfiguration für die DNA Center Appliance angegeben werden. Es muss mindestens ein Interface konfiguriert und als Cluster Link definiert sein. Statische Routen können definiert werden, sind aber optional. Mit einem Klick auf Next erscheint der nächste Konfigurationsschritt im Wizard.
 
 \begin{figure}[H]
 	\centering
@@ -42,7 +42,7 @@ Im nächsten Schritt muss die IP Konfiguration für die DNA Center Appliance ang
 
 \paragraph{Schritt 5}
 ~\\
-Anschliessend muss die Virtuelle Cluster IP Adresse hinterlegt werden. Da es sich in unserem Fall um eine Standalone Installation handelt, kann dieser Schritt übersprungen werden. 
+Anschliessend kann die virtuelle Cluster IP Adresse hinterlegt werden. Da es sich in diesem Fall um eine Standalone Installation handelt, kann dieser Schritt übersprungen werden.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=9cm]{img/installguide/installguide-step11.PNG}
@@ -52,7 +52,7 @@ Anschliessend muss die Virtuelle Cluster IP Adresse hinterlegt werden. Da es sic
 
 \paragraph{Schritt 6}
 ~\\
-In diesem Schritt des Wizards werden alle User Account Einstellungen festgelegt. Hierbei ist zu beachten, dass das "Linux Password" für den SSH Zugriff benötigt wird und die "Administrator Passphrase" für den Zugang zum Web Interface. Klicken Sie anschliessend auf \textit{next}.
+In diesem Schritt des Wizards werden alle User Account Einstellungen festgelegt. Hierbei ist zu beachten, dass das "Linux Password" für den SSH Zugriff benötigt wird und die "Administrator Passphrase" für den Zugang zum Web Interface. 
 
 \begin{figure}[H]
 	\centering
@@ -63,7 +63,7 @@ In diesem Schritt des Wizards werden alle User Account Einstellungen festgelegt.
 
 \paragraph{Schritt 7}
 ~\\
-In diesem Schritt wird der gewünschte NTP Server eingegeben. In unserem Fall \url{pool.ntp.org}.
+In diesem Schritt wird der gewünschte NTP Server eingegeben. Im vorliegenden Fall \url{pool.ntp.org}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=9cm]{img/installguide/installguide-step14.PNG}
@@ -73,7 +73,7 @@ In diesem Schritt wird der gewünschte NTP Server eingegeben. In unserem Fall \u
 
 \paragraph{Schritt 8}
 ~\\
-Das DNA Center benötigt für das interne Netzwerk ein Subnet. Geben Sie das entsprechende Subnet ein.
+Das DNA Center benötigt für das interne Netzwerk zwei Subnetze. Dazu müssen die entsprechenden Subnetze eingegeben werden, welche mindestens aus einem /21 bestehen. Diese Netzwerke müssen nicht von ausserhalb erreichbar sein.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=9cm]{img/installguide/installguide-step16.PNG}
@@ -83,11 +83,11 @@ Das DNA Center benötigt für das interne Netzwerk ein Subnet. Geben Sie das ent
 
 \paragraph{Schritt 9}
 ~\\
-Schliessen Sie den Wizard ab in dem Sie im Dialog entweder \textit{next} oder \textit{proceed} anwählen.
+Der Wizard wird mit einem Klick auf \textit{next} oder \textit{proceed} abgeschlossen.
 
 \paragraph{Schritt 10}
 ~\\
-Nun wird das DNA Center aufgesetzt. Dieser Prozess dauert mehrere Stunden. 
+Nun wird das DNA Center aufgesetzt. \textbf{Achtung:} Dieser Prozess dauert mehrere Stunden. 
 
 \begin{figure}[H]
 	\centering
@@ -96,10 +96,10 @@ Nun wird das DNA Center aufgesetzt. Dieser Prozess dauert mehrere Stunden.
 	\label{fig:dna-center-install-step-install}
 \end{figure}
 
-\subsection{Einloggen in Web GUI}
-Nachdem der \textit{Maglev Configuration Wizard} die Installation angeschlossen hat, kann das DNA Center über das Webinterface aufgerufen werden.
+\subsection{Einloggen im Web GUI}
+Nachdem der \textit{Maglev Configuration Wizard} die Installation abgeschlossen hat, kann das DNA Center über das Webinterface aufgerufen werden.
 
-Dazu wird mit einem gängigen Webbrowser die entsprechende Url aufgerufen. In unserem Fall \url{https://10.22.0.100}.
+Dazu wird mit einem gängigen Webbrowser die zuvor definierte IP-Adresse aufgerufen. In folgendem Fall \url{https://10.22.0.100}.
 
 Anschliessend erfolgt das Login mit den im vorhergehenden Schritt definierten Anmeldedaten. 
 
@@ -111,7 +111,7 @@ Anschliessend erfolgt das Login mit den im vorhergehenden Schritt definierten An
 \end{figure}
 
 \subsection{Cisco Credentials}
-Gleich zu Beginn verlangt das DNA Center die Cisco Credentials die mit dem Smart Account verknüpft sind, in welchem die Lizenzen verwaltet werden. Diese Informationen können auch zu einem späteren Zeitpunkt noch eingetragen werden.
+Gleich zu Beginn verlangt das DNA Center die Cisco Credentials, die mit dem Smart Account verknüpft sind, in welchem die Lizenzen verwaltet werden. Diese Informationen können auch zu einem späteren Zeitpunkt noch eingetragen werden.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=9cm]{img/sc_006.png}
@@ -121,7 +121,7 @@ Gleich zu Beginn verlangt das DNA Center die Cisco Credentials die mit dem Smart
 
 \subsection{IP Address Manager - IPAM Server}
 
-Im nächsten Schritt kann ein IPAM Server angegeben werden. Diese Einstellung kann ebenfalls später angepasst werden, weshalb wir diesen Schritt zu Beginn übersprungen haben. In unserem Fall haben wir den Infoblox Server mit der Addresse \url{10.22.0.21} eingegeben. 
+Im nächsten Schritt kann ein IPAM Server angegeben werden. Diese Einstellung ist optional und kann ebenfalls später angepasst werden. 
 
 \begin{figure}[H]
 	\centering
@@ -151,30 +151,30 @@ Danach ist die initiale Konfiguration beendet und das DNA Center Dashboard wird 
 \end{figure}
 
 \subsection{ISE Integration}
-Nebst dem Infoblox muss auch noch der Cisco ISE integriert werden. Es gilt dabei zu beachten, dass der Cisco ISE in der richtigen Version vorliegen muss. In unserem Falle \textbf{2.3.0.298}.
-Damit eine Verknüpfung zwischen dem Cisco DNA Center und dem Cisco ISE hergestellt werden kann, müssen im Cisco ISE zuerst einige Einstellungen vorgenommen werden. 
-Alle diese Schritte sind dieser Anleitung (Siehe: \cite{cisco-dna-appliance-installation-guide-release-1-chapter-post-installation-task}) entnommen worden.
+Für das Identity und Policy Management muss eine Cisco ISE integriert werden. Es gilt dabei zu beachten, dass die Cisco ISE in der richtigen Version vorliegen muss. Genauere Details dazu müssen der aktuellsten offiziellen Installationsanleitung von Cisco entnommen werden, da sich dies bei jedem Release ändern kann.
+Damit eine Verknüpfung zwischen dem Cisco DNA Center und der Cisco ISE hergestellt werden kann, müssen im Cisco ISE zuerst einige Einstellungen vorgenommen werden. 
+Die genauen Einstellungen für die ISE Integration können der folgenden Anleitung entnommen werden (Siehe: \cite{cisco-dna-appliance-installation-guide-release-1-chapter-post-installation-task}).
 
 \subsubsection{ISE Vorbereiten}
 
 \begin{enumerate}
 	\item In Cisco ISE einloggen.
 	\item \textit{Administration $\rightarrow$ Deployment} auswählen.
-	\item Gewünschten ISE node auswählen und in der Nachfolgenden Ansicht. \textit{Enable SXP Service}, \textit{Enable Passive Identity Service} und \textit{pxGrid} mit einem Haken anwählen. 
-	\item Speichern drücken.
-	\item Im \textit{Profiling Configuration} Tab muss mindestens \textit{RADIUS} und \textit{SNMPQUERY} ausgewählt sein. 
-	\item Unter \textit{Administration $\rightarrow$ Settings $\rightarrow$ ERS Settings} \textit{Enable ERS for Read/Write} auswählen und mit \textbf{OK} bestätigen. 
+	\item Gewünschten ISE Node auswählen und in der nachfolgenden Ansicht \textit{Enable SXP Service}, \textit{Enable Passive Identity Service} und \textit{pxGrid} mit einem Haken anwählen
+	\item Speichern drücken
+	\item Im \textit{Profiling Configuration} Tab muss mindestens \textit{RADIUS} und \textit{SNMPQUERY} ausgewählt sein
+	\item Unter \textit{Administration $\rightarrow$ Settings $\rightarrow$ ERS Settings} \textit{Enable ERS for Read/Write} auswählen und mit \textit{OK} bestätigen
 \end{enumerate}
 
 \subsubsection{Cisco ISE im DNA Center hinterlegen}
 \begin{enumerate}
-	\item In Cisco DNA Center Web GUI einloggen.
-	\item System Settings auswählen (Zahnrad oben rechts).
-	\item Cisco ISE Panel auswählen.
-	\item \textit{Configure Setting} wählen.
-	\item Unter \textit{Settings- Auhentication and Policy Servers} auf das grosse Plus (+) drücken. 
-	\item Im neuen Dialog Management IP Adresse, Shared Secret, Username, Password, FQDN und  Subscriber Name eingeben. 
-	\item Update wählen. 
+	\item In Cisco DNA Center Web GUI einloggen
+	\item System Settings auswählen (Zahnrad oben rechts)
+	\item Cisco ISE Panel auswählen
+	\item \textit{Configure Setting} wählen
+	\item Unter \textit{Settings- Auhentication and Policy Servers} auf das grosse Plus (+) drücken
+	\item Im neuen Dialog Management IP Adresse, Shared Secret, Username, Password, FQDN und  Subscriber Name eingeben
+	\item Update wählen
 \end{enumerate}
 
 \begin{figure}[H]
