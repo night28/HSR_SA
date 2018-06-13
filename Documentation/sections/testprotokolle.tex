@@ -49,7 +49,7 @@ Die Policy ist nun auf allen nötigen Geräten deployed und wird von diesen enfo
 	\testptrow{3}{Restore erstellen via \textit{Restore} neben dem gewünschten Backup}{DNA Center wird auf den Stand vom gewählten Backup zurückgesetzt}{DNA Center wurde auf den gewünschten Stand zurückgesetzt}{OK}
 }
 
-\subsubsection{Zusammenfassung UC02}
+
 Es kann ein Backup erstellt werden und auch ein Restore eines zuvor erstellten Backups ist möglich. Leider ist das Erfassen, Bearbeiten und Löschen eines Backup Servers enorm unzuverlässig und hat mehrfach zu kompletten Abstürzen des DNA Centers geführt. \\
 Zudem funktioniert der Backup Schedule nicht. Backups werden nicht automatisch ausgeführt, sind also nur manuell möglich. Auch ein Restore einzelner Komponenten des DNA Centers ist nicht vorgesehen und es gibt kein komplettes Backup des DNA Centers. Einzelne Teile wie zum Beispiel Assurance werden nicht gesichert. \\
 Da die Backup Funktionalität des DNA Centers sehr eingeschränkt ist und nur unzuverlässig funktioniert, wird der Use Case "Backup und Restore" nicht vollständig erfüllt.
@@ -63,7 +63,7 @@ Da die Backup Funktionalität des DNA Centers sehr eingeschränkt ist und nur un
 	\testptrow{4b}{Cronjob wird ausgeführt und versendet Report per Slack}{Report wird per Slack versendet.}{Nicht implementiert}{NOT OK}
 }
 
-\subsubsection{Zusammenfassung UC03}
+
 Mit dieser Lösung ist ein sehr rudimentäres Reporting implementiert worden. Es wird lediglich eine Liste aller Netzwerkgeräte, sowie eine Liste aller Hosts mit den wichtigsten Informationen und dem Zustand der Geräte ausgegeben. Wünschenswert wären natürlich wesentlich mehr Informationen, insbesondere aus dem Bereich Assurance. Leider unterstützt die API des aktuellen Release 1.1.6 diese Funktionien nicht. Im Release 1.2 ist einiges mehr vorhanden, aber nach wie vor als Early Field Trial (EFT) gekennzeichnet. 
 Eine sinnvolle Reporting Funktion ist daher mit den aktuell verfügbaren APIs des DNA Centers nicht realisierbar.
 \pagebreak
@@ -95,7 +95,7 @@ Die obigen Informationen sind nur theoretisch und konnten in der Testumgebung ni
 	\testptrow{6}{User erhält die korrekten Policies}{User erreicht dieselben Ressourcen wie zuvor in Gebäude 1}{User erreicht dieselben Ressourcen wie zuvor n Gebäude 1}{OK}
 }
 
-\subsubsection{Zusammenfassung UC05}
+
 Benutzermobilität funktioniert in einer vom DNA Center verwalteten Umgebung sehr gut. In unseren Tests wurden sogar bestehende SSH Sessions vom alten an den neuen Standort übernommen. 
 \pagebreak
 \subsection{UC06: Degradation}
@@ -156,7 +156,7 @@ Dieses Vorgehen wird von Cisco so empfohlen, konnte aber in unserer Testumgebung
 	\testptrow{4}{Die Scalable Group ist erstellt.}{In der Liste der Scalable Groups wird die neu erstellte Gruppe angezeigt.}{Da man immernoch in der ISE Ansicht ist, muss zuerst zum alten Tab des DNA Centers gewechselt werden. Anschliessend muss die Seite neu geladen werden. Die neue erstellte Gruppe wird angezeigt.}{OK}
 }
 
-\subsubsection{Zusammenfassung UC09: Einstaz von SGT}
+
 Noch nicht alle Funktionen können komplett im DNA Center erledigt werden. Ein Teil der Funktionen erfolgt weiterhin über die GUI der anderen Komponenten. 
 
 \pagebreak
@@ -173,7 +173,7 @@ Noch nicht alle Funktionen können komplett im DNA Center erledigt werden. Ein T
 	\testptrow{3}{Mit einem Klick auf Save wird der IP Adress Pool hinzugefügt und mit dem Infoblox Server synchronisiert}{Übersicht über vorhandene IP Adress Pools wird angezeigt}{Übersicht über vorhandene IP Adress Pools wird angezeigt mit vorher hinzugefügtem IP Adress Pool}{OK}
 }
 
-\subsubsection{Zusammenfassung UC10}
+
 Der Infoblox konnte im DNA Center relativ einfach hinterlegt werden. Das Erstellen eines IP Adress Pools auf dem DNA Center funktioniert gut und wird auch schnell mit dem Infoblox synchronisiert. Wird jedoch ein IP Adress Pool auf dem Infoblox erstellt, so ist es eher mühsam diesen neuen IP Adress Pool auf dem DNA Center anzuzeigen. Diese Synchronisation erfolgt nicht sauber. Es ist auf dem DNA Center zwar eine Import Funktion vorhanden, welche die IP Adress Pools vom Infoblox importieren sollte, aber nur mässig gut funktioniert. Jedes Netz welches importiert werden soll, muss einzeln erstellt und genaustens angegeben werden. Aus diesem Grunde sollte generell alles was im DNA Center erstellt werden kann, auf diesem erstellt werden und nicht manuell auf dem Infoblox.
 
 \pagebreak

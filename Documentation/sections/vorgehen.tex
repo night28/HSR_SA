@@ -1,5 +1,5 @@
 \section{Vorgehen Versuch 1} \label{versuch1}
-Nachfolgend haben wir das Vorgehen von unserem ersten Versuch in einer Grafik übersichtlich dargestellt. Die Blitze deuten dabei auf ein Hindernis bei welchem mehr Aufwand benötigt wurde hin und das rote X als einen fehlgeschlagenen Versuch, welcher abgebrochen werden musste.
+Nachfolgend wird das Vorgehen des ersten Versuches in einer Grafik übersichtlich dargestellt. Die Blitze deuten dabei auf ein Hindernis bei welchem mehr Aufwand benötigt wurde hin und das rote X als einen fehlgeschlagenen Versuch, welcher abgebrochen werden musste.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=9cm]{img/vorgehen.png}
@@ -218,7 +218,7 @@ Das DNA Center nutzt Plug and Play um automatisch Netzwerkgeräte in Betrieb zu 
 Bei unserem ersten Versuch ein Seed-Device festzulegen, wurde vom DNA Center kein DHCP Server konfiguriert, weshalb wir diesen manuell auf Infoblox eingerichtet haben.\\
 
 
-Cisco PnP kann über die DHCP Optionen 43 und 60 konfiguriert werden ( \cite{cisco-pnp-dhcp}). In unserem Fall haben wir diese Optionen wie nachfolgend auf der Grafik erischtlich auf dem Infoblox Server konfiguriert. Diese sind nötig, damit das Netzwerkgerät den PnP Server findet.
+Cisco PnP kann über die DHCP Optionen 43 und 60 konfiguriert werden (\cite{cisco-pnp-dhcp}). In unserem Fall haben wir diese Optionen wie nachfolgend auf der Grafik erischtlich auf dem Infoblox Server konfiguriert. Diese sind nötig, damit das Netzwerkgerät den PnP Server findet.
 
 \begin{figure}[H]
 	\centering
@@ -360,7 +360,7 @@ Das automatische Softwareupdate hat bei keinem von unseren Switches oder Routern
 	\hline
 	CLI - HTTPS    & Fehlgeschlagen (siehe \ref{fig:dna-center-provision-updates-2}) \\
 	\hline
-	CLI - SCP      & Fehlgeschlagen (siehe \ref{fig:dna-center-provision-updates-3}) \\
+	CLI - SCP      & Fehlgeschlagen (siehe \ref{fig:dna-center-provision-updates-2}) \\
 	\hline
 	CLI - TFTP     & Erfolgreich (siehe \ref{fig:dna-center-provision-updates-4}) \\	
 	\hline
@@ -722,43 +722,43 @@ Aus diesem Grund haben wir uns via SSH auf die Appliance eingelogged und dort na
 # $ sudo ls -lah /etc/maglev/.pki/
 # [sudo] password for maglev: 
 # total 140K
-# drwxr-xr-x 2 root 4.0K May 21 06:20 .
-# drwxr-xr-x 4 root 4.0K May 21 06:20 ..
-# -rw-r--r-- 1 root 1.3K May 17 09:09 apiserver.crt
-# -rw------- 1 root 1.7K May 17 09:09 apiserver.key
-# -rw-r--r-- 1 root 1.2K May 17 09:09 apiserver-kubelet-client.crt
-# -rw------- 1 root 1.7K May 17 09:09 apiserver-kubelet-client.key
-# -r--r--r-- 1 root 1.1K May 17 08:49 ca.crt
-# -rw-r--r-- 1 root 1.7K May 17 08:49 ca.key
-# lrwxrwxrwx 1 root   23 May 17 08:49 ca-key.pem -> /etc/maglev/.pki/ca.crt
-# lrwxrwxrwx 1 root   23 May 17 09:09 ca.pem -> /etc/maglev/.pki/ca.crt
-# -r-------- 1 root 1.7K May 17 08:49 credentialmanager-key.pem
-# -r-------- 1 root  307 May 21 06:20 credentialmanager-openssl.cnf
-# -r--r--r-- 1 root 1.1K May 17 08:49 credentialmanager.pem
-# -r-------- 1 root 1.7K May 17 08:49 encryptionmanager-key.pem
-# -r-------- 1 root  307 May 21 06:20 encryptionmanager-openssl.cnf
-# -r--r--r-- 1 root 1.1K May 17 08:49 encryptionmanager.pem
-# -r-------- 1 root 1.7K May 17 08:49 encryption_seed-key.pem
-# -r--r--r-- 1 root  981 May 17 08:49 encryption_seed.pem
-# -rw-r--r-- 1 root 1.1K May 17 09:09 front-proxy-ca.crt
-# -rw------- 1 root 1.7K May 17 09:09 front-proxy-ca.key
-# -rw-r--r-- 1 root 1.1K May 17 09:09 front-proxy-client.crt
-# -rw------- 1 root 1.7K May 17 09:09 front-proxy-client.key
-# -r-------- 1 root 1.7K May 17 08:49 kong-key.pem
-# -r-------- 1 root  299 May 21 06:20 kong-openssl.cnf
-# -r--r--r-- 1 root 1.1K May 17 08:49 kong.pem
-# -r-------- 1 root 1.7K May 17 08:49 kube-admin-key.pem
-# -r--r--r-- 1 root  977 May 17 08:49 kube-admin.pem
-# -r-------- 1 root 1.7K May 17 08:49 kube-worker-1-key.pem
-# -r-------- 1 root  336 May 21 06:20 kube-worker-1-openssl.cnf
-# -r--r--r-- 1 root 1.1K May 17 08:49 kube-worker-1.pem
-# -r-------- 1 root 1.7K May 17 08:49 maglev-registry-key.pem
-# -r-------- 1 root  472 May 21 06:20 maglev-registry-openssl.cnf
-# -r--r--r-- 1 root 1.3K May 17 08:49 maglev-registry.pem
-# -r-------- 1 root   36 May 17 08:49 passphrase.txt
-# -rw-r--r-- 1 root 1.1K May 21 06:20 registry-ca.pem
-# -rw------- 1 root 1.7K May 17 09:09 sa.key
-# -rw------- 1 root  451 May 17 09:09 sa.pub
+# drwxr-xr-x 2 4.0K May 21 06:20 .
+# drwxr-xr-x 4 4.0K May 21 06:20 ..
+# -rw-r--r-- 1 1.3K May 17 09:09 apiserver.crt
+# -rw------- 1 1.7K May 17 09:09 apiserver.key
+# -rw-r--r-- 1 1.2K May 17 09:09 apiserver-kubelet-client.crt
+# -rw------- 1 1.7K May 17 09:09 apiserver-kubelet-client.key
+# -r--r--r-- 1 1.1K May 17 08:49 ca.crt
+# -rw-r--r-- 1 1.7K May 17 08:49 ca.key
+# lrwxrwxrwx 1   23 May 17 08:49 ca-key.pem -> /etc/maglev/.pki/ca.crt
+# lrwxrwxrwx 1   23 May 17 09:09 ca.pem -> /etc/maglev/.pki/ca.crt
+# -r-------- 1 1.7K May 17 08:49 credentialmanager-key.pem
+# -r-------- 1  307 May 21 06:20 credentialmanager-openssl.cnf
+# -r--r--r-- 1 1.1K May 17 08:49 credentialmanager.pem
+# -r-------- 1 1.7K May 17 08:49 encryptionmanager-key.pem
+# -r-------- 1  307 May 21 06:20 encryptionmanager-openssl.cnf
+# -r--r--r-- 1 1.1K May 17 08:49 encryptionmanager.pem
+# -r-------- 1 1.7K May 17 08:49 encryption_seed-key.pem
+# -r--r--r-- 1  981 May 17 08:49 encryption_seed.pem
+# -rw-r--r-- 1 1.1K May 17 09:09 front-proxy-ca.crt
+# -rw------- 1 1.7K May 17 09:09 front-proxy-ca.key
+# -rw-r--r-- 1 1.1K May 17 09:09 front-proxy-client.crt
+# -rw------- 1 1.7K May 17 09:09 front-proxy-client.key
+# -r-------- 1 1.7K May 17 08:49 kong-key.pem
+# -r-------- 1  299 May 21 06:20 kong-openssl.cnf
+# -r--r--r-- 1 1.1K May 17 08:49 kong.pem
+# -r-------- 1 1.7K May 17 08:49 kube-admin-key.pem
+# -r--r--r-- 1  977 May 17 08:49 kube-admin.pem
+# -r-------- 1 1.7K May 17 08:49 kube-worker-1-key.pem
+# -r-------- 1  336 May 21 06:20 kube-worker-1-openssl.cnf
+# -r--r--r-- 1 1.1K May 17 08:49 kube-worker-1.pem
+# -r-------- 1 1.7K May 17 08:49 maglev-registry-key.pem
+# -r-------- 1  472 May 21 06:20 maglev-registry-openssl.cnf
+# -r--r--r-- 1 1.3K May 17 08:49 maglev-registry.pem
+# -r-------- 1   36 May 17 08:49 passphrase.txt
+# -rw-r--r-- 1 1.1K May 21 06:20 registry-ca.pem
+# -rw------- 1 1.7K May 17 09:09 sa.key
+# -rw------- 1  451 May 17 09:09 sa.pub
 \end{lstlisting}
 
 So konnten wir das alte Zertifikat wiederherstellen (sh. \ref{fig:dna-certificate-replacement} ). Dies war kein Problem, da mit ISE Version 2.3 der Hostname und die IP nicht im Common Name sein müssen. Es wäre aber auch möglich gewesen, mit der CA ein neues zu signieren, da die Passphrase für den Private Key der CA in einem Textfile abgelegt ist.\\
@@ -918,11 +918,13 @@ aaa accounting dot1x default start-stop group dnac-client-radius-group
 aaa accounting update newinfo periodic 600
 aaa accounting exec default start-stop group dnac-network-radius-group
 aaa authorization network dnac-cts-list group dnac-client-radius-group
-aaa authorization exec VTY_author group dnac-network-radius-group local if-authenticated 
+aaa authorization exec VTY_author group dnac-network-radius-group local \
+    if-authenticated 
 aaa authorization exec VTY_author group dnac-network-radius-group local 
 aaa authentication login default local 
 aaa authentication dot1x default group dnac-client-radius-group
-aaa authentication login VTY_authen group dnac-network-radius-group local 
+aaa authentication login VTY_authen group dnac-network-radius-group \
+    local 
 dot1x system-auth-control 
 radius server dnac-radius_10.22.0.22
 address ipv4 10.22.0.22 auth-port 1812 acct-port 1813
@@ -1380,7 +1382,7 @@ iface enxc0742bfff8af inet dhcp
 
 \paragraph{Fedora / RedHat}
 ~\\
-In Red Hat basierten Linux Distributionen kann die Datei "/etc/sysconfig/network-scripts/ifcfg-INTERFACE\_NAME" angepasst werden. Folgende Zeilen müssen hinzugefügt werden:
+In Red Hat basierten Linux Distributionen kann die Datei "/etc/sysconfig/network-scripts/ ifcfg-INTERFACE\_NAME" angepasst werden. Folgende Zeilen müssen hinzugefügt werden:
 \begin{lstlisting}[language=bash]
 KEY_MGMT=IEEE8021X
 IEEE_8021X_EAP_METHODS=PEAP
