@@ -1,29 +1,38 @@
 \section{Benutzerhandbuch}
 
 \subsection{Updates}
-Es ist wichtig das DNA Center auf einem aktuellen Stand zu halten, da es noch eher in einem frühen Release steckt.
+Es ist wichtig das DNA Center auf einem aktuellen Stand zu halten, da sehr häufig neue Updates publiziert werden.
 
 Auf folgender Webseite veröffentlicht Cisco die Sicherheitslücken und erklärt gleich zu welcher Version das DNA Center geupdatet werden muss:
 \url{https://tools.cisco.com/security/center/publicationListing.x?resourceIDs=233151\&apply=1\&totalbox=1\&pt0=Cisco\&cp0=233151\#~FilterByProduct}
 
+\subsubsection{Updates installieren}
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Settings $\rightarrow$ System Settings $\rightarrow$ App Management} navigieren
+	\item Das gewünschte System Update oder Package markieren und mittels \textit{Action $\rightarrow$ Download} herunterladen
+	\item Das heruntergeladene Update markieren und mittels \textit{Action $\rightarrow$ Install} installieren
+\end{enumerate}
+
+Es ist zu beachten, dass System Updates immer vor den Package Updates installiert werden müssen. Des Weiteren sollen die restlichen Funktionen des DNA Centers während dem Update nicht verwendet werden.
+
 \subsection{Design}
-Mit dem Design wird die physische Struktur bis auf die Gebäude genau hinterlegt. Zusätzlich werden Informationen hinterlegt, die das DNA Center während der Provisionierung auf die Netzwerkkomponenten schreibt. 
+Mit dem Design wird die physische Struktur bis auf die Gebäude genau hinterlegt. Zusätzlich werden Informationen hinterlegt, die das DNA Center während der Provisionierung auf die Netzwerkkomponenten schreibt.
 
 \subsubsection{Site hinzufügen}
 \begin{enumerate}
-	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Hierarchy} navigieren. 
-	\item \textit{Add Site} wählen. 
-	\item Im neuen Popup den gewünschten Namen eingeben.
-	\item \textit{Add} anwählen. 	
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Hierarchy} navigieren
+	\item \textit{Add Site} wählen
+	\item Im neuen Popup den gewünschten Namen eingeben
+	\item \textit{Add} anwählen
 \end{enumerate}
 
 \subsubsection{Gebäude zur Site hinzufügen}
 \begin{enumerate}
-	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Hierarchy} navigieren. 
-	\item \textit{Add Site} wählen. 
-	\item Im neuen Popup den gewünschten Namen eingeben.
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Hierarchy} navigieren
+	\item \textit{Add Site} wählen
+	\item Im neuen Popup den gewünschten Namen eingeben
 	\item \textit{Building} anwählen
-	\item Adresse und/oder Koordinaten eingeben.
+	\item Adresse und/oder Koordinaten eingeben
 	\item \textit{Add} anwählen.
 \end{enumerate}
 
@@ -31,81 +40,106 @@ Mit dem Design wird die physische Struktur bis auf die Gebäude genau hinterlegt
 \subsubsection{Netzwerkdienste Konfigurieren}
 \begin{enumerate}
 	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Settings} navigieren. 
-	\item \textit{Global} wählen. 
-	\item Bei \textit{AAA Server Network} und \textit{Client/Endpoint} anwählen.
-	\item Bei \textit{Network $\rightarrow$ ISE} wählen und entsprechende IP Adresse eingeben.
-	\item Bei \textit{Network $\rightarrow$ RADIUS} wählen und entsprechende IP Adresse eingeben.
-	\item Bei \textit{Client/Endpoint $\rightarrow$ Servers $\rightarrow$ ISE} wählen und entsprechende IP Adresse eingeben.
-	\item Bei \textit{Client/Endpoint $\rightarrow$ Protocol $\rightarrow$ RADIUS} wählen und entsprechende IP Adresse eingeben.
-	\item Bei \textit{DHCP Server} das \textbf{PLUS}-Zeichen anklicken und die IP Adresse des DHCP Servers (in diesem Fall Adresse des Infoblox) hinterlegen. 
-	\item \textit{SYSLOG Server}, \textit{SNMP Server} und \textit{Netflow Collector Server} können leer gelassen werden.
-	\item Bei \textit{Message of the day} ist eine für den Netzwerkadministrator aufstellende, aber nicht nervige Willkommensnachricht einzugeben. 
-	\item Mit einem Klick auf \textit{Save} ist alles abzuspeichern.
+	\item \textit{Global} wählen
+	\item Bei \textit{AAA Server Network} und \textit{Client/Endpoint} anwählen
+	\item Bei \textit{Network $\rightarrow$ ISE} wählen und entsprechende IP Adresse eingeben
+	\item Bei \textit{Network $\rightarrow$ RADIUS} wählen und entsprechende IP Adresse eingeben
+	\item Bei \textit{Client/Endpoint $\rightarrow$ Servers $\rightarrow$ ISE} wählen und entsprechende IP Adresse eingeben
+	\item Bei \textit{Client/Endpoint $\rightarrow$ Protocol $\rightarrow$ RADIUS} wählen und entsprechende IP Adresse eingeben
+	\item Bei \textit{DHCP Server} das \textbf{PLUS}-Zeichen anklicken und die IP Adresse des DHCP Servers hinterlegen 
+	\item \textit{SYSLOG Server}, \textit{SNMP Server} und \textit{Netflow Collector Server} können leer gelassen werden
+	\item Mit einem Klick auf \textit{Save} ist alles abzuspeichern
 \end{enumerate}
 
 \subsubsection{Device Credentials hinterlegen}
 \begin{enumerate}
-	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Settings $\rightarrow$ Device Credentials} navigieren. 
-	\item \textit{Add} wählen. 
-	\item Entsprechende(r) \textit{Name}, \textit{Username}, \textit{Password} und \textit{Enable Password} eingeben.
-	\item Mit einem Klick auf \textit{Save} alles abspeichern.
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Settings $\rightarrow$ Device Credentials} navigieren
+	\item \textit{Add} wählen
+	\item \textit{Name}, \textit{Username}, \textit{Password} und \textit{Enable Password} eingeben
+	\item Mit einem Klick auf \textit{Save} alles abspeichern
 \end{enumerate}
 
 \subsubsection{IP Address Pools hinzufügen}
-Das DNA Center benötigt verschiedene IP Adressen Pools. 
+Das DNA Center benötigt verschiedene IP Adressen Pools. Die Grösse der Pools ist entsprechend der Anforderungen in der Umgebung zu wählen.
 \begin{itemize}
-	\item 1 x /23 (mindestens empfohlen) für die LAN Automation
-	\item 1 x /24 (mindestens empfohlen) für die Border
-	\item Für jedes VN ein Pool. Die Grösse ist abhängig von den Anforderungen.
+	\item Ein Pool für die LAN Automation (P2P Links, Loopback Adressen)
+	\item Ein Pool für die Border Konfiguration
+	\item Für jedes VN ein Pool
 \end{itemize}
+
+Weitere Pools können jederzeit hinzugefügt werden.
+
 \begin{enumerate}
-	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Address Pools} navigieren. 
-	\item \textit{Add IP Pool} wählen. 
-	\item Nun gilt es einen IP Pool Name, ein IP Subnet, ein CIDR Präfix, eine Gateway IP Adresse einzugeben.
-	\item Der korrekte DHCP Server und DNS Server ist per Dropdown auszuwählen.
-	\item Mit einem Klick auf \textit{Save} alles abspeichern.
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Settings $\rightarrow$ IP Address Pools} navigieren
+	\item \textit{Add IP Pool} wählen
+	\item Nun gilt es einen IP Pool Name, ein IP Subnet, ein CIDR Präfix, eine Gateway IP Adresse einzugeben
+	\item Der korrekte DHCP Server und DNS Server ist per Dropdown auszuwählen
+	\item Mit einem Klick auf \textit{Save} die Eingaben speichern
+\end{enumerate}
+
+\subsubsection{Templates erstellen}
+Um Konfigurationen auf den Geräten vorzunehmen, die nicht vom DNA Center abgedeckt sind, können Templates definiert werden.
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Template Editor navigieren}
+	\item \textbf{PLUS} Zeichen anwählen und \textit{Add Project} wählen
+	\subitem Einen Namen für das Projekt angeben und speichern
+	\item \textbf{PLUS} Zeichen anwählen und \textit{Add Template} wählen
+	\item \textit{Name, Projekt, Device Type und Software Type} wählen und speichern
+	\item Im Editor die gewünschte Konfiguration eingeben
+	\item Template mittels \textit{Actions $\rightarrow$ Save} und \textit{Actions $\rightarrow$ Save} speichern
+\end{enumerate}
+
+\subsubsection{Netzwerkprofile erstellen}
+Um die erstellten Templates anwenden zu können, müssen Netzwerkprofile erstellt werden.
+\begin{enumerate}
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Profiles} navigieren
+	\item \textit{Add Profile} klicken und \textit{Switching Profile} wählen
+	\item \textit{Name} definieren
+	\item Mittels \textit{Add} die gewünschten Templates hinzufügen
 \end{enumerate}
 
 \subsubsection{Netzwerkprofile zuweisen}
-Um den Geräten Templates zugeweisen zu können, müssen die Sites Profile zugewiesen werden.
+Damit die Netzwerkprofile angewendet werden, müssen diese noch den nötigen Sites zugewiesen werden.
 \begin{enumerate}
-	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Profiles} navigieren. 
-	\item In der Zeile von \textit{Default Swichting Profile} auf \textit{0 Sites} klicken. 
-	\item Im neuen Popup alle Sites über das Multidropdown-Menü hinzufügen.
-	\item Mit \textit{Save} das Netzwerkprofil speichern.
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Design $\rightarrow$ Network Profiles} navigieren
+	\item In der Zeile des gewünschten Profils auf \textit{Sites} klicken
+	\item Im neuen Popup alle nötigen Sites über das Multidropdown-Menü hinzufügen
+	\item Mit \textit{Save} das Netzwerkprofil speichern
 \end{enumerate}
 
-\subsection{Access Control Policies}
+\subsection{Policies}
 
 \subsubsection{Virtual Network}
-Virtuelle Netzwerke sind isolierte Routing- und Switching-Umgebungen. Standardmässig können Hosts die in seperaten virtuellen Netzwerken existieren nicht miteinander kommunizieren. Mit Hilfe von virtuellen Netzwerken kann das physische Netzwerk in mehrere logische Netzwerk geteilt werden. Ein typischer Anwendungsfall ist die Segmentierung von Gästen, Mitarbeitern und Kontraktor in getrennte Gruppen, so dass der Zugriff nur auf Teile des Netzwerkes erlaubt oder eingeschränkt werden kann. Die verschiedenen Arten von Netzwerken sind:
+Virtuelle Netzwerke dienen der Isolierung der Netzwerkbenutzer und dienen somit der Sicherheit. Standardmässig können Hosts in unterschiedlichen virtuellen Netzwerken nicht miteinander kommunizieren. Mit Hilfe von virtuellen Netzwerken kann das physische Netzwerk in mehrere logische Netzwerk geteilt werden. Ein typischer Anwendungsfall ist die Segmentierung von Gästen, Mitarbeitern und Kontraktor in getrennte Gruppen, so dass der Zugriff nur auf Teile des Netzwerkes erlaubt oder eingeschränkt werden kann. Die verschiedenen Arten von Netzwerken sind:
 
 \begin{itemize}
-	\item Gast-Netzwerk: Netzwerkverbindungen, die von einem Unternehmen zur Verfügung gestellt werden, um seinen Gästen den Zugang zum Internet und zum eigenen Unternehmen zu ermöglichen, ohne die Sicherheit des Host-Unternehmensnetzwerks zu beeinträchtigen. Gäste können auf das Internet zugreifen, aber nicht auf interne Anwendungen, die im Rechenzentrum gehostet werden.
-	\item Mitarbeiter-Netzwerk: Netzwerkverbindungen, die den Zugriff auf das Internet und interne Anwendungen ermöglichen. Diese Gruppe kann weiter segmentiert werden, um z.B. den Zugriff innerhalb des Unternehmensnetzwerks zu ermöglichen oder einzuschränken, für bestimmte interne Anwendungen, Laborumgebungen und Server. Ein Finanzangestellter z.B. braucht keinen Zugang zum Entwicklungslabor. Ebenso benötigt ein Entwickler keinen Zugriff auf eine Verkaufsprognose. Diese können ohne Probleme in weitere virtuelle Netzwerke segmentiert werden.
-	\item Kontraktor-Netzwerk: Netzwerkverbindung, die es den Benutzern ermöglicht, auf das Internet und auf unternehmensspezifische Anwendungen innerhalb des Unternehmensnetzwerks zuzugreifen. Ein virtuelles Netzwerk kann sich über mehrere Standorte und Netzwerkdomänen (Wireless, Campus und WAN) erstrecken.
+	\item Gast-Netzwerk: Netzwerkverbindungen, die von einem Unternehmen zur Verfügung gestellt werden, um seinen Gästen den Zugang zum Internet und zum eigenen Unternehmen zu ermöglichen, ohne die Sicherheit der Unternehmens Infrastruktur zu beeinträchtigen. Gäste können auf das Internet zugreifen, aber nicht auf interne Anwendungen.
+	\item Mitarbeiter-Netzwerk: Netzwerkverbindungen, die den Zugriff auf das Internet und interne Anwendungen ermöglichen. Diese Gruppe kann weiter segmentiert werden, um Zugriffe innerhalb des Firmennetzwerks zu regeln und für spezifische Benutzer und Gruppen einzuschränken.
+	\item Kontraktor-Netzwerk: Netzwerkverbindung, die es den Benutzern ermöglicht, auf das Internet und auf unternehmensspezifische Anwendungen innerhalb des Unternehmensnetzwerks zuzugreifen. 
 \end{itemize}
 
 \subsubsection{Virtual Network hinzufügen}
 \begin{enumerate}
-	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Virtual Network} navigieren. 
-	\item \textbf{PLUS} Zeichen anwählen.
-	\item Der gewünschte Virtual Network Name ist einzugeben.
-	\item Die gewünschten Scalable Groups können nun der Drap\&Drop in das Virtual Network gezogen werden.
-	\item Die Ansicht wird mit \textit{Save} gespeichert.
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Virtual Network} navigieren.
+	\item \textbf{PLUS} Zeichen anwählen
+	\item \textit{Virtual Network Name} eingeben
+	\item Scalable Groups per Drap\&Drop in das Virtual Network ziehen
+	\item Mit \textit{Save} speichern
 \end{enumerate}
 
 \subsubsection{Scalable Group}
-Skalierbare Gruppen umfassen eine Gruppierung von Benutzern, Endgeräten oder Ressourcen, die dieselben Anforderungen an die Zugriffskontrolle stellen. Diese Gruppen (in Cisco ISE als Sicherheitsgruppen oder SGs bekannt) werden auf dem Cisco ISE definiert. Eine skalierbare Gruppe kann nur ein Element (ein Benutzer, ein Endgerät oder eine Ressource) enthalten.
+Scalable Groups umfassen eine Gruppierung von Benutzern, Endgeräten oder Ressourcen, die dieselben Anforderungen an die Zugriffskontrolle stellen. Diese Gruppen, in Cisco ISE als Sicherheitsgruppen oder SGs bekannt, werden auf dem Cisco ISE definiert. 
 
 \paragraph{Scalable Group hinzufügen}
 \begin{enumerate}
-	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Registry $\rightarrow$ Scalable Groups} navigieren. 
-	\item \textit{Add Groups} wählen.
-	\item Bei bedarf ist ein Login in Cisco ISE erforderlich.
-	\item \textit{+ Add} anklicken.
-	\item Im Formular ist Name, Icon und Beschreibung im neuen Formular einzugeben und mit \textit{Submit} zu speichern. 
+	\item Ausgehend vom DNA Center Dashboard nach \textit{Policy $\rightarrow$ Registry $\rightarrow$ Scalable Groups} navigieren
+	\item \textit{Add Groups} wählen
+	\item In Cisco ISE einloggen
+	\item \textit{+ Add} anklicken
+	\item \textit{Name, Icon und Beschreibung} eingeben 
+	\item Mit \textit{Submit} speichern
 \end{enumerate}
+Die erstellte Scalable Group ist nun auch im DNA Center verfügbar und kann verwendet werden um Policies zu definieren.
 
 \subsubsection{Access Control Contract}
 Ein Zugriffsvertrag ist eine Security Group Access Control List (SGACL). Sie definiert das Regelwerk, dass die Netzwerkinteraktion zwischen Quelle und Ziel in einer Zugriffskontrollrichtlinie regelt.
